@@ -34,11 +34,7 @@ from .models import get_user_email
 url_signer = URLSigner(session)
 
 @action('index')
-<<<<<<< Updated upstream
 @action.uses('index.html', db, auth, url_signer)
-=======
-@action.uses('index.html', url_signer, db, auth)
->>>>>>> Stashed changes
 def index():
     return dict(
         # COMPLETE: return here any signed URLs you need.
