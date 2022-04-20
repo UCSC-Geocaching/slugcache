@@ -34,9 +34,47 @@ from .models import get_user_email
 url_signer = URLSigner(session)
 
 @action('index')
+<<<<<<< Updated upstream
 @action.uses('index.html', db, auth, url_signer)
+=======
+@action.uses('index.html', url_signer, db, auth)
+>>>>>>> Stashed changes
 def index():
     return dict(
         # COMPLETE: return here any signed URLs you need.
-        my_callback_url = URL('my_callback', signer=url_signer),
+        my_callback_url = URL('my_callback', signer=url_signer)
     )
+
+@action('map')
+@action.uses('map.html', db, auth)
+def login():
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        my_callback_url = URL('my_callback', signer=url_signer)
+    )
+
+@action('suggest')
+@action.uses('suggest.html', db, auth)
+def login():
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        my_callback_url = URL('my_callback', signer=url_signer)
+    )
+
+@action('profile')
+@action.uses('profile.html', db, auth)
+def login():
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        my_callback_url = URL('my_callback', signer=url_signer)
+    )
+
+@action('bookmarks')
+@action.uses('bookmarks.html', db, auth)
+def login():
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        my_callback_url = URL('my_callback', signer=url_signer)
+    )
+
+
