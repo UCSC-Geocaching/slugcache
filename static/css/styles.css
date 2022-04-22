@@ -22,3 +22,13 @@ body > footer {
 p.yellowText {
   color: #fdc700;
 }
+
+.bannerWrapper {
+  height: clamp(200px, 30vw, 300px);
+  width: 100%;
+  overflow: hidden;
+}
+
+.bannerWrapper img {
+  object-fit: cover;
+}
