@@ -23,12 +23,28 @@ p.yellowText {
   color: #fdc700;
 }
 
+.profileImgs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .bannerWrapper {
   height: clamp(200px, 30vw, 300px);
   width: 100%;
   overflow: hidden;
 }
-
 .bannerWrapper img {
   object-fit: cover;
+}
+.profilePicWrapper {
+  margin-top: -80px;
+  display: flex;
+  background-color: red;
+  height: 100px;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+.profilePic {
+  object-fit: contain;
 }
