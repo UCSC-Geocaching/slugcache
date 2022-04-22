@@ -66,26 +66,47 @@
         <div class="level is-mobile">
           <div class="level-item has-text centered">
             <a href="[[=URL('profile')]]">
+              [[if currPage == "profile":]]
+              <figure class="image is-32x32 m-2">
+                <img src="../static/icons/ProfileSelectedSVG.svg">
+              </figure>
+              <p class="yellowText">Profile</p>
+              [[else:]]
               <figure class="image is-32x32 m-2">
                 <img src="../static/icons/ProfileSVG.svg">
               </figure>
               <p class="has-text-white">Profile</p>
+              [[pass]]
             </a>
           </div>
           <div class="level-item has-text centered">
             <a href="[[=URL('map')]]">
+              [[if currPage == "map":]]
+              <figure class="image is-32x32 m-2">
+                <img src="../static/icons/MapSelectedSVG.svg">
+              </figure>
+              <p class="yellowText">Map</p>
+              [[else:]]
               <figure class="image is-32x32 m-2">
                 <img src="../static/icons/MapSVG.svg">
               </figure>
               <p class="has-text-white">Map</p>
+              [[pass]]
             </a>
           </div>
           <div class="level-item has-text centered">
             <a href="[[=URL('bookmarks')]]">
+              [[if currPage == "bookmarks":]]
+              <figure class="image is-32x32 m-2">
+                <img src="../static/icons/ListsSelectedSVG.svg">
+              </figure>
+              <p class="yellowText">Lists</p>
+              [[else:]]
               <figure class="image is-32x32 m-2">
                 <img src="../static/icons/ListsSVG.svg">
               </figure>
               <p class="has-text-white">Lists</p>
+              [[pass]]
             </a>
           </div>
         </div>
