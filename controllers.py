@@ -39,7 +39,6 @@ def index():
     return dict(
         # COMPLETE: return here any signed URLs you need.
         my_callback_url = URL('my_callback', signer=url_signer),
-        currPage = 'index'
     )
 
 @action('map')
@@ -48,7 +47,6 @@ def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
         my_callback_url = URL('my_callback', signer=url_signer),
-        currPage = 'map'
     )
 
 @action('suggest')
@@ -57,7 +55,6 @@ def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
         my_callback_url = URL('my_callback', signer=url_signer),
-        currPage = 'suggest'
     )
 
 @action('profile')
@@ -66,7 +63,6 @@ def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
         my_callback_url = URL('my_callback', signer=url_signer),
-        currPage = 'profile'
     )
 
 @action('bookmarks')
@@ -75,7 +71,6 @@ def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
         my_callback_url = URL('my_callback', signer=url_signer),
-        currPage = 'bookmarks'
     )
 
 

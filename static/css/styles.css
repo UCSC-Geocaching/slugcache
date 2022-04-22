@@ -1,3 +1,9 @@
+:root {
+  --selected-color: #fdc700;
+  /* filter generated with https://codepen.io/sosuke/pen/Pjoqqp */
+  --selected-filter: brightness(0) saturate(100%) invert(77%) sepia(65%) saturate(2400%) hue-rotate(2deg) brightness(104%) contrast(106%);
+}
+
 html,
 body {
   height: 100vh;
@@ -17,10 +23,6 @@ body > footer {
   position: relative;
   height: 100%;
   width: 100%;
-}
-
-p.yellowText {
-  color: #fdc700;
 }
 
 .profileImgs {
