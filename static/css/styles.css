@@ -1,7 +1,8 @@
 :root {
   --selected-color: #fdc700;
   /* filter generated with https://codepen.io/sosuke/pen/Pjoqqp */
-  --selected-filter: brightness(0) saturate(100%) invert(77%) sepia(65%) saturate(2400%) hue-rotate(2deg) brightness(104%) contrast(106%);
+  --selected-filter: brightness(0) saturate(100%) invert(77%) sepia(65%)
+    saturate(2400%) hue-rotate(2deg) brightness(104%) contrast(106%);
 }
 
 html,
@@ -41,7 +42,6 @@ body > footer {
 .profilePicWrapper {
   margin-top: -80px;
   display: flex;
-  background-color: red;
   height: 100px;
   width: 100px;
   align-items: center;
