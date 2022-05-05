@@ -106,7 +106,7 @@ auth.param.registration_requires_approval = False
 auth.param.allowed_actions = settings.ALLOWED_ACTIONS
 auth.param.login_expiration_time = 3600
 # FIXME: Readd for production.
-auth.param.password_complexity = {"entropy": 2}
+auth.param.password_complexity = {"entropy": 0}
 auth.param.block_previous_password_num = 3
 auth.param.formstyle = FormStyleBulma
 auth.define_tables()

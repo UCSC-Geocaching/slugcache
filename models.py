@@ -1,6 +1,7 @@
 """
 This file defines the database models
 """
+from distutils.log import error
 from py4web import URL
 import datetime
 from operator import getitem
@@ -32,13 +33,12 @@ db.define_table(
 )
 
 # User Table Field Requirements
-db.users.first_name.requires = IS_NOT_EMPTY
-db.users.last_name.requires = IS_NOT_EMPTY
-db.users.user_email.requires = IS_EMAIL
-db.users.creation_date.requires = IS_DATE
-db.users.banner_path.requires = IS_NOT_EMPTY
-db.users.profile_photo_path.requires = IS_NOT_EMPTY
-db.users.banner_path.requires = IS_NOT_EMPTY
+db.users.first_name.requires = IS_NOT_EMPTY(error_message="Enter a first name.")
+db.users.last_name.requires = IS_NOT_EMPTY(error_message="Enter a last name.")
+db.users.user_email.requires = IS_EMAIL(error_message="Enter a valid email.")
+db.users.creation_date.requires = IS_DATE(error_message="Enter a valid date.")
+db.users.banner_path.requires = IS_NOT_EMPTY()
+db.users.profile_photo_path.requires = IS_NOT_EMPTY()
 db.users.caches_logged.requires = IS_INT_IN_RANGE(0,MAX_CACHES)
 db.users.caches_hidden.requires = IS_INT_IN_RANGE(0,MAX_CACHES)
 
