@@ -27,50 +27,95 @@ Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app w
 
 from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
-from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
+from .common import (
+    db,
+    session,
+    T,
+    cache,
+    auth,
+    logger,
+    authenticated,
+    unauthenticated,
+    flash,
+)
 from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
 
+from datetime import datetime
+
 url_signer = URLSigner(session)
 
-@action('index')
-@action.uses('index.html', db, auth, url_signer)
+
+@action("index")
+@action.uses("index.html", db, auth, url_signer)
 def index():
     return dict(
         # COMPLETE: return here any signed URLs you need.
-        my_callback_url = URL('my_callback', signer=url_signer),
+        my_callback_url=URL("my_callback", signer=url_signer),
     )
 
-@action('map')
-@action.uses('map.html', db, auth)
+
+@action("map")
+@action.uses("map.html", db, auth)
 def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
-        my_callback_url = URL('my_callback', signer=url_signer),
+        my_callback_url=URL("my_callback", signer=url_signer),
     )
 
-@action('suggest')
-@action.uses('suggest.html', db, auth)
+
+@action("suggest")
+@action.uses("suggest.html", db, auth)
 def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
-        my_callback_url = URL('my_callback', signer=url_signer),
+        my_callback_url=URL("my_callback", signer=url_signer),
     )
 
-@action('profile')
-@action.uses('profile.html', db, auth)
+
+@action("profile")
+@action.uses("profile.html", db, auth)
 def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
-        my_callback_url = URL('my_callback', signer=url_signer),
+        my_callback_url=URL("my_callback", signer=url_signer),
     )
 
-@action('bookmarks')
-@action.uses('bookmarks.html', db, auth)
+
+@action("bookmarks")
+@action.uses("bookmarks.html", db, auth)
 def login():
     return dict(
         # COMPLETE: return here any signed URLs you need.
-        my_callback_url = URL('my_callback', signer=url_signer),
+        my_callback_url=URL("my_callback", signer=url_signer),
     )
 
 
+# MAKE SURE TO REMOVE FOR PRODUCTION
+@action("setup")
+@action.uses(db, auth)
+def setup():
+    db.users.insert(
+        first_name="Chris",
+        last_name="Sterza",
+        user_email="csterza@ucsc.edu",
+        creation_date=datetime.now(),
+        banner_path="",
+        photo_profile_path="",
+        caches_logged=5,
+        caches_hidden=3,
+    )
+    my_ref = db(db.users.user_email == "csterza@ucsc.edu").select().first()
+    print(my_ref)
+    db.caches.insert(
+        cache_name="Test Cache Name",
+        photo_path="",
+        lat=37.00,
+        long=-122.05,
+        description="Test description",
+        hint="Test hint",
+        author=my_ref.id,
+        creation_date=datetime.now(),
+    )
+    redirect(URL("index"))
+    return dict()
