@@ -125,7 +125,7 @@ def setup():
 @action("clear_db")
 @action.uses(db, auth)
 def clear_db():
-    db.users.drop()
-    db.caches.drop()
+    db.users.truncate()
+    db.caches.truncate()
     redirect(URL("index"))
     return dict()
