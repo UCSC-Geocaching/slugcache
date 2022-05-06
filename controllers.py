@@ -119,3 +119,13 @@ def setup():
     )
     redirect(URL("index"))
     return dict()
+
+
+# MAKE SURE TO REMOVE FOR PRODUCTION
+@action("clear_db")
+@action.uses(db, auth)
+def clear_db():
+    db.users.drop()
+    db.caches.drop()
+    redirect(URL("index"))
+    return dict()
