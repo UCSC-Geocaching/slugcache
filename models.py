@@ -1,17 +1,11 @@
 """
 This file defines the database models
 """
-from distutils.log import error
 from py4web import URL
 import datetime
-from operator import getitem
-import string
-from tokenize import Double
 
 from .common import db, Field, auth
 from pydal.validators import *
-
-MAX_CACHES = 1000000
 
 
 def get_user_email():
@@ -42,8 +36,8 @@ db.users.user_email.requires = IS_EMAIL(error_message="Enter a valid email.")
 db.users.creation_date.requires = IS_DATE(error_message="Enter a valid date.")
 db.users.banner_path.requires = IS_NOT_EMPTY()
 db.users.profile_photo_path.requires = IS_NOT_EMPTY()
-db.users.caches_logged.requires = IS_INT_IN_RANGE(0, MAX_CACHES)
-db.users.caches_hidden.requires = IS_INT_IN_RANGE(0, MAX_CACHES)
+db.users.caches_logged.requires = IS_INT_IN_RANGE(0, None)
+db.users.caches_hidden.requires = IS_INT_IN_RANGE(0, None)
 
 # User Table Defaults
 db.users.user_email.default = get_user_email
@@ -80,15 +74,15 @@ db.define_table(
 )
 
 # Cache Table Field Requirements
-db.caches.cache_name.requires = IS_NOT_EMPTY
+db.caches.cache_name.requires = IS_NOT_EMPTY()
 db.caches.lat.requires = IS_FLOAT_IN_RANGE(
-    -90, 90, error_message="Please enter a valid lattitude."
+    -90, 90, error_message="Please enter a valid latitude."
 )
 db.caches.long.requires = IS_FLOAT_IN_RANGE(
     -180, 180, error_message="Please enter a valid longitude."
 )
-db.caches.description.requires = IS_NOT_EMPTY
-db.caches.creation_date.requires = IS_DATE
+db.caches.description.requires = IS_NOT_EMPTY()
+db.caches.creation_date.requires = IS_DATE()
 
 # Cache Table Field defaults
 db.caches.author.default = get_user_email
@@ -96,7 +90,7 @@ db.caches.creation_date.default = get_time
 
 # Cache Table Field labels
 db.caches.cache_name.label = "Name"
-db.caches.lat.label = "Lattitude"
+db.caches.lat.label = "Latitude"
 db.caches.long.label = "Longitude"
 db.caches.description.label = "Description"
 db.caches.hint.label = "Hint"
