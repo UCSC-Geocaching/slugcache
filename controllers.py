@@ -91,22 +91,21 @@ def login():
     )
 
 
-# MAKE SURE TO REMOVE FOR PRODUCTION
+# TODO: MAKE SURE TO REMOVE FOR PRODUCTION
 @action("setup")
 @action.uses(db, auth)
 def setup():
+    creation_date = datetime.now()
     db.users.insert(
         first_name="Chris",
         last_name="Sterza",
         user_email="csterza@ucsc.edu",
-        creation_date=datetime.now(),
+        creation_date=creation_date,
         banner_path="",
         photo_profile_path="",
         caches_logged=5,
         caches_hidden=3,
     )
-    my_ref = db(db.users.user_email == "csterza@ucsc.edu").select().first()
-    print(my_ref)
     db.caches.insert(
         cache_name="Test Cache Name",
         photo_path="",
@@ -114,18 +113,78 @@ def setup():
         long=-122.05,
         description="Test description",
         hint="Test hint",
-        author=my_ref.id,
+        author=db(db.users.creation_date == creation_date).select().first().id,
+        creation_date=datetime.now(),
+    )
+    creation_date = datetime.now()
+    db.users.insert(
+        first_name="Hello",
+        last_name="world",
+        user_email="helloworld@ucsc.edu",
+        creation_date=creation_date,
+        banner_path="",
+        photo_profile_path="",
+        caches_logged=2,
+        caches_hidden=1,
+    )
+    db.caches.insert(
+        cache_name="AppleE",
+        photo_path="",
+        lat=47.00,
+        long=-112.05,
+        description="a fruit",
+        hint="u eat dis",
+        author=db(db.users.creation_date == creation_date).select().first().id,
+        creation_date=datetime.now(),
+    )
+    db.caches.insert(
+        cache_name="pineapple",
+        photo_path="",
+        lat=47.00,
+        long=-112.05,
+        description="a fruit",
+        hint="u eat dis",
+        author=db(db.users.creation_date == creation_date).select().first().id,
+        creation_date=datetime.now(),
+    )
+    db.caches.insert(
+        cache_name="banana",
+        photo_path="",
+        lat=47.00,
+        long=-112.05,
+        description="a fruit",
+        hint="u eat dis",
+        author=db(db.users.creation_date == creation_date).select().first().id,
+        creation_date=datetime.now(),
+    )
+    creation_date = datetime.now()
+    db.users.insert(
+        first_name="first name",
+        last_name="last naem",
+        user_email="firstlast@ucsc.edu",
+        creation_date=creation_date,
+        banner_path="",
+        photo_profile_path="",
+        caches_logged=7,
+        caches_hidden=7,
+    )
+    db.caches.insert(
+        cache_name="pear",
+        photo_path="",
+        lat=47.00,
+        long=-112.05,
+        description="a fruit",
+        hint="u eat dis",
+        author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
     )
     redirect(URL("index"))
-    return dict()
 
 
-# MAKE SURE TO REMOVE FOR PRODUCTION
+# TODO: MAKE SURE TO REMOVE FOR PRODUCTION
 @action("clear_db")
 @action.uses(db, auth)
 def clear_db():
     db.users.truncate()
     db.caches.truncate()
     redirect(URL("index"))
-    return dict()
