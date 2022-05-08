@@ -4,7 +4,8 @@ This file defines the database models
 from py4web import URL
 import datetime
 
-from .common import db, Field, auth
+from py4web import Field
+from .common import db, auth
 from pydal.validators import *
 
 

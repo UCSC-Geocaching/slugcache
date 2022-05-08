@@ -47,48 +47,55 @@ url_signer = URLSigner(session)
 
 
 @action("index")
-@action.uses("index.html", db, auth, url_signer)
+@action.uses("index.html", auth.user)
 def index():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        my_callback_url=URL("my_callback", signer=url_signer),
-    )
+    return {}
+
+
+@action("login")
+@action.uses("login.html", auth)
+def login():
+    if auth.is_logged_in:
+        redirect(URL())
+    return {
+        "base_url": URL(),
+        "next": request.query.get("next") or URL()
+    }
+
+
+@action("register")
+@action.uses("register.html", auth)
+def register():
+    if auth.is_logged_in:
+        redirect(URL())
+    return {
+        "base_url": URL(),
+        "next": request.query.get("next") or URL()
+    }
 
 
 @action("map")
-@action.uses("map.html", db, auth)
-def login():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        my_callback_url=URL("my_callback", signer=url_signer),
-    )
+@action.uses("map.html", db, auth.user)
+def mapp():
+    return {}
 
 
 @action("suggest")
-@action.uses("suggest.html", db, auth)
-def login():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        my_callback_url=URL("my_callback", signer=url_signer),
-    )
+@action.uses("suggest.html", db, auth.user)
+def suggest():
+    return {}
 
 
 @action("profile")
-@action.uses("profile.html", db, auth)
-def login():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        my_callback_url=URL("my_callback", signer=url_signer),
-    )
+@action.uses("profile.html", db, auth.user)
+def profile():
+    return {}
 
 
 @action("bookmarks")
-@action.uses("bookmarks.html", db, auth)
-def login():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        my_callback_url=URL("my_callback", signer=url_signer),
-    )
+@action.uses("bookmarks.html", db, auth.user)
+def bookmarks():
+    return {}
 
 
 # TODO: MAKE SURE TO REMOVE FOR PRODUCTION

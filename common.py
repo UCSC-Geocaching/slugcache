@@ -3,12 +3,13 @@ This file defines cache, session, and translator T object for the app
 These are fixtures that every app needs so probably you will not be editing this file
 """
 import copy
-import os
+import re
 import sys
 import logging
-from py4web import Session, Cache, Translator, Flash, DAL, Field, action
+from py4web import Session, Cache, Translator, Flash, DAL, request, action, HTTP, URL, redirect
+from py4web.core import REGEX_APPJSON
 from py4web.utils.mailer import Mailer
-from py4web.utils.auth import Auth
+from py4web.utils.auth import Auth, AuthEnforcer
 from py4web.utils.downloader import downloader
 from pydal.tools.tags import Tags
 from py4web.utils.factories import ActionFactory
@@ -79,9 +80,35 @@ elif settings.SESSION_TYPE == "database":
 
 # #######################################################
 # Instantiate the object and actions that handle auth
-# #######################################################
+class CustomAuthEnforcer(AuthEnforcer):
+    def abort_or_redirect(self, page, message=""):
+        """Return HTTP 403 if 'application/json' in HTTP_ACCEPT
+        and HTTP_JSON_REDIRECTS flag is not set in the request to 'on'.
+        Else redirects to page
+        """
 
-auth = Auth(session, db, define_tables=False)
+        if re.search(REGEX_APPJSON, request.headers.get("accept", "")) and (
+            request.headers.get("json-redirects", "") != "on"
+        ):
+            raise HTTP(403)
+        redirect_next = request.fullpath
+        if request.query_string:
+            redirect_next = redirect_next + "?{}".format(request.query_string)
+        redirect(
+            URL(
+                page,
+                vars=dict(next=redirect_next),
+                use_appname=self.auth.param.use_appname_in_redirects,
+            )
+        )
+class CustomAuth(Auth):
+    @property
+    def user(self):
+        """Use as @action.uses(auth.user)"""
+        return CustomAuthEnforcer(self)
+
+# #######################################################
+auth = CustomAuth(session, db, define_tables=False)
 
 # Fixes the messages.
 auth_messages = copy.deepcopy(auth.MESSAGES)

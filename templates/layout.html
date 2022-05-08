@@ -16,6 +16,7 @@
 </head>
 
 <body>
+  [[if globals().get('user'):]]
   <!-- Navigation bar -->
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
@@ -64,9 +65,11 @@
       </div>
     </div>
   </nav>
+  [[pass]]
   <!-- beginning of HTML inserted by extending template -->
   [[include]]
   <!-- end of HTML inserted by extending template -->
+  [[if globals().get('user'):]]
   <footer class="footer has-background-link p-2">
     <div class="content has-text-centered">
       <div class="level is-mobile">
@@ -97,10 +100,11 @@
       </div>
     </div>
   </footer>
+  [[pass]]
 </body>
 <script src="js/sugar.min.js"></script>
 <script src="js/axios.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/utils.js"></script>
-
+[[block page_scripts]]<!-- individual pages can add scripts here -->[[end]]
 </html>
