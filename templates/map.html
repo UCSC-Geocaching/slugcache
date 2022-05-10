@@ -1,10 +1,4 @@
 [[extend 'layout.html']]
-<!-- Needed to use Mapbox from CDN -->
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
-<link
-  href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css"
-  rel="stylesheet"
-/>
 
 <style>
   [v-cloak] {
@@ -19,18 +13,10 @@
   }
 </style>
 
+
 <section class="mapWrapper">
   <div id="map"></div>
-  <script>
-    mapboxgl.accessToken =
-      'pk.eyJ1IjoiY3N0ZXJ6YSIsImEiOiJjbDF0dDRleG0yMWpkM2Ztb3B0YWZoaTR6In0.09vTcRrP3ty1lWFuouDsiw';
-    var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/outdoors-v11',
-      center: [-122.05, 36.99],
-      zoom: 12,
-    });
-  </script>
+  <pre id="coordinates"></pre>
 </section>
 
 <div class="section" id="vue-target" v-cloak>
@@ -40,3 +26,6 @@
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 [[end]]
+
+
+  

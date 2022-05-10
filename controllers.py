@@ -76,7 +76,7 @@ def register():
 
 @action("map")
 @action.uses("map.html", db, auth.user)
-def mapp():
+def map():
     return {}
 
 
