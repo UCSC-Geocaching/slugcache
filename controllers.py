@@ -57,7 +57,7 @@ def index():
 def login():
     if auth.is_logged_in:
         redirect(URL())
-    return {"base_url": URL(), "next": request.query.get("next") or URL()}
+    return {"base_url": URL(), "next": URL("map")}
 
 
 @action("register")
