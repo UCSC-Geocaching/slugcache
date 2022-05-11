@@ -57,10 +57,7 @@ def index():
 def login():
     if auth.is_logged_in:
         redirect(URL())
-    return {
-        "base_url": URL(),
-        "next": request.query.get("next") or URL()
-    }
+    return {"base_url": URL(), "next": request.query.get("next") or URL()}
 
 
 @action("register")
@@ -70,8 +67,19 @@ def register():
         redirect(URL())
     return {
         "base_url": URL(),
-        "next": request.query.get("next") or URL()
+        "next": request.query.get("next") or URL(),
+        "register_user_url": URL("register_user"),
     }
+
+
+@action("register_user", method="POST")
+@action.uses(db)
+def register_user():
+    db.users.insert(
+        first_name=request.json.get("first_name"),
+        last_name=request.json.get("last_name"),
+        user_email=request.json.get("email"),
+    )
 
 
 @action("map")

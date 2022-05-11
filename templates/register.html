@@ -13,7 +13,8 @@
           autocomplete="email"
           required
           v-model="email"
-          :class="{ 'is-danger': errors.email !== '' }">
+          :class="{ 'is-danger': errors.email !== '' }"
+        />
         <span class="icon is-small is-left">
           <i class="fa fa-fw fa-envelope-o"></i>
         </span>
@@ -30,7 +31,8 @@
           autocomplete="current-password"
           required
           v-model="password"
-          :class="{ 'is-danger': errors.password !== '' }">
+          :class="{ 'is-danger': errors.password !== '' }"
+        />
         <span class="icon is-small is-left">
           <i class="fa fa-fw fa-lock"></i>
         </span>
@@ -46,12 +48,15 @@
           autocomplete="current-password"
           required
           v-model="passwordAgain"
-          :class="{ 'is-danger': errors.password !== '' }">
+          :class="{ 'is-danger': errors.password !== '' }"
+        />
         <span class="icon is-small is-left">
           <i class="fa fa-fw fa-lock"></i>
         </span>
       </div>
-      <p v-if="errors.password !== ''" class="help is-danger">{{errors.password}}</p>
+      <p v-if="errors.password !== ''" class="help is-danger">
+        {{errors.password}}
+      </p>
     </div>
     <!-- first name -->
     <div class="field">
@@ -63,12 +68,15 @@
           autocomplete="given-name"
           required
           v-model="firstName"
-          :class="{ 'is-danger': errors.firstName !== '' }">
+          :class="{ 'is-danger': errors.firstName !== '' }"
+        />
         <span class="icon is-small is-left">
           <i class="fa fa-fw fa-user-o"></i>
         </span>
       </div>
-      <p v-if="errors.firstName !== ''" class="help is-danger">{{errors.firstName}}</p>
+      <p v-if="errors.firstName !== ''" class="help is-danger">
+        {{errors.firstName}}
+      </p>
     </div>
     <!-- last name -->
     <div class="field">
@@ -80,19 +88,30 @@
           autocomplete="family-name"
           required
           v-model="lastName"
-          :class="{ 'is-danger': errors.lastName !== '' }">
+          :class="{ 'is-danger': errors.lastName !== '' }"
+        />
         <span class="icon is-small is-left">
           <i class="fa fa-fw fa-user-o"></i>
         </span>
       </div>
-      <p v-if="errors.lastName !== ''" class="help is-danger">{{errors.lastName}}</p>
+      <p v-if="errors.lastName !== ''" class="help is-danger">
+        {{errors.lastName}}
+      </p>
     </div>
     <div class="columns is-variable is-2p5">
       <div class="column">
-        <button class="button is-fullwidth is-warning" type="submit">Login</button>
+        <button class="button is-fullwidth is-warning" type="submit">
+          Login
+        </button>
       </div>
       <div class="column">
-        <button class="button is-fullwidth is-warning" type="button" @click="register">Sign Up</button>
+        <button
+          class="button is-fullwidth is-warning"
+          type="button"
+          @click="register"
+        >
+          Sign Up
+        </button>
       </div>
     </div>
   </form>
@@ -128,22 +147,22 @@
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
-  const baseURL = "[[=XML(base_url)]]"
-  const next = "[[=XML(next)]]"
+  const baseURL = '[[=XML(base_url)]]';
+  const next = '[[=XML(next)]]';
   const registerComponent = new Vue({
-    el: "#register-form",
+    el: '#register-form',
     data: {
-      email: "",
-      password: "",
-      passwordAgain: "",
-      firstName: "",
-      lastName: "",
+      email: '',
+      password: '',
+      passwordAgain: '',
+      firstName: '',
+      lastName: '',
       errors: {
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-      }
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+      },
     },
     methods: {
       login() {
@@ -151,29 +170,37 @@
       },
       register() {
         if (this.password !== this.passwordAgain) {
-          this.errors.password = "Not matching";
+          this.errors.password = 'Not matching';
           return;
         }
-        axios.post(`${baseURL}auth/api/register`, {
-          email: this.email,
-          password: this.password,
-          first_name: this.firstName,
-          last_name: this.lastName
-        }).then(resp => {
-          this.errors.email = "";
-          this.errors.password = "";
-          this.errors.firstName = "";
-          this.errors.lastName = "";
-          this.login();
-        }).catch(err => {
-          const errors = err.response.data.errors || "";
-          this.errors.email = errors.email || "";
-          this.errors.password = errors.password || "";
-          this.errors.firstName = errors.first_name || "";
-          this.errors.lastName = errors.last_name || "";
-        });
-      }
-    }
+        axios
+          .post(`${baseURL}auth/api/register`, {
+            email: this.email,
+            password: this.password,
+            first_name: this.firstName,
+            last_name: this.lastName,
+          })
+          .then((resp) => {
+            axios.post('[[=XML(register_user_url)]]', {
+              first_name: this.firstName,
+              last_name: this.lastName,
+              email: this.email,
+            });
+            this.errors.email = '';
+            this.errors.password = '';
+            this.errors.firstName = '';
+            this.errors.lastName = '';
+            this.login();
+          })
+          .catch((err) => {
+            const errors = err.response.data.errors || '';
+            this.errors.email = errors.email || '';
+            this.errors.password = errors.password || '';
+            this.errors.firstName = errors.first_name || '';
+            this.errors.lastName = errors.last_name || '';
+          });
+      },
+    },
   });
 </script>
 [[end]]
