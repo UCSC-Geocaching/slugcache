@@ -149,6 +149,7 @@
 <script>
   const baseURL = '[[=XML(base_url)]]';
   const next = '[[=XML(next)]]';
+  const add_user_url = '[[=XML(add_user_url)]]';
   const registerComponent = new Vue({
     el: '#register-form',
     data: {
@@ -181,7 +182,7 @@
             last_name: this.lastName,
           })
           .then((resp) => {
-            axios.post('[[=XML(register_user_url)]]', {
+            axios.post(`${add_user_url}`, {
               first_name: this.firstName,
               last_name: this.lastName,
               email: this.email,

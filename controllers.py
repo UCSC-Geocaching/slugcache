@@ -61,19 +61,19 @@ def login():
 
 
 @action("register")
-@action.uses("register.html", auth)
+@action.uses("register.html", auth, url_signer)
 def register():
     if auth.is_logged_in:
         redirect(URL())
     return {
         "base_url": URL(),
         "next": request.query.get("next") or URL(),
-        "register_user_url": URL("register_user"),
+        "add_user_url": URL("add_user", signer=url_signer),
     }
 
 
-@action("register_user", method="POST")
-@action.uses(db)
+@action("add_user", method="POST")
+@action.uses(db, auth, url_signer.verify())
 def register_user():
     db.users.insert(
         first_name=request.json.get("first_name"),
