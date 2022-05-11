@@ -5,6 +5,10 @@
     saturate(2400%) hue-rotate(2deg) brightness(104%) contrast(106%);
 }
 
+[v-cloak] {
+  display: none;
+}
+
 html,
 body {
   height: 100vh;

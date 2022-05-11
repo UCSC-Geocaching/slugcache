@@ -1,9 +1,10 @@
 [[extend 'layout.html']]
+<link rel="stylesheet" href="css/login.css" />
 
 <div class="section" id="login-page">
   <header>
     <figure class="image is-128x128">
-      <img src="../static/images/ucsc-logo.jpg" alt="UCSC Logo">
+      <img src="../static/images/ucsc-logo.jpg" alt="UCSC Logo" />
     </figure>
     <h1 class="title">UCSC Geocaching</h1>
   </header>
@@ -16,8 +17,10 @@
             type="email"
             placeholder="Email Address"
             autocomplete="email"
-            required v-model="email"
-            :class="{ 'is-danger': !isValidCredentials }">
+            required
+            v-model="email"
+            :class="{ 'is-danger': !isValidCredentials }"
+          />
           <span class="icon is-small is-left">
             <i class="fa fa-fw fa-envelope-o"></i>
           </span>
@@ -25,25 +28,37 @@
       </div>
       <div class="field">
         <div class="control has-icons-left">
-          <input 
+          <input
             class="input"
             type="password"
             placeholder="Password"
             autocomplete="current-password"
             required
-            v-model="password" :class="{ 'is-danger': !isValidCredentials }">
+            v-model="password"
+            :class="{ 'is-danger': !isValidCredentials }"
+          />
           <span class="icon is-small is-left">
             <i class="fa fa-fw fa-lock"></i>
           </span>
         </div>
-        <p v-if="!isValidCredentials" class="help is-danger">Incorrect email or password. Please try again.</p>
+        <p v-if="!isValidCredentials" class="help is-danger">
+          Incorrect email or password. Please try again.
+        </p>
       </div>
       <div class="columns is-variable is-2p5">
         <div class="column">
-          <button class="button is-fullwidth is-warning" type="submit">Login</button>
+          <button class="button is-fullwidth is-warning" type="submit">
+            Login
+          </button>
         </div>
         <div class="column">
-          <button class="button is-fullwidth is-warning" type="button" @click="register">Sign Up</button>
+          <button
+            class="button is-fullwidth is-warning"
+            type="button"
+            @click="register"
+          >
+            Sign Up
+          </button>
         </div>
       </div>
     </form>
@@ -53,65 +68,35 @@
   </footer>
 </div>
 
-<style>
-  [v-cloak] {
-    display: none;
-  }
-
-  #login-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 100vh;
-  }
-
-  .image,
-  form {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .title,
-  footer {
-    text-align: center;
-  }
-
-  form {
-    width: 30%;
-  }
-
-  .columns.is-variable.is-2p5 {
-    --columnGap: calc(0.5 * 0.75rem);
-    /* bulma default gap size is 0.75rem */
-  }
-</style>
-
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
-  const baseURL = "[[=XML(base_url)]]"
-  const next = "[[=XML(next)]]"
+  const baseURL = '[[=XML(base_url)]]';
+  const next = '[[=XML(next)]]';
   const loginComponent = new Vue({
-    el: "#login-form",
+    el: '#login-form',
     data: {
-      email: "",
-      password: "",
-      isValidCredentials: true
+      email: '',
+      password: '',
+      isValidCredentials: true,
     },
     methods: {
       login() {
-        axios.post(`${baseURL}auth/api/login`, {
-          email: this.email,
-          password: this.password
-        }).then(resp => {
-          this.isValidCredentials = true;
-          location.href = next;
-        }).catch(err => this.isValidCredentials = false);
+        axios
+          .post(`${baseURL}auth/api/login`, {
+            email: this.email,
+            password: this.password,
+          })
+          .then((resp) => {
+            this.isValidCredentials = true;
+            location.href = next;
+          })
+          .catch((err) => (this.isValidCredentials = false));
       },
       register() {
         location.href = `${baseURL}register`;
-      }
-    }
+      },
+    },
   });
 </script>
 [[end]]
