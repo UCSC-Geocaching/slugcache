@@ -1,37 +1,21 @@
 [[extend 'layout.html']]
 
-<style>
-  [v-cloak] {
-    display: none;
-  }
 
-  .map-icon {
-    filter: var(--selected-filter);
-  }
-  .map-text {
-    color: var(--selected-color) !important;
-  }
-</style>
+[[block page_head]]
+<link rel="stylesheet" href="css/map.css">
+[[end]]
 
 <section class="mapWrapper">
-  <div id="map"></div>
-  <script>
-    mapboxgl.accessToken =
-      'pk.eyJ1IjoiY3N0ZXJ6YSIsImEiOiJjbDF0dDRleG0yMWpkM2Ztb3B0YWZoaTR6In0.09vTcRrP3ty1lWFuouDsiw';
-    var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/outdoors-v11',
-      center: [-122.05, 36.99],
-      zoom: 12,
-    });
-  </script>
-  <pre id="coordinates"></pre>
+
+  <div id="vue-target">
+    <div id="map"></div>
+  </div>
+
 </section>
 
-<div class="section" id="vue-target" v-cloak>
-  <!-- Put here your Vue.js template -->
-</div>
+
 
 [[block page_scripts]]
+<script src="js/map.js"></script>
 <!-- Loads the index-specific js for Vue -->
 [[end]]

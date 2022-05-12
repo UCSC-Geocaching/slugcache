@@ -203,3 +203,18 @@ def clear_db():
     db.users.truncate()
     db.caches.truncate()
     redirect(URL("index"))
+
+@action('storecaches')
+@action.uses(db)
+def storecaches():
+# Reads geocache code database.
+    import json
+    import os
+    APP_FOLDER = os.path.dirname(__file__)
+    GEOC_FILE = os.path.join(APP_FOLDER, "data", "geocaches.json")
+    with open(GEOC_FILE, "r") as f:
+        GEOCACHE_LOCATIONS = json.load(f)
+        for z, (lat, lng) in GEOCACHE_LOCATIONS.items():
+            db.caches.insert(cachename=z, lat=lat, lng=lng, description="This is a ...")
+        return "ok"
+

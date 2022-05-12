@@ -1,0 +1,23 @@
+
+[v-cloak] {
+    display: none;
+}
+
+.map-icon {
+    filter: var(--selected-filter);
+}
+.map-text {
+    color: var(--selected-color) !important;
+}
+
+body{
+    margin: 0;
+}
+
+
+#map{
+    padding: 0px;
+    margin: 0px;
+    height: 83vh;
+    width: 100vw;
+}
