@@ -46,29 +46,16 @@ from datetime import datetime
 url_signer = URLSigner(session)
 
 
-@action("index")
-@action.uses("index.html", auth.user)
-def index():
-    return {}
-
-
 @action("login")
-@action.uses("login.html", auth)
-def login():
-    if auth.is_logged_in:
-        redirect(URL())
-    return {"base_url": URL(), "next": URL("map")}
-
-
 @action("register")
-@action.uses("register.html", auth, url_signer)
-def register():
-    if auth.is_logged_in:
+@action("index")
+@action.uses("index.html", auth, url_signer)
+def index():
+    if request.fullpath in (URL("login"), URL("register")) and auth.is_logged_in:
         redirect(URL())
     return {
         "base_url": URL(),
-        "next": request.query.get("next") or URL(),
-        "add_user_url": URL("add_user", signer=url_signer),
+        "add_user_url": URL("add_user", signer=url_signer)
     }
 
 

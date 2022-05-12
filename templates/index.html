@@ -1,4 +1,101 @@
 [[extend 'layout.html']]
 
-
+[[if globals().get('user'):]]
 <script src="js/map.js"></script>
+[[else:]]
+<style>
+  .hero-body {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    display: block;
+  }
+</style>
+<div id="welcome-pg" v-cloak>
+  <div class="hero is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Welcome to Geocache</h1>
+        <div class="block">
+          <button
+            id="login-modal-trigger"
+            class="button is-warning is-fullwidth"
+            @click="openLoginModal">
+            Log In
+          </button>
+        </div>
+        <div class="block">
+          <button
+            id="signup-modal-trigger"
+            class="button is-light is-fullwidth"
+            @click="openRegisterModal">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <modal-auth
+    v-show="isModalVisible"
+    :route="currentRoute"
+    @update:route="updateRoute"
+    @close="closeModal">
+  </modal-auth>
+</div>
+
+[[block page_scripts]]
+<script type="module">
+  import ModalAuth from "./js/components/ModalAuth.js";
+  import { buildPath } from "./js/utils.js";
+  import { listen, push } from "./js/history.js";
+
+  const baseURL = "[[=XML(base_url)]]";
+  //TODO: rm TMP
+  const loginURL = buildPath(baseURL, "login");
+  const registerURL = buildPath(baseURL, "register");
+
+  new Vue({
+    el: "#welcome-pg",
+    components: {
+      ModalAuth
+    },
+    provide: {
+      baseURL,
+      addUserURL: "[[=XML(add_user_url)]]"
+    },
+    data: {
+      currentRoute: window.location.pathname
+    },
+    created() {
+      listen((route, previousRoute) => (this.currentRoute = route));
+      window.addEventListener(
+        "popstate",
+        event => (this.currentRoute = window.location.pathname)
+      );
+    },
+    methods: {
+      updateRoute(route) {
+        if (this.currentRoute !== route) push(route);
+      },
+      openLoginModal() {
+        this.updateRoute(loginURL);
+      },
+      openRegisterModal() {
+        this.updateRoute(registerURL);
+      },
+      closeModal() {
+        this.updateRoute(baseURL);
+      }
+    },
+    computed: {
+      isModalVisible() {
+        return [loginURL, registerURL].includes(this.currentRoute);
+      }
+    }
+  });
+</script>
+[[end]]
+[[pass]]
