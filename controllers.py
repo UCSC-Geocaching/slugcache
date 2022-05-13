@@ -70,9 +70,11 @@ def register_user():
 
 
 @action("map")
-@action.uses("map.html", db, auth.user)
+@action.uses("map.html", db, auth)
 def map():
-    return {}
+    return dict(
+        loadGeoCachesURL = URL('loadGeoCaches', signer=url_signer),
+    )
 
 
 @action("suggest")
@@ -109,11 +111,11 @@ def setup():
         caches_hidden=3,
     )
     db.caches.insert(
-        cache_name="Test Cache Name",
+        cache_name="Arboretum", 
         photo_path="",
-        lat=37.00,
-        long=-122.05,
-        description="Test description",
+        lat=36.98267070650899,
+        long=-122.05985900885949,
+        description="Arboretum description etc etc",
         hint="Test hint",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
@@ -121,7 +123,7 @@ def setup():
     creation_date = datetime.now()
     db.users.insert(
         first_name="Hello",
-        last_name="world",
+        last_name="World",
         user_email="helloworld@ucsc.edu",
         creation_date=creation_date,
         banner_path="",
@@ -130,31 +132,31 @@ def setup():
         caches_hidden=1,
     )
     db.caches.insert(
-        cache_name="AppleE",
+        cache_name="Quarry Amphitheater",
         photo_path="",
-        lat=47.00,
-        long=-112.05,
-        description="a fruit",
+        lat= 36.9986320770141,
+        long=-122.05648938884585,
+        description="Quarry description etc etc",
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
     )
     db.caches.insert(
-        cache_name="pineapple",
+        cache_name="Jack Baskin",
         photo_path="",
-        lat=47.00,
-        long=-112.05,
-        description="a fruit",
+        lat=37.0005353033127,
+        long=-122.06380507461215, 
+        description="Jack Baskin description etc etc",
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
     )
     db.caches.insert(
-        cache_name="banana",
+        cache_name="Porter",
         photo_path="",
-        lat=47.00,
-        long=-112.05,
-        description="a fruit",
+        lat=36.99473025211556,
+        long=-122.06554686691216, 
+        description="Porter description etc etc",
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
@@ -171,11 +173,11 @@ def setup():
         caches_hidden=7,
     )
     db.caches.insert(
-        cache_name="pear",
+        cache_name="East Remote",
         photo_path="",
-        lat=47.00,
-        long=-112.05,
-        description="a fruit",
+        lat=36.9911648945102,
+        long=-122.0534244573749, 
+        description="East Remote description etc etc",
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
@@ -191,17 +193,9 @@ def clear_db():
     db.caches.truncate()
     redirect(URL("index"))
 
-@action('storecaches')
+@action('loadGeoCaches')
 @action.uses(db)
-def storecaches():
-# Reads geocache code database.
-    import json
-    import os
-    APP_FOLDER = os.path.dirname(__file__)
-    GEOC_FILE = os.path.join(APP_FOLDER, "data", "geocaches.json")
-    with open(GEOC_FILE, "r") as f:
-        GEOCACHE_LOCATIONS = json.load(f)
-        for z, (lat, lng) in GEOCACHE_LOCATIONS.items():
-            db.caches.insert(cachename=z, lat=lat, lng=lng, description="This is a ...")
-        return "ok"
+def getCaches():
+    rows = db(db.caches).select().as_list()
+    return dict(caches=rows)
 

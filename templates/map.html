@@ -8,7 +8,9 @@
 <section class="mapWrapper">
 
   <div id="vue-target">
-    <div id="map"></div>
+    <div id="map">
+      
+    </div>
   </div>
 
 </section>
@@ -16,6 +18,9 @@
 
 
 [[block page_scripts]]
+<script>
+  let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
+</script>
 <script src="js/map.js"></script>
 <!-- Loads the index-specific js for Vue -->
 [[end]]
