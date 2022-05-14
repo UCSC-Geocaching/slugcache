@@ -24,9 +24,9 @@
   <!-- Navigation bar -->
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="[[=URL('index')]]">
+      <a class="navbar-item custom" href="[[=URL('map')]]">
+        <img class="logo" width="75" src="../static/icons/slug_gold.svg">
         Slug Cache
-        <!-- <img class="logo" width="150" src="images/site_icon.png"> -->
       </a>
 
 
@@ -46,7 +46,7 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item custom">
           <div class="buttons">
             [[if globals().get('user'):]]
             <div class="navbar-item has-dropdown is-hoverable">
@@ -74,11 +74,11 @@
   [[include]]
   <!-- end of HTML inserted by extending template -->
   [[if globals().get('user'):]]
-  <footer class="footer has-background-link p-2">
+  <footer class="footer p-2">
     <div class="content has-text-centered">
       <div class="level is-mobile">
         <div class="level-item has-text centered">
-          <a href="[[=URL('profile')]]">
+          <a class="page-button" href="[[=URL('profile')]]">
             <figure class="profile-icon image is-32x32 m-2">
               <img src="../static/icons/ProfileSVG.svg">
             </figure>
@@ -86,7 +86,7 @@
           </a>
         </div>
         <div class="level-item has-text centered">
-          <a href="[[=URL('map')]]">
+          <a class="page-button" href="[[=URL('map')]]">
             <figure class="map-icon image is-32x32 m-2">
               <img src="../static/icons/MapSVG.svg">
             </figure>
@@ -94,7 +94,7 @@
           </a>
         </div>
         <div class="level-item has-text centered">
-          <a href="[[=URL('bookmarks')]]">
+          <a class="page-button" href="[[=URL('bookmarks')]]">
             <figure class="bookmark-icon image is-32x32 m-2">
               <img src="../static/icons/ListsSVG.svg">
             </figure>

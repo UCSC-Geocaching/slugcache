@@ -1,5 +1,6 @@
 :root {
   --primary-color: #003c6c;
+  --primary-color-highlighted: #002e54;
   --accent-color: #fdc700;
   /* filter generated with https://codepen.io/sosuke/pen/Pjoqqp */
   --selected-filter: brightness(0) saturate(100%) invert(77%) sepia(65%)
@@ -19,4 +20,25 @@ body {
 
 body > footer {
   margin-top: auto;
+}
+
+.navbar {
+  background-color: var(--primary-color) !important;
+}
+.navbar-item.custom {
+  background-color: var(--primary-color) !important;
+}
+.navbar-brand:hover .navbar-item {
+  background-color: var(--primary-color-highlighted) !important;
+}
+.navbar-link:hover {
+  background-color: var(--primary-color-highlighted) !important;
+}
+
+.footer {
+  background-color: var(--primary-color);
+}
+
+.page-button:hover {
+  scale: 1.05;
 }
