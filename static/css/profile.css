@@ -1,0 +1,66 @@
+#vue-target {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-icon {
+  filter: var(--selected-filter);
+}
+.profile-text {
+  color: var(--accent-color) !important;
+}
+
+.profileImgs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bannerWrapper {
+  height: clamp(200px, 30vw, 300px);
+  width: 100%;
+  overflow: hidden;
+}
+.bannerWrapper img {
+  object-fit: cover;
+}
+.profilePicWrapper {
+  margin-top: -80px;
+  display: flex;
+  height: 100px;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+.profilePic {
+  object-fit: contain;
+}
+
+.nameAndDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.accountName {
+  font-weight: bold;
+}
+.accountDate {
+  display: flex;
+  flex-direction: row;
+}
+.accountCacheInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profileCard .iconAndCount {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

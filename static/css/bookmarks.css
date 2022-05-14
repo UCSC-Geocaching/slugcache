@@ -1,0 +1,6 @@
+.bookmark-icon {
+  filter: var(--selected-filter);
+}
+.bookmark-text {
+  color: var(--accent-color) !important;
+}

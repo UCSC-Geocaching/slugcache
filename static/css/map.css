@@ -1,69 +1,65 @@
-
 [v-cloak] {
-    display: none;
+  display: none;
 }
-
 
 .map-icon {
-    filter: var(--selected-filter);
+  filter: var(--selected-filter);
 }
 .map-text {
-    color: var(--selected-color) !important;
+  color: var(--accent-color) !important;
 }
 
-body{
-    margin: 0;
+body {
+  margin: 0;
 }
 
-#map{
-    padding: 0px;
-    margin: 0px;
-    height: 83vh;
-    width: 100vw;
+#map {
+  padding: 0px;
+  margin: 0px;
+  height: 83vh;
+  width: 100vw;
 }
 
-#marker{
-    border: 3px;
-    border-style: solid;
-    border-color: rgba(255, 200, 10, 0.83);
+#marker {
+  border: 3px;
+  border-style: solid;
+  border-color: rgba(255, 200, 10, 0.83);
 
-    /*Background image just a placeholder, to be replaced with relative path's to uploaded(?) photos*/
-    background-image: url('https://www.prainc.com/wp-content/uploads/2013/06/geocache-398017_1920-ds.jpg');
-    background-size: cover;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
+  /*Background image just a placeholder, to be replaced with relative path's to uploaded(?) photos*/
+  background-image: url('https://www.prainc.com/wp-content/uploads/2013/06/geocache-398017_1920-ds.jpg');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.mapboxgl-map .mapboxgl-popup{
-    right:100px;
-    bottom:110px;
-    top:auto;
-    left:auto;
-    position:fixed;
-    transform:none !important;
+.mapboxgl-map .mapboxgl-popup {
+  right: 100px;
+  bottom: 110px;
+  top: auto;
+  left: auto;
+  position: fixed;
+  transform: none !important;
 }
 
 /*Will be full length of viewport*/
 .mapboxgl-popup-content {
-    border: 1.5px;
-    border-style: solid;
-    border-color: #FDC700;
-    font-weight: 700;
+  border: 1.5px;
+  border-style: solid;
+  border-color: #fdc700;
+  font-weight: 700;
 
-    /* Turn on when cache-details page done
+  /* Turn on when cache-details page done
     cursor: pointer;
     pointer-events: all;
     touch-action: auto;*/
-    
 }
 
 .mapboxgl-popup-close-button {
-    display: none;
+  display: none;
 }
 
 .mapboxgl-popup-tip {
-    display: none;
+  display: none;
 }
-
