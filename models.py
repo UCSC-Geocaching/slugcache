@@ -43,8 +43,8 @@ db.users.caches_hidden.requires = IS_INT_IN_RANGE(0, None)
 # User Table Defaults
 db.users.user_email.default = get_user_email
 db.users.creation_date.default = get_time
-db.users.banner_path.default = URL("static", "images", "DefaultBanner.jpg")
-db.users.profile_photo_path.default = URL("static", "images", "DefaultProfilePic.jpg")
+db.users.banner_path.default = URL("static", "images", "default_banner.jpg")
+db.users.profile_photo_path.default = URL("static", "images", "default_profile_pic.jpg")
 db.users.caches_logged.default = 0
 db.users.caches_hidden.default = 0
 
