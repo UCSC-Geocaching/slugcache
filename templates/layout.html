@@ -49,16 +49,16 @@
         <div class="navbar-item custom">
           <div class="buttons">
             [[if globals().get('user'):]]
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link is-primary">
-                [[=globals().get('user').get('email')]]
-              </a>
+            <div class="navbar-item custom has-dropdown is-hoverable">
               <div class="navbar-dropdown">
                 <a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
                 <a class="navbar-item" href="[[=URL('profile')]]">Profile</a>
                 <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
 
               </div>
+              <a class="navbar-link is-primary">
+                [[=globals().get('user').get('email')]]
+              </a>
             </div>
             [[else:]]
             <a class="button is-link" href="[[=URL('auth/register')]]">Sign up</a>
