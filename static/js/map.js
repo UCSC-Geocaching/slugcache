@@ -14,6 +14,9 @@ let init = (app) => {
     app.data = {
         // Complete as you see fit.
         caches: [],
+        query: "",
+        results: [],
+        popups: [],
     };
 
     app.enumerate = (a) => {
@@ -67,16 +70,17 @@ let init = (app) => {
 
             // create the popup
             const popup = new mapboxgl.Popup({ offset: 25 })
-                .setText( cache.description   //tag, likes, distance, difficulty, etc
+                .setText( cache.description  //tag, likes, distance, difficulty, etc
                 );
 
             // create DOM element for the marker
             const el = document.createElement('div');
             el.id = 'marker';
 
+            /*
             el.addEventListener('click', () => {
                 //todo
-                });
+                }); */
 
             // create the marker
             new mapboxgl.Marker(el)
@@ -95,6 +99,33 @@ let init = (app) => {
 
     }
 
+    app.search = function () {
+        if (app.vue.query.length > 1) {
+            axios.get(searchURL, {params: {q: app.vue.query}})
+                .then( function(result) {
+
+                    for (let cache of app.vue.caches) {
+                        if(app.vue.query == cache.cache_name){
+                            app.map.flyTo({
+                                center: [cache.long,cache.lat],
+                                zoom: 17,
+                                speed: 1,
+                                curve: 1,
+                                easing(t) {
+                                    return t;
+                                    }
+                                });
+                            
+                        }
+                    }
+
+                    app.vue.results = result.data.results;
+                });
+        }
+        else
+            app.vue.results = [];
+    }
+
     // This contains all the methods.
     app.methods = {
         // Complete as you see fit.
@@ -103,6 +134,8 @@ let init = (app) => {
         addGeoTracking: app.addGeoTracking,
         addNav: app.addNav,
         loadLocations: app.loadLocations,
+        search: app.search,
+
         
     };
 

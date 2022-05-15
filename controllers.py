@@ -70,7 +70,8 @@ def register_user():
 @action.uses("map.html", db, auth)
 def map():
     return dict(
-        loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
+        loadGeoCachesURL = URL('loadGeoCaches', signer=url_signer),
+        searchURL = URL('search', signer=url_signer),
     )
 
 
@@ -194,5 +195,11 @@ def clear_db():
 @action("loadGeoCaches")
 @action.uses(db)
 def getCaches():
+    rows = db(db.caches).select().as_list()
+    return dict(caches=rows)
+
+@action('search')
+@action.uses()
+def search(): 
     rows = db(db.caches).select().as_list()
     return dict(caches=rows)

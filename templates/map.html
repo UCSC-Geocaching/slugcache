@@ -6,11 +6,17 @@
 [[end]]
 
 <section class="mapWrapper">
-
   <div id="vue-target">
-    <div id="map">
-      
+
+    <div class="control has-icons-left block mb-0">
+      <input class="input" type="text" placeholder="Search" v-model="query" @keyup="search" />
+      <span class="icon is-small is-left">
+        <i class="fas fa-search"></i>
     </div>
+    <div v-for="r in results">{{r}}</div>
+
+    <div id="map"></div>
+
   </div>
 
 </section>
@@ -20,7 +26,10 @@
 [[block page_scripts]]
 <script>
   let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
+  let searchURL = "[[=XML(searchURL)]]";
+
 </script>
 <script src="js/map.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> <!--Change-->
 <!-- Loads the index-specific js for Vue -->
 [[end]]

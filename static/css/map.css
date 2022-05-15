@@ -13,11 +13,15 @@ body {
   margin: 0;
 }
 
-#map {
-  padding: 0px;
-  margin: 0px;
-  height: 83vh;
-  width: 100vw;
+.control{
+    width: 100vw;
+
+}
+
+#map{
+    padding: 0px;
+    margin: 0px;
+    height: 79vh;
 }
 
 #marker {
