@@ -23,7 +23,6 @@ body > footer {
   margin-top: auto;
 }
 
-<<<<<<< Updated upstream
 .navbar {
   background-color: var(--primary-color) !important;
 }
@@ -32,12 +31,6 @@ body > footer {
 }
 .navbar-brand:hover .navbar-item {
   background-color: var(--primary-color-highlighted) !important;
-=======
-.profileImgs {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
->>>>>>> Stashed changes
 }
 .navbar-link:hover {
   background-color: var(--primary-color-highlighted) !important;

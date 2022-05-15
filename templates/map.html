@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="css/map.css">
 [[end]]
 
+
 <section class="mapWrapper">
+
   <div id="vue-target">
 
     <div class="control has-icons-left block mb-0">
@@ -13,9 +15,30 @@
       <span class="icon is-small is-left">
         <i class="fas fa-search"></i>
     </div>
-    <div v-for="r in results">{{r}}</div>
+
+    <div v-if="popupMode" class="section box">
+      <div class="popupColumn">
+        <div id="popColOne">
+          <p class="title is-5">
+            {{cacheTitle}}
+          </p>
+          <p class="subtitle is-6">
+            {{cacheDescr}}
+          </p>
+        </div>
+      </div>
+      <div class="popupColumn2">
+        <div id="popColTwo">
+          <span class="icon">
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </div>
+      </div>
+    </div>
 
     <div id="map"></div>
+
+   
 
   </div>
 

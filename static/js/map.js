@@ -17,6 +17,9 @@ let init = (app) => {
         query: "",
         results: [],
         popups: [],
+        popupMode: false,
+        cacheTitle: "",
+        cacheDescr: "",
     };
 
     app.enumerate = (a) => {
@@ -68,33 +71,22 @@ let init = (app) => {
 
         for (let cache of app.vue.caches) {
 
-            // create the popup
-            const popup = new mapboxgl.Popup({ offset: 25 })
-                .setText( cache.description  //tag, likes, distance, difficulty, etc
-                );
-
             // create DOM element for the marker
             const el = document.createElement('div');
             el.id = 'marker';
-
-            /*
-            el.addEventListener('click', () => {
-                //todo
-                }); */
+            
+            // click event for popups on markers
+            el.addEventListener('click', (e) => {
+                app.vue.cacheTitle = cache.cache_name;
+                app.vue.cacheDescr = cache.description;
+                app.vue.popupMode = true;
+                e.stopPropagation();
+            }); 
 
             // create the marker
             new mapboxgl.Marker(el)
                 .setLngLat([cache.long, cache.lat])
-                .setPopup(popup) // sets a popup on this marker
                 .addTo(map);
-
-
-            /*/ Set marker options.
-            const marker = new mapboxgl.Marker({
-                color: "#FDC700"
-                }).setLngLat([cache.long, cache.lat])
-                .setDraggable(false)
-                .addTo(map); */
         }
 
     }
@@ -115,7 +107,7 @@ let init = (app) => {
                                     return t;
                                     }
                                 });
-                            
+                            app.vue.popupMode = true;
                         }
                     }
 
@@ -196,8 +188,14 @@ function setupMap(center) {
       [-122.08012683329952, 36.9750849217556], // Southwest coordinates
       [-122.0349268336223, 37.00766046433793], // Northeast coordinates
     ],
-  });
+    });
 
-  app.setMap(map);
+    map.on('click', () => {
+        if(app.vue.popupMode == true)
+            app.vue.popupMode = false;
+    });
+
+    map.resize();
+
+    app.setMap(map);
 }
-

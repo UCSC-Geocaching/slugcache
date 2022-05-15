@@ -18,10 +18,44 @@ body {
 
 }
 
+.section{
+    border: 1.5px;
+    border-style: solid;
+    border-color: #fdc700;
+
+    left: 5%;
+    right: 5%;
+    position:absolute;
+    z-index: 1;
+    top: 73%;
+    padding: 20px;
+
+
+}
+
+.popupColumn { 
+    float: left; 
+    width: 80%; 
+}
+.popupColumn2 { 
+    float: left; 
+    width: 20%; 
+}
+
+#popColOne{
+    padding:0px;
+    
+}
+
+#popColTwo{
+    margin-top:10px;
+    margin-left:50%;
+}
+
 #map{
     padding: 0px;
     margin: 0px;
-    height: 79vh;
+    height: 77.2vh;
 }
 
 #marker {
@@ -67,3 +101,14 @@ body {
 .mapboxgl-popup-tip {
   display: none;
 }
+
+@media screen and (max-width: 400px){
+    .section{
+        top: 75%;
+    }
+    
+    #map{
+        height:78.7vh;
+    }
+    
+  }
