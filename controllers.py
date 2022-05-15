@@ -92,6 +92,39 @@ def profile():
 def bookmarks():
     return {}
 
+@action("geocache_info")
+@action.uses("geocache_info.html", db, auth.user)
+def geocache_info():
+    ###Entering a testing data entry###
+    db.users.truncate()
+    db.caches.truncate()
+    creation_date = datetime.now()
+    db.users.insert(
+        first_name="Tester",
+        last_name="Test",
+        user_email="test@ucsc.edu",
+        creation_date=creation_date,
+        banner_path="",
+        photo_profile_path="",
+        caches_logged=5,
+        caches_hidden=3,
+    )
+    db.caches.insert(
+        cache_name="Arboretum",
+        photo_path="../static/images/default_banner.jpg",
+        lat=36.98267070650899,
+        long=-122.05985900885949,
+        description="Arboretum description etc etc",
+        hint="Test hint",
+        author=db(db.users.creation_date == creation_date).select().first().id,
+        creation_date=datetime.now(),
+    )
+    ###End insertion
+    return dict(
+        loadGeoCachesURL = URL('loadGeoCaches', signer=url_signer),
+        getUserURL = URL('getUser', signer=url_signer),
+    )
+
 
 # TODO: MAKE SURE TO REMOVE FOR PRODUCTION
 @action("setup")
@@ -203,3 +236,11 @@ def getCaches():
 def search(): 
     rows = db(db.caches).select().as_list()
     return dict(caches=rows)
+
+@action('getUser', method="POST")
+@action.uses(db)
+def getUser():
+    id = request.json.get('id')
+    user = db(db.users._id == id).select().first()
+    return dict(user=user)
+

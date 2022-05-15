@@ -1,0 +1,47 @@
+#vue-target {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.title {
+    margin: center;
+    width: 60%;
+    padding: 10px;
+}
+
+.bannerWrapper {
+    height: clamp(200px, 30vw, 300px);
+    width: 100%;
+    overflow: hidden;
+  }
+
+.bannerWrapper img {
+    object-fit: cover;
+}
+
+.nameAndBookmark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    padding-top: 40px;
+    font-size: 22px;
+}
+
+.line {
+    width:100%;
+    text-align:left;
+    margin-left:0;
+    color:black;
+    height:3px;
+    background-color:black
+}
+
+.columnz {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: 300px;
+}
