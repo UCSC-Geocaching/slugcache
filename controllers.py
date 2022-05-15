@@ -52,11 +52,8 @@ url_signer = URLSigner(session)
 @action.uses("index.html", auth, url_signer)
 def index():
     if request.fullpath in (URL("login"), URL("register")) and auth.is_logged_in:
-        redirect(URL())
-    return {
-        "base_url": URL(),
-        "add_user_url": URL("add_user", signer=url_signer)
-    }
+        redirect(URL("map"))
+    return {"base_url": URL(), "add_user_url": URL("add_user", signer=url_signer)}
 
 
 @action("add_user", method="POST")
@@ -73,7 +70,7 @@ def register_user():
 @action.uses("map.html", db, auth)
 def map():
     return dict(
-        loadGeoCachesURL = URL('loadGeoCaches', signer=url_signer),
+        loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
     )
 
 
@@ -111,7 +108,7 @@ def setup():
         caches_hidden=3,
     )
     db.caches.insert(
-        cache_name="Arboretum", 
+        cache_name="Arboretum",
         photo_path="",
         lat=36.98267070650899,
         long=-122.05985900885949,
@@ -134,7 +131,7 @@ def setup():
     db.caches.insert(
         cache_name="Quarry Amphitheater",
         photo_path="",
-        lat= 36.9986320770141,
+        lat=36.9986320770141,
         long=-122.05648938884585,
         description="Quarry description etc etc",
         hint="u eat dis",
@@ -145,7 +142,7 @@ def setup():
         cache_name="Jack Baskin",
         photo_path="",
         lat=37.0005353033127,
-        long=-122.06380507461215, 
+        long=-122.06380507461215,
         description="Jack Baskin description etc etc",
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
@@ -155,7 +152,7 @@ def setup():
         cache_name="Porter",
         photo_path="",
         lat=36.99473025211556,
-        long=-122.06554686691216, 
+        long=-122.06554686691216,
         description="Porter description etc etc",
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
@@ -176,7 +173,7 @@ def setup():
         cache_name="East Remote",
         photo_path="",
         lat=36.9911648945102,
-        long=-122.0534244573749, 
+        long=-122.0534244573749,
         description="East Remote description etc etc",
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
@@ -193,9 +190,9 @@ def clear_db():
     db.caches.truncate()
     redirect(URL("index"))
 
-@action('loadGeoCaches')
+
+@action("loadGeoCaches")
 @action.uses(db)
 def getCaches():
     rows = db(db.caches).select().as_list()
     return dict(caches=rows)
-
