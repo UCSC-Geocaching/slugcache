@@ -23,19 +23,19 @@ body > footer {
   margin-top: auto;
 }
 
-.navbar {
+.navbar.custom {
   background-color: var(--primary-color) !important;
 }
-.navbar-item.custom {
+/* .navbar-item.custom {
   background-color: var(--primary-color) !important;
-}
-.navbar-brand:hover .navbar-item {
+} */
+.navbar-brand.custom:hover .navbar-item {
   background-color: var(--primary-color-highlighted) !important;
 }
-.navbar-link:hover {
+.navbar-link.custom:hover {
   background-color: var(--primary-color-highlighted) !important;
 }
-.navbar-dropdown:hover ~ .navbar-link {
+.navbar-dropdown.custom:hover ~ .navbar-link {
   background-color: var(--primary-color-highlighted) !important;
 }
 
