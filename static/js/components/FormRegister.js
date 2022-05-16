@@ -1,25 +1,25 @@
-import { buildPath } from "../utils.js";
+import { buildPath } from '../utils.js';
 
 export default {
-    name: "FormRegister",
-    inject: ["baseURL", "addUserURL"],
-    data() {
-        // using snake_case to make constructing POST request easier
-        return {
-            email: '',
-            password: '',
-            password_again: '',
-            first_name: '',
-            last_name: '',
-            errors: {
-                email: '',
-                password: '',
-                first_name: '',
-                last_name: '',
-            },
-        };
-    },
-    template: /*html*/ `
+  name: 'FormRegister',
+  inject: ['baseURL', 'addUserURL'],
+  data() {
+    // using snake_case to make constructing POST request easier
+    return {
+      email: '',
+      password: '',
+      password_again: '',
+      first_name: '',
+      last_name: '',
+      errors: {
+        email: '',
+        password: '',
+        first_name: '',
+        last_name: '',
+      },
+    };
+  },
+  template: /*html*/ `
     <form @submit.prevent="register" novalidate v-cloak>
       <!-- email address -->
       <div class="field">
@@ -119,53 +119,58 @@ export default {
       <button class="button is-fullwidth is-warning" type="submit">Sign Up</button>
     </form>
     `,
-    methods: {
-        register() {
-            if (this.password !== this.password_again) {
-                this.errors.password = 'Not matching';
-                return;
-            }
-            axios
-                .post(buildPath(this.baseURL, "auth/api/register"), {
-                    email: this.email,
-                    password: this.password,
-                    first_name: this.first_name,
-                    last_name: this.last_name,
+  methods: {
+    register() {
+      if (this.password !== this.password_again) {
+        this.errors.password = 'Not matching';
+        return;
+      }
+      // register with auth
+      axios
+        .post(buildPath(this.baseURL, 'auth/api/register'), {
+          email: this.email,
+          password: this.password,
+          first_name: this.first_name,
+          last_name: this.last_name,
+        })
+        .then((resp) => {
+          // auto login on successful registration
+          axios
+            .post(buildPath(this.baseURL, 'auth/api/login'), {
+              email: this.email,
+              password: this.password,
+            })
+            .then((resp) => {
+              // Adding to "users" database
+              // Must do this after login so we can get auth_user reference from session
+              axios
+                .post(this.addUserURL, {
+                  first_name: this.first_name,
+                  last_name: this.last_name,
+                  email: this.email,
                 })
-                .then((resp) => {
-                    // adding to "users" database
-                    axios.post(this.addUserURL, {
-                        first_name: this.first_name,
-                        last_name: this.last_name,
-                        email: this.email,
-                    }).catch(err => this.setAllErrors("Internal Server Error"));
+                .catch((err) => this.setAllErrors('Internal Server Error'));
+              const next =
+                new URLSearchParams(location.search).get('next') ||
+                buildPath(this.baseURL, 'map');
+              window.location.replace(next);
+            })
+            .catch((err) => this.setAllErrors('Internal Server Error'));
 
-                    // auto login on successful registration
-                    axios
-                        .post(buildPath(this.baseURL, "auth/api/login"), {
-                            email: this.email,
-                            password: this.password,
-                        })
-                        .then(resp => {
-                            const next = new URLSearchParams(location.search).get("next") || buildPath(this.baseURL, "map");
-                            window.location.replace(next);
-                        })
-                        .catch(err => this.setAllErrors("Internal Server Error"));
-
-                    this.setAllErrors("");
-                })
-                .catch((err) => {
-                    const errors = err.response.data.errors || '';
-                    Object.keys(this.errors)
-                          .forEach(key => this.errors[key] = errors[key] || '');
-                });
-        },
-        setAllErrors(errMsg) {
-            Object.keys(this.errors)
-                  .forEach(key => this.errors[key] = errMsg);
-        }
+          this.setAllErrors('');
+        })
+        .catch((err) => {
+          const errors = err.response.data.errors || '';
+          Object.keys(this.errors).forEach(
+            (key) => (this.errors[key] = errors[key] || '')
+          );
+        });
     },
-    mounted() {
-        this.setAllErrors("");
-    }
+    setAllErrors(errMsg) {
+      Object.keys(this.errors).forEach((key) => (this.errors[key] = errMsg));
+    },
+  },
+  mounted() {
+    this.setAllErrors('');
+  },
 };

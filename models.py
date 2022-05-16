@@ -20,6 +20,7 @@ def get_time():
 # User Table
 db.define_table(
     "users",
+    Field("user_id", "reference auth_user"),
     Field("first_name", "string"),
     Field("last_name", "string"),
     Field("user_email", "string"),

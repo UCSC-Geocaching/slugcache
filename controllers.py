@@ -53,13 +53,18 @@ url_signer = URLSigner(session)
 def index():
     if request.fullpath in (URL("login"), URL("register")) and auth.is_logged_in:
         redirect(URL("map"))
-    return {"base_url": URL(), "add_user_url": URL("add_user", signer=url_signer)}
+    return {
+        "base_url": URL(),
+        "add_user_url": URL("add_user", signer=url_signer),
+    }
 
 
 @action("add_user", method="POST")
 @action.uses(db, auth, url_signer.verify())
 def register_user():
+    user = auth.get_user()
     db.users.insert(
+        user_id=user["id"],
         first_name=request.json.get("first_name"),
         last_name=request.json.get("last_name"),
         user_email=request.json.get("email"),

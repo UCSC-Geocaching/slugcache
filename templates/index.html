@@ -1,6 +1,4 @@
-[[extend 'layout.html']]
-
-[[if globals().get('user'):]]
+[[extend 'layout.html']] [[if globals().get('user'):]]
 <script src="js/map.js"></script>
 [[else:]]
 <style>
@@ -23,7 +21,8 @@
           <button
             id="login-modal-trigger"
             class="button is-warning is-fullwidth"
-            @click="openLoginModal">
+            @click="openLoginModal"
+          >
             Log In
           </button>
         </div>
@@ -31,7 +30,8 @@
           <button
             id="signup-modal-trigger"
             class="button is-light is-fullwidth"
-            @click="openRegisterModal">
+            @click="openRegisterModal"
+          >
             Sign Up
           </button>
         </div>
@@ -42,38 +42,39 @@
     v-show="isModalVisible"
     :route="currentRoute"
     @update:route="updateRoute"
-    @close="closeModal">
+    @close="closeModal"
+  >
   </modal-auth>
 </div>
 
 [[block page_scripts]]
 <script type="module">
-  import ModalAuth from "./js/components/ModalAuth.js";
-  import { buildPath } from "./js/utils.js";
-  import { listen, push } from "./js/history.js";
+  import ModalAuth from './js/components/ModalAuth.js';
+  import { buildPath } from './js/utils.js';
+  import { listen, push } from './js/history.js';
 
-  const baseURL = "[[=XML(base_url)]]";
+  const baseURL = '[[=XML(base_url)]]';
   //TODO: rm TMP
-  const loginURL = buildPath(baseURL, "login");
-  const registerURL = buildPath(baseURL, "register");
+  const loginURL = buildPath(baseURL, 'login');
+  const registerURL = buildPath(baseURL, 'register');
 
   new Vue({
-    el: "#welcome-pg",
+    el: '#welcome-pg',
     components: {
-      ModalAuth
+      ModalAuth,
     },
     provide: {
       baseURL,
-      addUserURL: "[[=XML(add_user_url)]]"
+      addUserURL: '[[=XML(add_user_url)]]',
     },
     data: {
-      currentRoute: window.location.pathname
+      currentRoute: window.location.pathname,
     },
     created() {
       listen((route, previousRoute) => (this.currentRoute = route));
       window.addEventListener(
-        "popstate",
-        event => (this.currentRoute = window.location.pathname)
+        'popstate',
+        (event) => (this.currentRoute = window.location.pathname)
       );
     },
     methods: {
@@ -88,14 +89,13 @@
       },
       closeModal() {
         this.updateRoute(baseURL);
-      }
+      },
     },
     computed: {
       isModalVisible() {
         return [loginURL, registerURL].includes(this.currentRoute);
-      }
-    }
+      },
+    },
   });
 </script>
-[[end]]
-[[pass]]
+[[end]] [[pass]]
