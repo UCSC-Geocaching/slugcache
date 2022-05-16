@@ -73,6 +73,9 @@ db.define_table(
     Field("hint", "string"),
     Field("author", "reference users"),
     Field("creation_date", "datetime"),
+    Field("difficulty", "integer"),
+    Field("terrain", "integer"),
+    Field("size", "integer"),
 )
 
 # Cache Table Field Requirements
@@ -84,11 +87,17 @@ db.caches.long.requires = IS_FLOAT_IN_RANGE(
     -180, 180, error_message="Please enter a valid longitude."
 )
 db.caches.description.requires = IS_NOT_EMPTY()
-db.caches.creation_date.requires = IS_DATE()
+db.caches.creation_date.requires = IS_DATETIME()
+db.caches.difficulty.requires = IS_IN_SET([1, 2, 3, 4, 5])
+db.caches.terrain.requires = IS_IN_SET([1, 2, 3, 4, 5])
+db.caches.size.requires = IS_IN_SET([1, 2, 3, 4, 5])
 
 # Cache Table Field defaults
 db.caches.author.default = get_user_email
 db.caches.creation_date.default = get_time
+db.caches.difficulty.default = 1
+db.caches.terrain.default = 1
+db.caches.size.default = 1
 
 # Cache Table Field labels
 db.caches.cache_name.label = "Name"
@@ -97,13 +106,39 @@ db.caches.long.label = "Longitude"
 db.caches.description.label = "Description"
 db.caches.hint.label = "Hint"
 db.caches.creation_date.label = "Creation Date"
+db.caches.difficulty.label = "Difficulty"
+db.caches.terrain.label = "Terrain"
+db.caches.size.label = "Size"
 
 # Cache Table Fields Readable/Writeable edits
 db.caches.author.readable = db.caches.author.writable = False
 db.caches.author.writable = False
 
 # ----------------------------------------------------
+# Log Table
+db.define_table(
+    "logs",
+    Field("logger", "reference users"),
+    Field("cache", "reference caches"),
+    Field("discover_date", "datetime"),
+)
 
+# Log Table Field Requirements
+db.logs.logger.requires = IS_NOT_EMPTY(error_message="Enter a logger.")
+db.logs.cache.requires = IS_NOT_EMPTY(error_message="Enter a cache.")
+db.logs.discover_date.requires = IS_DATETIME(error_message="Enter a valid date.")
+
+# Log Table Defaults
+db.logs.discover_date.default = get_time
+
+# Log Table Field Labels
+db.logs.logger.label = "Logger"
+db.logs.cache.label = "Cache"
+db.logs.discover_date.label = "Discover Date"
+
+# Log Table Fields Readable/Writeable edits
+
+# ----------------------------------------------------
 
 ### Define your table below
 #
