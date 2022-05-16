@@ -70,27 +70,28 @@ def register_user():
 @action.uses("map.html", db, auth)
 def map():
     return dict(
-        loadGeoCachesURL = URL('loadGeoCaches', signer=url_signer),
-        searchURL = URL('search', signer=url_signer),
+        loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
+        searchURL=URL("search", signer=url_signer),
     )
 
 
 @action("suggest")
 @action.uses("suggest.html", db, auth.user)
 def suggest():
-    return {}
+    return ()
 
 
 @action("profile")
 @action.uses("profile.html", db, auth.user)
 def profile():
-    return {}
+    return dict(load_profile_url=URL("load_profile_details"))
 
 
 @action("bookmarks")
 @action.uses("bookmarks.html", db, auth.user)
 def bookmarks():
-    return {}
+    return ()
+
 
 @action("geocache_info")
 @action.uses("geocache_info.html", db, auth.user)
@@ -121,8 +122,8 @@ def geocache_info():
     )
     ###End insertion
     return dict(
-        loadGeoCachesURL = URL('loadGeoCaches', signer=url_signer),
-        getUserURL = URL('getUser', signer=url_signer),
+        loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
+        getUserURL=URL("getUser", signer=url_signer),
     )
 
 
@@ -231,16 +232,25 @@ def getCaches():
     rows = db(db.caches).select().as_list()
     return dict(caches=rows)
 
-@action('search')
+
+@action("search")
 @action.uses()
-def search(): 
+def search():
     rows = db(db.caches).select().as_list()
     return dict(caches=rows)
 
-@action('getUser', method="POST")
+
+@action("getUser", method="POST")
 @action.uses(db)
 def getUser():
-    id = request.json.get('id')
+    id = request.json.get("id")
     user = db(db.users._id == id).select().first()
     return dict(user=user)
 
+
+@action("load_profile_details")
+@action.uses(db, auth.user)
+def load_profile_details():
+    user = auth.get_user()
+    profile = db(db.users.user_email == user["email"]).select().first()
+    return dict(profile=profile)

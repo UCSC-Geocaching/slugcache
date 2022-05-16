@@ -1,5 +1,12 @@
 [[extend 'layout.html']]
 
+<!-- FIGURE OUT WHY THIS STYLE ISN'T BEING APPLIED FROM styles.css -->
+<style>
+  [v-cloak] {
+    display: none;
+  }
+</style>
+
 <link rel="stylesheet" href="css/profile.css" />
 
 <div class="section" id="vue-target">
@@ -7,40 +14,36 @@
     <section class="hero is-fullwidth is-medium">
       <div class="hero-body p-0">
         <div class="bannerWrapper">
-          <img src="../static/images/default_banner.jpg" alt="Banner Image" />
+          <img :src="banner_URL" alt="Banner Image" />
         </div>
       </div>
     </section>
     <div class="profilePicWrapper">
-      <img
-        class="profilePic"
-        src="../static/images/default_profile_pic.jpg"
-        alt="Profile Picture"
-      />
+      <img class="profilePic" :src="profile_pic_URL" alt="Profile Picture" />
     </div>
   </div>
 
   <div class="infoContainer">
     <div class="nameAndDate">
-      <p class="accountName">Account Name</p>
+      <p class="accountName">{{user_email}}</p>
       <p></p>
       <div class="accountDate">
         <p>Member since:</p>
-        <p id="dateJoined">04/16/2022</p>
+        <p id="dateJoined">{{creation_date}}</p>
       </div>
     </div>
     <div class="accountCacheInfo">
       <div class="profileCard">
         <div class="iconAndCount">
           <img src="../static/icons/notebook.svg" alt="Notebook Icon" />
-          <p>5</p>
+          <p>{{logs}}</p>
         </div>
         <p>Caches logged</p>
       </div>
       <div class="profileCard">
         <div class="iconAndCount">
           <img src="../static/icons/treasure_chest.svg" alt="Treasure Icon" />
-          <p>3</p>
+          <p>{{hides}}</p>
         </div>
         <p>Caches hidden</p>
       </div>
@@ -50,4 +53,8 @@
 
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
+<script>
+  let load_profile_url = '[[=XML(load_profile_url)]]';
+</script>
+<script src="js/profile.js"></script>
 [[end]]
