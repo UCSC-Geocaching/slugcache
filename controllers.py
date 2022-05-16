@@ -257,5 +257,5 @@ def getUser():
 @action.uses(db, auth.user)
 def load_profile_details():
     user = auth.get_user()
-    profile = db(db.users.user_email == user["email"]).select().first()
+    profile = db(db.users.user_id == user["id"]).select().first()
     return dict(profile=profile)
