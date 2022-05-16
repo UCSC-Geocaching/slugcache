@@ -49,5 +49,6 @@ body > footer {
   align-items: center;
 }
 .page-button:hover {
-  scale: 1.05;
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
