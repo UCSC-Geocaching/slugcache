@@ -107,6 +107,8 @@ let init = (app) => {
                                     return t;
                                     }
                                 });
+                            app.vue.cacheTitle = cache.cache_name;
+                            app.vue.cacheDescr = cache.description;
                             app.vue.popupMode = true;
                         }
                     }

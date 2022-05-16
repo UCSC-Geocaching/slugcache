@@ -9,6 +9,11 @@
   color: var(--accent-color) !important;
 }
 
+.mapboxgl-ctrl-top-right{
+  margin-top: 50px;
+
+}
+
 body {
   margin: 0;
 }
