@@ -18,6 +18,11 @@ let init = (app) => {
         cache_author_id: null,
         cache_author: "",
         cache_create_date: "",
+        cache_diff: 1,
+        cache_terrain: 1,
+        cache_size: 1,
+        bookmarked: false,
+        bookmark_icon: "",
     };
 
     app.enumerate = (a) => {
@@ -36,7 +41,11 @@ let init = (app) => {
         app.vue.cache_hint = a.hint,
         app.vue.cache_author_id = a.author,
         app.vue.cache_author = app.getUser(),
-        app.vue.cache_create_date = a.creation_date
+        app.vue.cache_create_date = a.creation_date,
+        app.vue.cache_diff = a.difficulty,
+        app.vue.cache_terrain = a.terrain,
+        app.vue.cache_size = a.size
+        app.vue.cache_bookmarked = false; //Change based on bookmarked db
     };
 
     app.getUser = function () {
@@ -47,6 +56,7 @@ let init = (app) => {
 
     app.bookmark = function () {
         console.log("Bookmark was pressed")
+        app.vue.bookmarked = !app.vue.bookmarked
     }
 
     // This contains all the methods.

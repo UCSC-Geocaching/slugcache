@@ -1,0 +1,92 @@
+[[extend 'layout.html']]
+
+[[block page_head]]
+<link rel="stylesheet" href="css/cache_info.css">
+[[end]]
+
+<section id="vue-target">
+    <header>
+        <section class="hero is-fullwidth is-medium">
+            <div class="hero-body p-0">
+              <div class="bannerWrapper">
+                <img :src="cache_photo_path" :alt="cache_photo_path"/>
+              </div>
+            </div>
+        </section>
+    </header>
+    <body>
+        <div class="header">
+            <div class="alignWrapper">
+                <div class="nameWrapper">
+                    <div class="cacheName">{{cache_name}}</div>
+                </div>
+                <div class="bookmarkWrapper">
+                    <button class="custButton" @click="bookmark">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <p>Bookmark</p>
+                </div>
+            </div>
+        </div>
+        <hr class="line">
+        <div class="statsWrapper">
+            <div class="statCard">
+                <div class="boxWrapper">
+                    <i v-for="num in cache_diff" class="fas fa-square m-1"></i>
+                </div>
+                <div class="statName">Difficulty</div>
+            </div>
+            <div class="statCard">
+                <div class="boxWrapper">
+                    <i v-for="num in cache_terrain" class="fas fa-square m-1"></i>
+                </div>
+                <div class="statName">Terrain</div>
+            </div>
+            <div class="statCard">
+                <div class="boxWrapper">
+                    <i v-for="num in cache_size" class="fas fa-square m-1"></i>
+                </div>
+                <div class="statName">Size</div>
+            </div>
+        </div>
+        <hr class="line">
+        <section class="cacheContent">
+            <div class="contentWrapper">
+                <div class="contentHeader">
+                    Description:
+                </div>
+                <div class="descriptionContent">
+                    {{cache_desc}}
+                </div>
+            </div>
+            <div class="contentWrapper">
+                <div class="contentHeader">
+                    Hint:
+                </div>
+                <div class="descriptionContent">
+                    {{cache_hint}}
+                </div>
+            </div>
+            <div class="contentWrapper">
+                <div class="contentHeader">
+                    Additional Information:
+                </div>
+                <div class="descriptionContent">
+                <div>Located at {{cache_lat}}, {{cache_long}}</div>
+                <div>Created on {{cache_create_date}} by {{cache_author}} </div>
+                </div>
+            </div>
+        </section>
+    </body> 
+</section>
+
+[[block page_scripts]]
+<script>
+  let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
+  let getUserURL = "[[=XML(getUserURL)]]";
+
+</script>
+<script src="js/cache_info.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> <!--Change-->
+<!-- Loads the index-specific js for Vue -->
+[[end]]

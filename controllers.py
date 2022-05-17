@@ -98,9 +98,9 @@ def bookmarks():
     return ()
 
 
-@action("geocache_info")
-@action.uses("geocache_info.html", db, auth.user)
-def geocache_info():
+@action("cache_info")
+@action.uses("cache_info.html", db, auth.user)
+def cache_info():
     ###Entering a testing data entry###
     db.users.truncate()
     db.caches.truncate()
@@ -124,6 +124,9 @@ def geocache_info():
         hint="Test hint",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
+        difficulty=5,
+        terrain=5,
+        size=5,
     )
     ###End insertion
     return dict(

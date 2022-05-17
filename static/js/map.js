@@ -20,6 +20,7 @@ let init = (app) => {
         popupMode: false,
         cacheTitle: "",
         cacheDescr: "",
+        cacheID: 0,
     };
 
     app.enumerate = (a) => {
@@ -79,6 +80,7 @@ let init = (app) => {
             el.addEventListener('click', (e) => {
                 app.vue.cacheTitle = cache.cache_name;
                 app.vue.cacheDescr = cache.description;
+                app.vue.cacheID = cache._id; //set id to send to cache_info redirect
                 app.vue.popupMode = true;
                 e.stopPropagation();
             }); 
@@ -109,6 +111,7 @@ let init = (app) => {
                                 });
                             app.vue.cacheTitle = cache.cache_name;
                             app.vue.cacheDescr = cache.description;
+                            app.vue.cacheID = cache._id; //Setting ID as well
                             app.vue.popupMode = true;
                         }
                     }
@@ -120,6 +123,10 @@ let init = (app) => {
             app.vue.results = [];
     }
 
+    app.redirectCacheInfo = function (cacheID) {
+        console.log("prep to redirect")
+    }
+
     // This contains all the methods.
     app.methods = {
         // Complete as you see fit.
@@ -129,7 +136,7 @@ let init = (app) => {
         addNav: app.addNav,
         loadLocations: app.loadLocations,
         search: app.search,
-
+        redirectCacheInfo: app.redirectCacheInfo,
         
     };
 
