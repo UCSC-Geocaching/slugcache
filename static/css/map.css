@@ -56,6 +56,11 @@ body {
   margin-left: 50%;
 }
 
+.custButton{
+  border: 0;
+  background-color: white;
+}
+
 #vue-target{
   height: 100%;
 }
@@ -115,4 +120,23 @@ body {
 .mapboxgl-marker:hover {
   -webkit-filter: brightness(70%);
   filter: brightness(70%);
+}
+
+
+/*
+  Enter and leave animations can use different
+  durations and timing functions.
+*/
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }

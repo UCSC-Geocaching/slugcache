@@ -7,12 +7,14 @@
 
 
 <div class="mapWrapper" id="vue-target">
+
   <div class="control has-icons-left block mb-0"> <!--Search Bar-->
     <input class="input" type="text" placeholder="Search" v-model="query" @keyup="search" />
     <span class="icon is-small is-left">
       <i class="fas fa-search"></i>
   </div>
 
+  <transition name="slide-fade" mode="out-in">
   <div v-if="popupMode" class="section box"> <!--Popups-->
     <div class="popupColumn">
       <div id="popColOne">
@@ -27,13 +29,14 @@
     <div class="popupColumn2">
       <div id="popColTwo">
         <span class="icon">
-          <button class="custButton" @click="redirectCacheInfo(cacheID)">
+          <button class="custButton is-white" @click="redirectCacheInfo(cacheID)">
             <i class="fas fa-chevron-right"></i>
           </button>
         </span>
       </div>
     </div>
   </div>
+</transition>
 
   <div id="map"></div> <!--Map-->
 </div>
