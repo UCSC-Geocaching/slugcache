@@ -61,7 +61,9 @@ let init = (page) => {
     axios.get(load_profile_url).then(function (r) {
       let profile = r.data.profile;
       page.vue.user_email = profile.user_email;
-      page.vue.creation_date = profile.creation_date;
+      date = new Date(profile.creation_date);
+      console.log(date.toString());
+      page.vue.creation_date = `${date.getMonth()}/${date.getDate()}/${date.getYear()}`;
       page.vue.logs = profile.caches_logged;
       page.vue.hides = profile.caches_hidden;
       page.vue.banner_URL = '..' + profile.banner_path; // Should change this

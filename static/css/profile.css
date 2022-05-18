@@ -3,6 +3,14 @@
   width: 100%;
   margin: 0;
   padding: 0;
+  overflow-y: scroll;
+  /* Hides scrollbar for:*/
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+#vue-target::-webkit-scrollbar {
+  display: none;
 }
 
 .profile-icon {
@@ -37,17 +45,25 @@
   object-fit: contain;
 }
 
+.infoContainer {
+  padding: 0 5%;
+}
 .nameAndDate {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 5% 0;
 }
 .accountName {
+  font-size: x-large;
   font-weight: bold;
 }
 .accountDate {
   display: flex;
   flex-direction: row;
+}
+.dateJoined {
+  padding-left: 0.5em;
 }
 .accountCacheInfo {
   display: flex;
@@ -59,8 +75,20 @@
   flex-direction: column;
   align-items: center;
 }
-.profileCard .iconAndCount {
+.profileCard p {
+  font-weight: bold;
+}
+.profileCard > * {
+  padding: 0.5em;
+}
+.iconAndCount {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.iconAndCount > * {
+  padding: 0 0.5em;
+}
+.iconAndCount p {
+  font-weight: bold;
 }
