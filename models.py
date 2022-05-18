@@ -35,7 +35,7 @@ db.define_table(
 db.users.first_name.requires = IS_NOT_EMPTY(error_message="Enter a first name.")
 db.users.last_name.requires = IS_NOT_EMPTY(error_message="Enter a last name.")
 db.users.user_email.requires = IS_EMAIL(error_message="Enter a valid email.")
-db.users.creation_date.requires = IS_DATE(error_message="Enter a valid date.")
+db.users.creation_date.requires = IS_DATETIME(error_message="Enter a valid date.")
 db.users.banner_path.requires = IS_NOT_EMPTY()
 db.users.profile_photo_path.requires = IS_NOT_EMPTY()
 db.users.caches_logged.requires = IS_INT_IN_RANGE(0, None)
