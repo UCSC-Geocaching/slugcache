@@ -18,6 +18,14 @@ body {
   margin: 0;
 }
 
+#loadingScreen{
+  background-color: red;
+  position: absolute;
+  
+  width: 100%;
+  z-index: 100;
+}
+
 .control {
   width: 100vw;
   position: absolute;
@@ -134,7 +142,7 @@ body {
 }
 
 .slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter-from,

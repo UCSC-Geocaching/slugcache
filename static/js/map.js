@@ -6,8 +6,10 @@ mapboxgl.accessToken =
 // and be used to initialize it.
 let app = {};
 
-// Given an empty app object, initializes it filling its attributes,
-// creates a Vue instance, and then initializes the Vue instance.
+/**
+ * Given an empty app object, initializes it filling its attributes,
+ *      creates a Vue instance, and then initializes the Vue instance.
+ */
 let init = (app) => {
 
     // This is the Vue data.
@@ -21,6 +23,8 @@ let init = (app) => {
         cacheTitle: "",
         cacheDescr: "",
         cacheID: 0,
+        loadingMode: true,
+        mapMode: false,
     };
 
     app.enumerate = (a) => {
@@ -60,14 +64,19 @@ let init = (app) => {
    }
 
      /**
-    * Adds Navigation Bars
+    * Adds Navigation Bars/Controls
     */
     app.addNav = function (map) {
         const nav = new mapboxgl.NavigationControl();
         map.addControl(nav);
     }
 
-
+    /**
+     * Loads all the marker (geocache) locations 
+     * Adds click events to all for popups
+     * Stop Propagation prevents chaining of click
+     *      events from map.click()->marker.click()
+     */
     app.loadLocations = function (map) {
 
         for (let cache of app.vue.caches) {
@@ -82,6 +91,7 @@ let init = (app) => {
                 app.vue.cacheDescr = cache.description;
                 app.vue.cacheID = cache.id; //set id to send to cache_info redirect
                 app.vue.popupMode = true;
+                app.setPopup();
                 e.stopPropagation();
             }); 
 
@@ -93,14 +103,19 @@ let init = (app) => {
 
     }
 
+    /**
+     * Search function, reads from query and finds a 
+     *      cache with the same title (STRICT, ideally
+     *      should be less strict)
+     */
     app.search = function () {
         if (app.vue.query.length > 1) {
             axios.get(searchURL, {params: {q: app.vue.query}})
                 .then( function(result) {
 
                     for (let cache of app.vue.caches) {
-                        if(app.vue.query == cache.cache_name){
-                            app.map.flyTo({
+                        if(app.vue.query == cache.cache_name){ //Fly to location if
+                            app.map.flyTo({ //Fly To animation details
                                 center: [cache.long,cache.lat],
                                 zoom: 17,
                                 speed: 1,
@@ -109,10 +124,11 @@ let init = (app) => {
                                     return t;
                                     }
                                 });
-                            app.vue.cacheTitle = cache.cache_name;
+                            app.vue.cacheTitle = cache.cache_name; //Sets details
                             app.vue.cacheDescr = cache.description;
                             app.vue.cacheID = cache.id; //Setting ID as well
                             app.vue.popupMode = true;
+                            app.setPopup(); // Activates Popup on search
                         }
                     }
 
@@ -133,7 +149,26 @@ let init = (app) => {
         });
     }
 
-    // This contains all the methods.
+    /**
+     * Resets Popup
+     * Timeout Function handles marker to marker transitions
+     */
+    app.setPopup = function () {
+        if(app.vue.popupMode == true){ //sounds redundant, but for transition of popups
+            app.vue.popupMode = false;
+             setTimeout(() => {
+                    app.vue.popupMode = true;
+                }, "200")
+            }
+        else 
+            app.vue.popupMode = true;
+        }
+    
+         
+
+    /**
+    * This contains all the methods.
+    */
     app.methods = {
         // Complete as you see fit.
         successLocation: app.successLocation,
@@ -143,42 +178,50 @@ let init = (app) => {
         loadLocations: app.loadLocations,
         search: app.search,
         redirectCacheInfo: app.redirectCacheInfo,
+        setPopup: app.setPopup,
         
     };
 
-    // This creates the Vue instance.
+    /**
+     * This creates the Vue instance.
+     */
     app.vue = new Vue({
         el: "#vue-target",
         data: app.data,
         methods: app.methods
     });
 
-    // And this initializes it.
+    /**
+     * And this initializes it.
+     */
     app.init = () => {
-        // Put here any initialization code.
-        // Typically this is a server GET call to load the data.
         axios.get(loadGeoCachesURL).then(function (r) {
             app.vue.caches = app.enumerate(r.data.caches);
         })
     };
 
-
+    /**
+     * Sets the map
+     */
     app.setMap = function(map) {
         app.map = map;
 
         app.addNav(map) //nav controls
         app.addGeoTracking(map)
         app.loadLocations(map) //needs to be passed the db
-        
 
     };
 
-    // Call to the initializer.
+    /**
+     * Call to the initializer.
+     */ 
     app.init();
 };
 
-// This takes the (empty) app object, and initializes it,
-// putting all the code i
+/**
+ * This takes the (empty) app object, and initializes it,
+ *         putting all the code i
+ */
 init(app);
 
 /**
@@ -213,4 +256,6 @@ function setupMap(center) {
     map.resize();
 
     app.setMap(map);
+
+    
 }
