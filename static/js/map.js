@@ -80,7 +80,7 @@ let init = (app) => {
             el.addEventListener('click', (e) => {
                 app.vue.cacheTitle = cache.cache_name;
                 app.vue.cacheDescr = cache.description;
-                app.vue.cacheID = cache._idx; //set id to send to cache_info redirect
+                app.vue.cacheID = cache.id; //set id to send to cache_info redirect
                 app.vue.popupMode = true;
                 e.stopPropagation();
             }); 
@@ -111,7 +111,7 @@ let init = (app) => {
                                 });
                             app.vue.cacheTitle = cache.cache_name;
                             app.vue.cacheDescr = cache.description;
-                            app.vue.cacheID = cache._idx; //Setting ID as well
+                            app.vue.cacheID = cache.id; //Setting ID as well
                             app.vue.popupMode = true;
                         }
                     }

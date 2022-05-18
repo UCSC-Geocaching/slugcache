@@ -37,7 +37,7 @@ let init = (app) => {
         app.vue.cache_diff = a.difficulty,
         app.vue.cache_terrain = a.terrain,
         app.vue.cache_size = a.size,
-        app.vue.bookmarked = true; //Change based on bookmarked db
+        app.vue.bookmarked = false; //Change based on bookmarked db
     };
 
     app.getUser = function () {
