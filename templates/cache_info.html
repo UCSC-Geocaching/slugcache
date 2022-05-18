@@ -22,7 +22,7 @@
                 </div>
                 <div class="bookmarkWrapper">
                     <button class="custButton" @click="bookmark">
-                        <i class="far fa-heart"></i>
+                        <i :class="{'fas fa-heart': bookmarked, 'far fa-heart': !bookmarked}"></i>
                     </button>
                     <p>Bookmark</p>
                 </div>
@@ -82,7 +82,7 @@
 
 [[block page_scripts]]
 <script>
-  let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
+  let getCacheURL = "[[=XML(getCacheURL)]]";
   let getUserURL = "[[=XML(getUserURL)]]";
 
 </script>

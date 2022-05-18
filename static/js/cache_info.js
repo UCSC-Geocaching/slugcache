@@ -8,7 +8,6 @@ let init = (app) => {
 
     // This is the Vue data.
     app.data = {
-        caches: [],
         cache_name: "",
         cache_photo_path: "",
         cache_lat: 0.0,
@@ -22,18 +21,11 @@ let init = (app) => {
         cache_terrain: 1,
         cache_size: 1,
         bookmarked: false,
-        bookmark_icon: "",
-    };
-
-    app.enumerate = (a) => {
-        // This adds an _idx field to each element of the array.
-        let k = 0;
-        a.map((e) => {e._idx = k++;});
-        return a;
     };
     
     app.processCache = function (a) {
-        app.vue.cache_name = a.cache_name ,
+        console.log(a),
+        app.vue.cache_name = a.cache_name,
         app.vue.cache_photo_path = a.photo_path,
         app.vue.cache_lat = a.lat,
         app.vue.cache_long = a.long,
@@ -44,8 +36,8 @@ let init = (app) => {
         app.vue.cache_create_date = a.creation_date,
         app.vue.cache_diff = a.difficulty,
         app.vue.cache_terrain = a.terrain,
-        app.vue.cache_size = a.size
-        app.vue.cache_bookmarked = false; //Change based on bookmarked db
+        app.vue.cache_size = a.size,
+        app.vue.bookmarked = true; //Change based on bookmarked db
     };
 
     app.getUser = function () {
@@ -55,8 +47,8 @@ let init = (app) => {
     };
 
     app.bookmark = function () {
-        console.log("Bookmark was pressed")
-        app.vue.bookmarked = !app.vue.bookmarked
+        console.log("Bookmark was pressed");
+        app.vue.bookmarked = !app.vue.bookmarked;
     }
 
     // This contains all the methods.
@@ -77,9 +69,8 @@ let init = (app) => {
     app.init = () => {
         // Put here any initialization code.
         // Typically this is a server GET call to load the data.
-        axios.get(loadGeoCachesURL).then(function (r) {
-            app.vue.caches = app.enumerate(r.data.caches);
-            app.processCache(app.vue.caches[0]);
+        axios.get(getCacheURL).then(function (r) {
+            app.processCache(r.data.cache);
         })
     };
 

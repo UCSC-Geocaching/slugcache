@@ -80,7 +80,7 @@ let init = (app) => {
             el.addEventListener('click', (e) => {
                 app.vue.cacheTitle = cache.cache_name;
                 app.vue.cacheDescr = cache.description;
-                app.vue.cacheID = cache._id; //set id to send to cache_info redirect
+                app.vue.cacheID = cache._idx; //set id to send to cache_info redirect
                 app.vue.popupMode = true;
                 e.stopPropagation();
             }); 
@@ -111,7 +111,7 @@ let init = (app) => {
                                 });
                             app.vue.cacheTitle = cache.cache_name;
                             app.vue.cacheDescr = cache.description;
-                            app.vue.cacheID = cache._id; //Setting ID as well
+                            app.vue.cacheID = cache._idx; //Setting ID as well
                             app.vue.popupMode = true;
                         }
                     }
@@ -123,8 +123,14 @@ let init = (app) => {
             app.vue.results = [];
     }
 
-    app.redirectCacheInfo = function (cacheID) {
-        console.log("prep to redirect")
+    app.redirectCacheInfo = function () {
+        axios.get(generateCacheURL, {params: {cache_id: app.vue.cacheID}})
+        .then(function (r) {
+            console.log("We got the URL:", r.data.url);
+            let cache_url = document.createElement('a');
+            cache_url.href = r.data.url;
+            cache_url.click();
+        });
     }
 
     // This contains all the methods.

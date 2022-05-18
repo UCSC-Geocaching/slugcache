@@ -27,7 +27,7 @@
     <div class="popupColumn2">
       <div id="popColTwo">
         <span class="icon">
-          <button class="custButton" @click="redirectCacheInfo(cacheID)">
+          <button class="custButton" @click="redirectCacheInfo">
             <i class="fas fa-chevron-right"></i>
           </button>
         </span>
@@ -44,6 +44,7 @@
 <script>
   let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
   let searchURL = "[[=XML(searchURL)]]";
+  let generateCacheURL = "[[=XML(generateCacheURL)]]";
 
 </script>
 <script src="js/map.js"></script>
