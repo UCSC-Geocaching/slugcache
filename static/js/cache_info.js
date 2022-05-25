@@ -24,7 +24,6 @@ let init = (app) => {
     };
     
     app.processCache = function (a) {
-        console.log(a),
         app.vue.cache_name = a.cache_name,
         app.vue.cache_photo_path = a.photo_path,
         app.vue.cache_lat = a.lat,
