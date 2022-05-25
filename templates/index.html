@@ -2,8 +2,22 @@
 <script src="js/map.js"></script>
 [[else:]]
 <style>
+  .hero {
+    background-color: var(--primary-color);
+  } 
   .hero-body {
     width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 75vh;
+  }
+
+  .image {
     margin-left: auto;
     margin-right: auto;
   }
@@ -15,25 +29,34 @@
 <div id="welcome-pg" v-cloak>
   <div class="hero is-fullheight">
     <div class="hero-body">
-      <div class="container">
-        <h1 class="title">Welcome to Geocache</h1>
+      <div class="hero-container container">
         <div class="block">
-          <button
-            id="login-modal-trigger"
-            class="button is-warning is-fullwidth"
-            @click="openLoginModal"
-          >
-            Log In
-          </button>
+          <figure class="block image is-128x128">
+            <img src="../static/icons/slug_gold.svg" alt="UCSC Logo">
+          </figure>
+          <div class="block">
+            <h1 class="title has-text-light has-text-centered">Slug Cache</h1>
+          </div>
         </div>
         <div class="block">
-          <button
-            id="signup-modal-trigger"
-            class="button is-light is-fullwidth"
-            @click="openRegisterModal"
-          >
-            Sign Up
-          </button>
+          <div class="block">
+            <button
+              id="login-modal-trigger"
+              class="button is-warning is-fullwidth"
+              @click="openLoginModal"
+            >
+              Log In
+            </button>
+          </div>
+          <div class="block">
+            <button
+              id="signup-modal-trigger"
+              class="button is-light is-fullwidth"
+              @click="openRegisterModal"
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -54,7 +77,6 @@
   import { listen, push } from './js/history.js';
 
   const baseURL = '[[=XML(base_url)]]';
-  //TODO: rm TMP
   const loginURL = buildPath(baseURL, 'login');
   const registerURL = buildPath(baseURL, 'register');
 
