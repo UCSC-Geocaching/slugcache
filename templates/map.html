@@ -4,17 +4,25 @@
 [[block page_head]]
 <link rel="stylesheet" href="css/map.css">
 [[end]]
+ 
 
 
 <div class="mapWrapper" id="vue-target">
-
   
+  <div v-if="loadMode" class="control" id="loadingScreen">
+    <div id="loader">
+      <div id="shadow"></div>
+      <div id="box"></div>
+      <h4>Loading Caches</h4>
+    </div>
+  </div>
 
-  <div class="control has-icons-left block mb-0"> <!--Search Bar-->
+  <div v-if="!loadMode" class="control has-icons-left block mb-0"> <!--Search Bar-->
     <input class="input" type="text" placeholder="Search" v-model="query" @keyup="search" />
     <span class="icon is-small is-left">
       <i class="fas fa-search"></i>
   </div>
+
 
   <transition name="slide-fade" mode="out-in">
   <div v-if="popupMode" class="section box" @click="redirectCacheInfo"> <!--Popups-->

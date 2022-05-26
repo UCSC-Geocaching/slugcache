@@ -18,14 +18,6 @@ body {
   margin: 0;
 }
 
-#loadingScreen{
-  background-color: red;
-  position: absolute;
-  
-  width: 100%;
-  z-index: 100;
-}
-
 .control {
   width: 100vw;
   position: absolute;
@@ -84,6 +76,7 @@ body {
   padding: 0px;
   margin: 0px;
   height: 100%;
+  z-index: -2;
 }
 
 
@@ -132,8 +125,8 @@ body {
   filter: brightness(70%);
 }
 
-
 /*
+  Popups
   Enter and leave animations can use different
   durations and timing functions.
 */
@@ -149,4 +142,74 @@ body {
 .slide-fade-leave-to {
   transform: translateX(20px);
   opacity: 0;
+}
+
+/* Loading Screen*/
+
+#loadingScreen{
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  z-index: -1;
+
+  overflow: hidden;
+}
+
+#loader {
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+}
+@keyframes loader {
+  0% { left: -100px }
+  100% { left: 110%; }
+}
+#box {
+  width: 50px;
+  height: 50px;
+  background: #fdc700;
+  animation: animate .5s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 3px;
+}
+@keyframes animate {
+  17% { border-bottom-right-radius: 3px; }
+  25% { transform: translateY(9px) rotate(22.5deg); }
+  50% {
+    transform: translateY(18px) scale(1,.9) rotate(45deg) ;
+    border-bottom-right-radius: 40px;
+  }
+  75% { transform: translateY(9px) rotate(67.5deg); }
+  100% { transform: translateY(0) rotate(90deg); }
+} 
+#shadow { 
+  width: 50px;
+  height: 5px;
+  background: #000;
+  opacity: 0.1;
+  position: absolute;
+  top: 59px;
+  left: 0;
+  border-radius: 50%;
+  animation: shadow .5s linear infinite;
+}
+@keyframes shadow {
+  50% {
+    transform: scale(1.2,1);
+  }
+}
+
+h4 {
+  position: absolute;
+  bottom: -120px;
+  margin: 0;
+  font-weight: 200;
+  opacity: .6;
+	font-family: sans-serif;
+  color: #003c6c;
+  z-index: -1;
 }

@@ -24,7 +24,7 @@ let init = (app) => {
         cacheDescr: "",
         cacheID: 0,
         loadingMode: true,
-        mapMode: false,
+        loadMode: true,
     };
 
     app.enumerate = (a) => {
@@ -223,7 +223,7 @@ let init = (app) => {
  *         putting all the code i
  */
 init(app);
-
+ 
 /**
  * Gets current position to start map initializer
  */
@@ -252,6 +252,33 @@ function setupMap(center) {
         if(app.vue.popupMode == true)
             app.vue.popupMode = false;
     });
+
+    var elapsed = false;
+    var loaded = false;
+
+    setTimeout(() => {
+        elapsed = true;
+        if (loaded){
+            app.vue.loadMode = false;
+            document.getElementById("map").style.zIndex="0";
+        }
+    }, "1500")
+    
+    map.on('load', function() {
+        loaded = true;
+        if (elapsed){
+            app.vue.loadMode = false;
+            document.getElementById("map").style.zIndex="0";
+        }
+    });
+
+
+
+/*
+    map.on('load', function () {
+       app.vue.loadMode = false;
+    }); 
+    */
 
     map.resize();
 
