@@ -23,7 +23,6 @@ let init = (app) => {
         cacheTitle: "",
         cacheDescr: "",
         cacheID: 0,
-        loadingMode: true,
         loadMode: true,
     };
 
@@ -271,14 +270,6 @@ function setupMap(center) {
             document.getElementById("map").style.zIndex="0";
         }
     });
-
-
-
-/*
-    map.on('load', function () {
-       app.vue.loadMode = false;
-    }); 
-    */
 
     map.resize();
 
