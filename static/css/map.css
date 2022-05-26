@@ -33,7 +33,8 @@ body {
   right: 5%;
   position: absolute;
   z-index: 1;
-  top: 73%;
+  bottom: 130px;
+
   padding: 20px;
 
   cursor: pointer;

@@ -70,6 +70,18 @@ let init = (app) => {
         map.addControl(nav);
     }
 
+    app.flyToCache = function(cache) {
+        app.map.flyTo({ //Fly To animation details
+            center: [cache.long,cache.lat],
+            zoom: 17,
+            speed: 1,
+            curve: 1,
+            easing(t) {
+                return t;
+                }
+            });
+    }
+
     /**
      * Loads all the marker (geocache) locations 
      * Adds click events to all for popups
@@ -90,6 +102,7 @@ let init = (app) => {
                 app.vue.cacheDescr = cache.description;
                 app.vue.cacheID = cache.id; //set id to send to cache_info redirect
                 app.vue.popupMode = true;
+                app.flyToCache(cache)
                 app.setPopup();
                 e.stopPropagation();
             }); 
@@ -114,20 +127,13 @@ let init = (app) => {
 
                     for (let cache of app.vue.caches) {
                         if(app.vue.query == cache.cache_name){ //Fly to location if
-                            app.map.flyTo({ //Fly To animation details
-                                center: [cache.long,cache.lat],
-                                zoom: 17,
-                                speed: 1,
-                                curve: 1,
-                                easing(t) {
-                                    return t;
-                                    }
-                                });
+                            app.flyToCache(cache)
                             app.vue.cacheTitle = cache.cache_name; //Sets details
                             app.vue.cacheDescr = cache.description;
                             app.vue.cacheID = cache.id; //Setting ID as well
                             app.vue.popupMode = true;
                             app.setPopup(); // Activates Popup on search
+                            
                         }
                     }
 
@@ -178,6 +184,7 @@ let init = (app) => {
         search: app.search,
         redirectCacheInfo: app.redirectCacheInfo,
         setPopup: app.setPopup,
+        flyToCache: app.flyToCache,
         
     };
 
