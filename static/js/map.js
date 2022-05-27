@@ -24,6 +24,7 @@ let init = (app) => {
         cacheDescr: "",
         cacheID: 0,
         loadMode: true,
+        markerSelected: [],
     };
 
     app.enumerate = (a) => {
@@ -70,6 +71,9 @@ let init = (app) => {
         map.addControl(nav);
     }
 
+    /**
+     * Fly's to geocache specified by paramater `cache`
+     */
     app.flyToCache = function(cache) {
         app.map.flyTo({ //Fly To animation details
             center: [cache.long,cache.lat],
@@ -83,6 +87,21 @@ let init = (app) => {
     }
 
     /**
+     * Updates scale of current active marker on map to indicate selection
+     *      markerSelected holds the previously selected marker
+     *      Height and Width are reset and markerSelected gets current marker
+     *      specified by paramater `marker`
+     */
+    app.resetMarkerSize = function(marker) {    
+        if((app.vue.markerSelected).length != 0){ //curr marker selected
+            (app.vue.markerSelected[0]).setAttribute("style", "width: 28px; height: 28px");
+        }
+        if(marker === null)
+            (app.vue.markerSelected).pop();
+        else app.vue.markerSelected[0] = marker;
+    }
+
+    /**
      * Loads all the marker (geocache) locations 
      * Adds click events to all for popups
      * Stop Propagation prevents chaining of click
@@ -92,12 +111,14 @@ let init = (app) => {
 
         for (let cache of app.vue.caches) {
 
-            // create DOM element for the marker
-            const el = document.createElement('div');
+            const el = document.createElement('div');  // create DOM element for the marker
             el.id = 'marker';
             
-            // click event for popups on markers
-            el.addEventListener('click', (e) => {
+            el.addEventListener('click', (e) => { // click event for popups on markers
+
+                app.resetMarkerSize(el);
+                el.setAttribute("style", "width: 35px; height: 35px");
+        
                 app.vue.cacheTitle = cache.cache_name;
                 app.vue.cacheDescr = cache.description;
                 app.vue.cacheID = cache.id; //set id to send to cache_info redirect
@@ -107,8 +128,7 @@ let init = (app) => {
                 e.stopPropagation();
             }); 
 
-            // create the marker
-            new mapboxgl.Marker(el)
+            new mapboxgl.Marker(el) // create the marker
                 .setLngLat([cache.long, cache.lat])
                 .addTo(map);
         }
@@ -185,6 +205,7 @@ let init = (app) => {
         redirectCacheInfo: app.redirectCacheInfo,
         setPopup: app.setPopup,
         flyToCache: app.flyToCache,
+        resetMarkerSize: app.resetMarkerSize,
         
     };
 
@@ -254,24 +275,28 @@ function setupMap(center) {
     ],
     });
 
-    map.on('click', () => {
-        if(app.vue.popupMode == true)
+    map.on('click', () => { //Click event to remove/toggle popup and size for marker
+        if(app.vue.popupMode == true){
             app.vue.popupMode = false;
+            app.resetMarkerSize(null);
+            map.setZoom(map.getZoom()); //Temp fix, addresses issue of marker needing
+                                        //  a map movement trigger to be repainted
+                                        //  after being reset
+        }
     });
 
-    var elapsed = false;
+    var elapsed = false; 
     var loaded = false;
-
-    setTimeout(() => {
-        elapsed = true;
+    setTimeout(() => { //Ensures loading screen is displayed for a minimum time
+        elapsed = true; //If elapsed time has been reached and map is loaded: display
         if (loaded){
             app.vue.loadMode = false;
             document.getElementById("map").style.zIndex="0";
         }
     }, "1500")
-    
-    map.on('load', function() {
-        loaded = true;
+
+    map.on('load', function() { //If map has loaded, activate loaded boolean to true
+        loaded = true; //Ensure min time has been reached
         if (elapsed){
             app.vue.loadMode = false;
             document.getElementById("map").style.zIndex="0";

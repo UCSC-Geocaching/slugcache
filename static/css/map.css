@@ -82,15 +82,15 @@ body {
 
 
 #marker {
-  border: 3px;
+  /*border: 3px;
   border-style: solid;
-  border-color: rgba(255, 200, 10, 0.83);
+  border-color: rgba(255, 200, 10, 0.83);*/
 
   /*Background image just a placeholder, to be replaced with relative path's to uploaded(?) photos*/
-  background-image: url('https://www.prainc.com/wp-content/uploads/2013/06/geocache-398017_1920-ds.jpg');
+  background-image: url('./images/cache-icon.png');
   background-size: cover;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -112,18 +112,10 @@ body {
   font-weight: 700;
 }
 
-.mapboxgl-popup-close-button {
-  display: none;
-}
-
-.mapboxgl-popup-tip {
-  display: none;
-}
-
-
 .mapboxgl-marker:hover {
-  -webkit-filter: brightness(70%);
-  filter: brightness(70%);
+  
+  width: 35px !important;
+  height: 35px !important;
 }
 
 /*
@@ -168,6 +160,12 @@ body {
   100% { left: 110%; }
 }
 #box {
+  /*
+  border: 9px;
+  border-style: solid;
+  border-color: #003c6c;
+  */
+  
   width: 50px;
   height: 50px;
   background: #fdc700;
@@ -206,10 +204,12 @@ body {
 
 h4 {
   position: absolute;
-  bottom: -120px;
+  width: 150px;
+  bottom: -100px;
+  right: -120px;
   margin: 0;
-  font-weight: 200;
-  opacity: .6;
+  opacity: .7;
+  font-weight: 500;
 	font-family: sans-serif;
   color: #003c6c;
   z-index: -1;
