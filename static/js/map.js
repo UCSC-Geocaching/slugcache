@@ -25,6 +25,7 @@ let init = (app) => {
         cacheID: 0,
         loadMode: true,
         markerSelected: [],
+        searchMode: false,
     };
 
     app.enumerate = (a) => {
@@ -72,7 +73,7 @@ let init = (app) => {
     }
 
     /**
-     * Fly's to geocache specified by paramater `cache`
+     * Fly's to geocache specified by parameter `cache`
      */
     app.flyToCache = function(cache) {
         app.map.flyTo({ //Fly To animation details
@@ -87,10 +88,10 @@ let init = (app) => {
     }
 
     /**
-     * Updates scale of current active marker on map to indicate selection
+     * Updates scale of current active marker on map to indicate selection.
      *      markerSelected holds the previously selected marker
      *      Height and Width are reset and markerSelected gets current marker
-     *      specified by paramater `marker`
+     *      specified by parameter `marker`
      */
     app.resetMarkerSize = function(marker) {    
         if((app.vue.markerSelected).length != 0){ //curr marker selected
@@ -101,11 +102,15 @@ let init = (app) => {
         else app.vue.markerSelected[0] = marker;
     }
 
+    app.setSearchMode = function(mode) {
+        app.vue.searchMode = mode;
+    }
+
     /**
      * Loads all the marker (geocache) locations 
      * Adds click events to all for popups
      * Stop Propagation prevents chaining of click
-     *      events from map.click()->marker.click()
+     *      events from map.click() => marker.click()
      */
     app.loadLocations = function (map) {
 
@@ -206,6 +211,7 @@ let init = (app) => {
         setPopup: app.setPopup,
         flyToCache: app.flyToCache,
         resetMarkerSize: app.resetMarkerSize,
+        setSearchMode: app.setSearchMode,
         
     };
 
@@ -276,6 +282,7 @@ function setupMap(center) {
     });
 
     map.on('click', () => { //Click event to remove/toggle popup and size for marker
+        app.vue.searchMode = false;
         if(app.vue.popupMode == true){
             app.vue.popupMode = false;
             app.resetMarkerSize(null);

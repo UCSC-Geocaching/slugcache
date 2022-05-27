@@ -9,7 +9,7 @@
 
 <div class="mapWrapper" id="vue-target">
   
-  <div v-if="loadMode" class="control" id="loadingScreen">
+  <div v-if="loadMode" id="loadingScreen">
     <div id="loader">
       <div id="shadow"></div>
       <div id="box"></div>
@@ -17,15 +17,23 @@
     </div>
   </div>
 
-  <div v-if="!loadMode" class="control has-icons-left block mb-0"> <!--Search Bar-->
-    <input class="input" type="text" placeholder="Search" v-model="query" @keyup="search" />
-    <span class="icon is-small is-left">
-      <i class="fas fa-search"></i>
+  <div v-if="!loadMode && !searchMode" class="searchButton" @click="setSearchMode(true)">
+    <span class="icon-text">
+      <i class="fa fa-search is-size-5"></i>
+    </span>
   </div>
+
+  <div class="searchBar">
+    <div v-if="searchMode" class="control has-icons-left block mb-0"> <!--Search Bar-->
+      <input class="input is-rounded" type="text" placeholder="Search" v-model="query" @keyup="search" />
+      <span class="icon is-small is-left">
+        <i class="fas fa-search"></i>
+    </div>
+</div>
 
 
   <transition name="slide-fade" mode="out-in">
-  <div v-if="popupMode" class="section box mb-0" @click="redirectCacheInfo"> <!--Popups-->
+  <div v-if="popupMode && !loadMode" class="section box mb-0" @click="redirectCacheInfo"> <!--Popups-->
     <div class="popupColumn">
       <div id="popColOne">
         <p class="title is-5">
