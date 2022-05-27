@@ -95,7 +95,8 @@ let init = (app) => {
      */
     app.resetMarkerSize = function(marker) {    
         if((app.vue.markerSelected).length != 0){ //curr marker selected
-            (app.vue.markerSelected[0]).setAttribute("style", "width: 28px; height: 28px");
+            (app.vue.markerSelected[0]).setAttribute("style", 
+                    "width: 28px; height: 28px; border-style: none; background-color: null;");
         }
         if(marker === null)
             (app.vue.markerSelected).pop();
@@ -115,14 +116,14 @@ let init = (app) => {
     app.loadLocations = function (map) {
 
         for (let cache of app.vue.caches) {
-
             const el = document.createElement('div');  // create DOM element for the marker
-            el.id = 'marker';
+            el.className = 'marker';
+            el.id = "marker-" + cache.id;
             
             el.addEventListener('click', (e) => { // click event for popups on markers
-
                 app.resetMarkerSize(el);
-                el.setAttribute("style", "width: 35px; height: 35px");
+                el.setAttribute("style", 
+                    "width: 35px; height: 35px; border: 2px; border-style: solid; border-color: #fdc700; background-color: #fdc700;");
         
                 app.vue.cacheTitle = cache.cache_name;
                 app.vue.cacheDescr = cache.description;
@@ -152,13 +153,7 @@ let init = (app) => {
 
                     for (let cache of app.vue.caches) {
                         if(app.vue.query == cache.cache_name){ //Fly to location if
-                            app.flyToCache(cache)
-                            app.vue.cacheTitle = cache.cache_name; //Sets details
-                            app.vue.cacheDescr = cache.description;
-                            app.vue.cacheID = cache.id; //Setting ID as well
-                            app.vue.popupMode = true;
-                            app.setPopup(); // Activates Popup on search
-                            
+                            document.getElementById("marker-" + cache.id).click();
                         }
                     }
 
@@ -282,6 +277,7 @@ function setupMap(center) {
     });
 
     map.on('click', () => { //Click event to remove/toggle popup and size for marker
+        app.vue.query = "";
         app.vue.searchMode = false;
         if(app.vue.popupMode == true){
             app.vue.popupMode = false;

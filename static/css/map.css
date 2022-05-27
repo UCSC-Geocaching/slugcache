@@ -105,11 +105,7 @@ body {
 }
 
 
-#marker {
-  /*border: 3px;
-  border-style: solid;
-  border-color: rgba(255, 200, 10, 0.83);*/
-
+.marker {
   /*Background image just a placeholder, to be replaced with relative path's to uploaded(?) photos*/
   background-image: url('./images/cache-icon.png');
   background-size: cover;
@@ -137,7 +133,7 @@ body {
 }
 
 .mapboxgl-marker:hover {
-  
+
   width: 35px !important;
   height: 35px !important;
 }
