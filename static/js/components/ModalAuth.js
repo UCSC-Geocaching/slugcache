@@ -104,7 +104,8 @@ export default {
     },
     computed: {
         isLoginRoute() {
-            return this.route.split("/").at(-1) === "login";
+            const routes = this.route.split("/");
+            return routes[routes.length - 1] === "login";
         }
     }
 };
