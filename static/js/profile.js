@@ -25,24 +25,24 @@ let init = (page) => {
     return a;
   };
 
-  // Custom Functions
-  // loadProfile: Loads the profile details from the users db.
-  page.loadProfile = function () {
-    axios.get(load_profile_url).then(function (r) {
-      let profile = r.data.profile;
-      page.vue.user_email = profile.user_email;
-      page.vue.creation_date = profile.creation_date;
-      page.vue.logs = profile.caches_logged;
-      page.vue.hides = profile.caches_hidden;
-      page.vue.banner_URL = '..' + profile.banner_path; // Should change this
-      page.vue.profile_pic_URL = '..' + profile.profile_photo_path; // Should change this
-    });
-  };
-
   // This contains all the methods.
   page.methods = {
     // Complete as you see fit.
-    loadProfile: page.loadProfile,
+    // loadProfile: Loads the profile details from the users db.
+    loadProfile: function () {
+      axios.get(load_profile_url).then(function (r) {
+        let profile = r.data.profile;
+        page.vue.user_email = profile.user_email;
+        date = new Date(profile.creation_date);
+        page.vue.creation_date = `${
+          date.getMonth() + 1
+        }/${date.getDate()}/${date.getFullYear()}`;
+        page.vue.logs = profile.caches_logged;
+        page.vue.hides = profile.caches_hidden;
+        page.vue.banner_URL = '..' + profile.banner_path; // Should change this
+        page.vue.profile_pic_URL = '..' + profile.profile_photo_path; // Should change this
+      });
+    },
   };
 
   // This creates the Vue instance.
@@ -50,30 +50,10 @@ let init = (page) => {
     el: '#vue-target',
     data: page.data,
     methods: page.methods,
+    created: function () {
+      this.loadProfile();
+    },
   });
-
-  // And this initializes it.
-  page.init = () => {
-    // Put here any initialization code.
-    // Typically this is a server GET call to load the data.
-    // TODO: FIGURE OUT HOW TO USE THE loadProfile METHOD TO LOAD AT INIT
-    // loadProfile();
-    axios.get(load_profile_url).then(function (r) {
-      let profile = r.data.profile;
-      page.vue.user_email = profile.user_email;
-      date = new Date(profile.creation_date);
-      page.vue.creation_date = `${
-        date.getMonth() + 1
-      }/${date.getDate()}/${date.getFullYear()}`;
-      page.vue.logs = profile.caches_logged;
-      page.vue.hides = profile.caches_hidden;
-      page.vue.banner_URL = '..' + profile.banner_path; // Should change this
-      page.vue.profile_pic_URL = '..' + profile.profile_photo_path; // Should change this
-    });
-  };
-
-  // Call to the initializer.
-  page.init();
 };
 
 // This takes the (empty) page object, and initializes it,

@@ -96,7 +96,7 @@ def profile():
 @action("bookmarks")
 @action.uses("bookmarks.html", db, auth.user)
 def bookmarks():
-    return ()
+    return
 
 
 @action("cache_info/<cache_id:int>")
@@ -213,17 +213,20 @@ def getCaches():
     rows = db(db.caches).select().as_list()
     return dict(caches=rows)
 
+
 @action("getCache/<cache_id:int>")
 @action.uses(db)
-def getCache(cache_id = None):
+def getCache(cache_id=None):
     cache = db(db.caches._id == cache_id).select().first()
     return dict(cache=cache)
+
 
 @action("generateCacheURL")
 @action.uses(db, url_signer, url_signer.verify())
 def generateCacheURL():
-    cache_id = int(request.params.get('cache_id'))
-    return dict(url=URL('cache_info', cache_id, signer=url_signer))
+    cache_id = int(request.params.get("cache_id"))
+    return dict(url=URL("cache_info", cache_id, signer=url_signer))
+
 
 @action("search")
 @action.uses()
