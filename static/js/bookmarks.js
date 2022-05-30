@@ -22,6 +22,7 @@ let init = (page) => {
   // This contains all the methods.
   page.methods = {
     // Complete as you see fit.
+    
   };
 
   // This creates the Vue instance.
@@ -29,13 +30,8 @@ let init = (page) => {
     el: '#vue-target',
     data: page.data,
     methods: page.methods,
+    
   });
-
-  // And this initializes it.
-  page.init = () => {};
-
-  // Call to the initializer.
-  page.init();
 };
 
 // This takes the (empty) page object, and initializes it,
