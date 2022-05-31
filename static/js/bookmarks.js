@@ -9,6 +9,7 @@ let init = (page) => {
   page.data = {
     // Complete as you see fit.
     bookmarks: [],
+    max_boxes: 5,
   };
 
   page.enumerate = (a) => {

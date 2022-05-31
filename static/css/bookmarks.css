@@ -19,3 +19,48 @@
 .bookmarks-text {
   color: var(--accent-color) !important;
 }
+
+.card-header-title {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.content-wrapper {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  aspect-ratio: 1/1;
+  width: 200px;
+  background-color: red;
+  grid-column: 1;
+}
+
+.text-wrapper {
+  grid-column: 2/4;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+}
+.box-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.my-box {
+  color: var(--primary-color);
+}
+.my-box.filled {
+  color: var(--accent-color);
+}
