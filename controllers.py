@@ -25,6 +25,7 @@ session, db, T, auth, and tempates are examples of Fixtures.
 Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app will result in undefined behavior
 """
 
+from requests import delete
 from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
 from .common import (
@@ -120,8 +121,8 @@ def cache_info(cache_id=None):
     return dict(
         getCacheURL=URL("getCache", cache_id, signer=url_signer),
         getUserURL=URL("getUser", signer=url_signer),
-        setBookmarkedURL=URL("setBookmarked", signer=url_signer),
-        getBookmarkedURL=URL("getBookmarked", signer=url_signer),
+        setBookmarkedURL=URL("setBookmarked", cache_id, signer=url_signer),
+        getBookmarkedURL=URL("getBookmarked", cache_id, signer=url_signer),
     )
 
 
@@ -132,12 +133,15 @@ def getCache(cache_id=None):
     return dict(cache=cache)
 
 
-@action("setBookmarked", method="PUT")
+@action("setBookmarked/<cache_id:int>", method="PUT")
 @action.uses(db, auth, url_signer.verify())
-def setBookmarked():
-    user = auth.get_user()
-    cache_id = request.json.get("cache_id")
+def setBookmarked(cache_id=None):
+    # First user is from auth_user table
     bookmarked = False
+    user = auth.get_user()
+    assert user is not None
+    # This user is from Users table
+    user = db(db.users.user_id == user["id"]).select().first()
     assert user is not None
     assert cache_id is not None
     bookmark = (
@@ -149,16 +153,19 @@ def setBookmarked():
         db.bookmarks.update_or_insert(user=user["id"], cache=cache_id)
         bookmarked = True
     else:
-        bookmark.delete()
+        del db.bookmarks[bookmark["id"]]
         bookmarked = False
     return dict(bookmarked=bookmarked)
 
 
-@action("getBookmarked", method="GET")
+@action("getBookmarked/<cache_id:int>", method="GET")
 @action.uses(db, auth, url_signer.verify())
-def getBookmarked():
+def getBookmarked(cache_id=None):
+    # First user is from auth_user table
     user = auth.get_user()
-    cache_id = request.json.get("cache_id")
+    assert user is not None
+    # This user is from Users table
+    user = db(db.users.user_id == user["id"]).select().first()
     assert user is not None
     assert cache_id is not None
     bookmark = (

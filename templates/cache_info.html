@@ -20,9 +20,11 @@
         </div>
         <div class="bookmarkWrapper">
           <button class="button" @click="bookmark">
-            <i
-              :class="{'fas fa-heart': bookmarked, 'far fa-heart': !bookmarked}"
-            ></i>
+            <!-- When trying this, heart icons are appended on toggle -->
+            <!-- <i v-if="bookmarked" class="fas fa-heart"/></i>
+              <i v-if="!bookmarked" class="far fa-heart"/></i> -->
+            <!-- For some reason, the class isn't reactive -->
+            <i class="fa-heart" :class="bookmarked ? 'fas' : 'far'"></i>
             <p class="m-2">Bookmark</p>
           </button>
         </div>
@@ -107,6 +109,8 @@
 <script>
   let getCacheURL = '[[=XML(getCacheURL)]]';
   let getUserURL = '[[=XML(getUserURL)]]';
+  let setBookmarkedURL = '[[=XML(setBookmarkedURL)]]';
+  let getBookmarkedURL = '[[=XML(getBookmarkedURL)]]';
 </script>
 <script src="js/cache_info.js"></script>
 <script

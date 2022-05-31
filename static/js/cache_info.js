@@ -35,7 +35,9 @@ let init = (app) => {
       (app.vue.cache_diff = a.difficulty),
       (app.vue.cache_terrain = a.terrain),
       (app.vue.cache_size = a.size),
-      (app.vue.bookmarked = false); //Change based on bookmarked db
+      axios.get(getBookmarkedURL).then(function (r) {
+        app.vue.bookmarked = r.data.bookmarked;
+      });
   };
 
   app.getUser = function () {
@@ -46,8 +48,9 @@ let init = (app) => {
   };
 
   app.bookmark = function () {
-    console.log('Bookmark was pressed');
-    app.vue.bookmarked = !app.vue.bookmarked;
+    axios.put(setBookmarkedURL).then(function (r) {
+      app.vue.bookmarked = r.data.bookmarked;
+    });
   };
 
   // This contains all the methods.
