@@ -108,10 +108,26 @@ def generateCacheURL():
 
 
 # Bookmarks Page Controllers-----------------------------------------
-@action("bookmarks")
-@action.uses("bookmarks.html", db, auth.user)
+@action("bookmarks", method="GET")
+@action.uses("bookmarks.html", db, auth.user, url_signer)
 def bookmarks():
-    return dict()
+    return dict(get_bookmarks_url=URL("get_bookmarks", signer=url_signer))
+
+
+@action("get_bookmarks", method="GET")
+@action.uses(db, auth.user, url_signer.verify())
+def get_bookmarks():
+    # First user is from auth_user table
+    bookmarks = []
+    user = auth.get_user()
+    assert user is not None
+    # This user is from Users table
+    user = db(db.users.user_id == user["id"]).select().first()
+    assert user is not None
+    tmp_bookmarks = db(db.bookmarks.user == user["id"]).select().as_list()
+    for bookmark in tmp_bookmarks:
+        bookmarks.append(db.caches[bookmark["cache"]])
+    return dict(bookmarks=bookmarks)
 
 
 # Cache Info Page Controllers----------------------------------------

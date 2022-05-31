@@ -8,6 +8,7 @@ let init = (page) => {
   // This is the Vue data.
   page.data = {
     // Complete as you see fit.
+    bookmarks: [],
   };
 
   page.enumerate = (a) => {
@@ -22,7 +23,11 @@ let init = (page) => {
   // This contains all the methods.
   page.methods = {
     // Complete as you see fit.
-    
+    get_bookmarks: function () {
+      axios.get(get_bookmarks_url).then(function (res) {
+        page.data.bookmarks = res.data.bookmarks;
+      });
+    },
   };
 
   // This creates the Vue instance.
@@ -30,7 +35,9 @@ let init = (page) => {
     el: '#vue-target',
     data: page.data,
     methods: page.methods,
-    
+    created: function () {
+      this.get_bookmarks();
+    },
   });
 };
 
