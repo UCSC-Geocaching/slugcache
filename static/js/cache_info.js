@@ -19,6 +19,7 @@ let init = (app) => {
     cache_diff: 1,
     cache_terrain: 1,
     cache_size: 1,
+    cache_max_boxes: 5,
     bookmarked: false,
   };
 

@@ -34,52 +34,34 @@
     <div class="statsWrapper">
       <div class="statCard">
         <div class="boxWrapper">
-          <span v-for="box_idx in [1, 2, 3, 4, 5]">
-            <i
-              v-if="box_idx <= cache_diff"
-              class="fas fa-square m-1"
-              style="color: #fdc700"
-            ></i>
-            <i
-              v-if="box_idx > cache_diff"
-              class="fas fa-square m-1"
-              style="color: #003c6c"
-            ></i>
-          </span>
+          <i
+            v-for="box_idx in cache_max_boxes"
+            class="fas fa-square m-1 myBox"
+            :class="{'filled': box_idx <= cache_diff}"
+          >
+          </i>
         </div>
         <div class="statName">Difficulty</div>
       </div>
       <div class="statCard">
         <div class="boxWrapper">
-          <span v-for="box_idx in [1, 2, 3, 4, 5]">
-            <i
-              v-if="box_idx <= cache_terrain"
-              class="fas fa-square m-1"
-              style="color: #fdc700"
-            ></i>
-            <i
-              v-if="box_idx > cache_terrain"
-              class="fas fa-square m-1"
-              style="color: #003c6c"
-            ></i>
-          </span>
+          <i
+            v-for="box_idx in cache_max_boxes"
+            class="fas fa-square m-1 myBox"
+            :class="{'filled': box_idx <= cache_terrain}"
+          >
+          </i>
         </div>
         <div class="statName">Terrain</div>
       </div>
       <div class="statCard">
         <div class="boxWrapper">
-          <span v-for="box_idx in [1, 2, 3, 4, 5]">
-            <i
-              v-if="box_idx <= cache_size"
-              class="fas fa-square m-1"
-              style="color: #fdc700"
-            ></i>
-            <i
-              v-if="box_idx > cache_size"
-              class="fas fa-square m-1"
-              style="color: #003c6c"
-            ></i>
-          </span>
+          <i
+            v-for="box_idx in cache_max_boxes"
+            class="fas fa-square m-1 myBox"
+            :class="{'filled': box_idx <= cache_size}"
+          >
+          </i>
         </div>
         <div class="statName">Size</div>
       </div>

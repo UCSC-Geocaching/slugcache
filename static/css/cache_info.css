@@ -117,3 +117,10 @@
 .additionalInfo {
   padding: 2em;
 }
+
+.myBox {
+  color: var(--primary-color);
+}
+.myBox.filled {
+  color: var(--accent-color);
+}
