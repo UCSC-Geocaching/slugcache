@@ -139,6 +139,24 @@ db.logs.discover_date.label = "Discover Date"
 # Log Table Fields Readable/Writeable edits
 
 # ----------------------------------------------------
+# Bookmarks Table
+db.define_table(
+    "bookmarks",
+    Field("user", "reference users"),
+    Field("cache", "reference caches"),
+)
+# Bookmarks Table Field Requirements
+db.bookmarks.user.requires = IS_NOT_EMPTY()
+db.bookmarks.cache.requires = IS_NOT_EMPTY()
+
+# Log Table Defaults
+
+# Log Table Field Labels
+db.bookmarks.user.label = "User"
+db.bookmarks.cache.label = "Cache"
+
+# Log Table Fields Readable/Writeable edits
+# ----------------------------------------------------
 
 ### Define your table below
 #

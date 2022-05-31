@@ -45,7 +45,7 @@ from datetime import datetime
 
 url_signer = URLSigner(session)
 
-
+# Login Controllers--------------------------------------------------
 @action("login")
 @action("register")
 @action("index")
@@ -59,6 +59,128 @@ def index():
     }
 
 
+# Profile Page Controllers-------------------------------------------
+@action("profile")
+@action.uses("profile.html", db, auth.user)
+def profile():
+    return dict(load_profile_url=URL("load_profile_details"))
+
+
+@action("load_profile_details")
+@action.uses(db, auth.user)
+def load_profile_details():
+    user = auth.get_user()
+    profile = db(db.users.user_id == user["id"]).select().first()
+    return dict(profile=profile)
+
+
+# Map Page Controllers-----------------------------------------------
+@action("map")
+@action.uses("map.html", db, auth, url_signer)
+def map():
+    return dict(
+        loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
+        searchURL=URL("search", signer=url_signer),
+        generateCacheURL=URL("generateCacheURL", signer=url_signer),
+    )
+
+
+@action("loadGeoCaches")
+@action.uses(db)
+def getCaches():
+    rows = db(db.caches).select().as_list()
+    return dict(caches=rows)
+
+
+@action("search")
+@action.uses()
+def search():
+    rows = db(db.caches).select().as_list()
+    return dict(caches=rows)
+
+
+@action("generateCacheURL")
+@action.uses(db, url_signer, url_signer.verify())
+def generateCacheURL():
+    cache_id = int(request.params.get("cache_id"))
+    return dict(url=URL("cache_info", cache_id, signer=url_signer))
+
+
+# Bookmarks Page Controllers-----------------------------------------
+@action("bookmarks")
+@action.uses("bookmarks.html", db, auth.user)
+def bookmarks():
+    return dict()
+
+
+# Cache Info Page Controllers----------------------------------------
+@action("cache_info/<cache_id:int>")
+@action.uses("cache_info.html", db, auth.user, url_signer)
+def cache_info(cache_id=None):
+    return dict(
+        getCacheURL=URL("getCache", cache_id, signer=url_signer),
+        getUserURL=URL("getUser", signer=url_signer),
+        setBookmarkedURL=URL("setBookmarked", signer=url_signer),
+        getBookmarkedURL=URL("getBookmarked", signer=url_signer),
+    )
+
+
+@action("getCache/<cache_id:int>")
+@action.uses(db)
+def getCache(cache_id=None):
+    cache = db(db.caches._id == cache_id).select().first()
+    return dict(cache=cache)
+
+
+@action("setBookmarked", method="PUT")
+@action.uses(db, auth, url_signer.verify())
+def setBookmarked():
+    user = auth.get_user()
+    cache_id = request.json.get("cache_id")
+    bookmarked = False
+    assert user is not None
+    assert cache_id is not None
+    bookmark = (
+        db((db.bookmarks.user == user["id"]) & (db.bookmarks.cache == cache_id))
+        .select()
+        .first()
+    )
+    if bookmark is None:
+        db.bookmarks.update_or_insert(user=user["id"], cache=cache_id)
+        bookmarked = True
+    else:
+        bookmark.delete()
+        bookmarked = False
+    return dict(bookmarked=bookmarked)
+
+
+@action("getBookmarked", method="GET")
+@action.uses(db, auth, url_signer.verify())
+def getBookmarked():
+    user = auth.get_user()
+    cache_id = request.json.get("cache_id")
+    assert user is not None
+    assert cache_id is not None
+    bookmark = (
+        db((db.bookmarks.user == user["id"]) & (db.bookmarks.cache == cache_id))
+        .select()
+        .first()
+    )
+    if bookmark is None:
+        bookmarked = False
+    else:
+        bookmarked = True
+    return dict(bookmarked=bookmarked)
+
+
+# Suggest Page Controllers-------------------------------------------
+@action("suggest")
+@action.uses("suggest.html", db, auth.user)
+def suggest():
+    return ()
+
+
+# Miscellaneous Controllers------------------------------------------
 @action("add_user", method="POST")
 @action.uses(db, auth, url_signer.verify())
 def register_user():
@@ -71,40 +193,12 @@ def register_user():
     )
 
 
-@action("map")
-@action.uses("map.html", db, auth, url_signer)
-def map():
-    return dict(
-        loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
-        searchURL=URL("search", signer=url_signer),
-        generateCacheURL=URL("generateCacheURL", signer=url_signer),
-    )
-
-
-@action("suggest")
-@action.uses("suggest.html", db, auth.user)
-def suggest():
-    return ()
-
-
-@action("profile")
-@action.uses("profile.html", db, auth.user)
-def profile():
-    return dict(load_profile_url=URL("load_profile_details"))
-
-
-@action("bookmarks")
-@action.uses("bookmarks.html", db, auth.user)
-def bookmarks():
-    return dict()
-
-@action("cache_info/<cache_id:int>")
-@action.uses("cache_info.html", db, auth.user, url_signer)
-def cache_info(cache_id=None):
-    return dict(
-        getCacheURL=URL("getCache", cache_id, signer=url_signer),
-        getUserURL=URL("getUser", signer=url_signer),
-    )
+@action("getUser", method="POST")
+@action.uses(db)
+def getUser():
+    id = request.json.get("id")
+    user = db(db.users._id == id).select().first()
+    return dict(user=user)
 
 
 # TODO: MAKE SURE TO REMOVE FOR PRODUCTION
@@ -204,47 +298,3 @@ def clear_db():
     db.users.truncate()
     db.caches.truncate()
     redirect(URL("index"))
-
-
-@action("loadGeoCaches")
-@action.uses(db)
-def getCaches():
-    rows = db(db.caches).select().as_list()
-    return dict(caches=rows)
-
-
-@action("getCache/<cache_id:int>")
-@action.uses(db)
-def getCache(cache_id=None):
-    cache = db(db.caches._id == cache_id).select().first()
-    return dict(cache=cache)
-
-
-@action("generateCacheURL")
-@action.uses(db, url_signer, url_signer.verify())
-def generateCacheURL():
-    cache_id = int(request.params.get("cache_id"))
-    return dict(url=URL("cache_info", cache_id, signer=url_signer))
-
- 
-@action("search")
-@action.uses()
-def search():
-    rows = db(db.caches).select().as_list()
-    return dict(caches=rows)
-
-
-@action("getUser", method="POST")
-@action.uses(db)
-def getUser():
-    id = request.json.get("id")
-    user = db(db.users._id == id).select().first()
-    return dict(user=user)
-
-
-@action("load_profile_details")
-@action.uses(db, auth.user)
-def load_profile_details():
-    user = auth.get_user()
-    profile = db(db.users.user_id == user["id"]).select().first()
-    return dict(profile=profile)
