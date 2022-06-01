@@ -12,7 +12,7 @@
   <div class="container">
     <h1 class="title block mt-3">Bookmarked Caches</h1>
     <h1 v-if="bookmarks.length <= 0">Empty list :(</h1>
-    <div v-for="bookmark in bookmarks" class="card m-4">
+    <div v-for="bookmark in bookmarks" class="card mt-5 mb-5">
       <div class="card-header">
         <div class="card-header-title">
           <a class="cache-link" :href="bookmark.href"
