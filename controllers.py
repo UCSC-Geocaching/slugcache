@@ -126,7 +126,10 @@ def get_bookmarks():
     assert user is not None
     tmp_bookmarks = db(db.bookmarks.user == user["id"]).select().as_list()
     for bookmark in tmp_bookmarks:
-        bookmarks.append(db.caches[bookmark["cache"]])
+        cache = db.caches[bookmark["cache"]]
+        cache["href"] = URL("cache_info", cache.id, signer=url_signer)
+        bookmarks.append(cache)
+
     return dict(bookmarks=bookmarks)
 
 

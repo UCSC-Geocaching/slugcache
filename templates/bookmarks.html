@@ -14,7 +14,11 @@
     <h1 v-if="bookmarks.length <= 0">Empty list :(</h1>
     <div v-for="bookmark in bookmarks" class="card m-4">
       <div class="card-header">
-        <p class="card-header-title">{{bookmark.cache_name}}</p>
+        <div class="card-header-title">
+          <a class="cache-link" :href="bookmark.href"
+            >{{bookmark.cache_name}}</a
+          >
+        </div>
       </div>
       <div class="card-content">
         <div class="content content-wrapper">
@@ -55,7 +59,7 @@
           <div class="box-wrapper">
             <i
               v-for="box_idx in max_boxes"
-              class="fa fa-square m-1 my-box"
+              class="faz fa-square m-1 my-box"
               :class="{'filled': box_idx <= bookmark.size}"
             >
             </i>
