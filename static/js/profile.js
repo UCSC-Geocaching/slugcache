@@ -32,8 +32,9 @@ let init = (page) => {
     loadProfile: function () {
       axios.get(load_profile_url).then(function (r) {
         let profile = r.data.profile;
+        let date_string = profile.creation_date.replace(' ', 'T');
         page.vue.user_email = profile.user_email;
-        date = new Date(profile.creation_date);
+        date = new Date(date_string);
         page.vue.creation_date = `${
           date.getMonth() + 1
         }/${date.getDate()}/${date.getFullYear()}`;
