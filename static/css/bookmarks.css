@@ -39,8 +39,9 @@
   justify-content: center;
   align-self: center;
   justify-self: center;
-  aspect-ratio: 1/1;
+  /* aspect-ratio: 1/1; */
   width: 200px;
+  height: 200px;
   background-color: red;
   grid-column: 1;
 }

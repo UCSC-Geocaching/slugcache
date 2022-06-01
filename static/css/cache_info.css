@@ -124,3 +124,10 @@
 .myBox.filled {
   color: var(--accent-color);
 }
+
+.blue {
+  color: blue;
+}
+.green {
+  color: green;
+}
