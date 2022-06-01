@@ -40,7 +40,6 @@ body > footer {
 }
 
 .footer {
-  padding-bottom: calc(1em + env(safe-area-inset-bottom));
   background-color: var(--primary-color);
 }
 

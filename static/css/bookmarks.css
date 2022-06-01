@@ -20,6 +20,11 @@
   color: var(--accent-color) !important;
 }
 
+.my-container {
+  height: 100%;
+  width: 100%;
+}
+
 .card-header-title {
   background-color: var(--primary-color);
   color: white;

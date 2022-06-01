@@ -9,9 +9,14 @@
 <link rel="stylesheet" href="css/bookmarks.css" />
 
 <div class="section" id="vue-target">
-  <div class="container">
+  <div class="container my-container">
     <h1 class="title block mt-3">Bookmarked Caches</h1>
-    <h1 v-if="bookmarks.length <= 0">Empty list :(</h1>
+    <div v-if="bookmarks.length <= 0" class="empty-list">
+      <h1 class="subtitle">No caches bookmarked 🥺</h1>
+      <h1 class="subtitle">
+        Please bookmark a cache from the cache info page.
+      </h1>
+    </div>
     <div v-for="bookmark in bookmarks" class="card mt-5 mb-5">
       <div class="card-header">
         <div class="card-header-title">
