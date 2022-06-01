@@ -41,6 +41,7 @@
 }
 
 .map-placeholder {
+  margin-right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +68,25 @@
 }
 .my-box {
   color: var(--primary-color);
+  margin: 0 3px;
 }
 .my-box.filled {
   color: var(--accent-color);
+}
+
+@media screen and (max-width: 700px) {
+  .content-wrapper {
+    grid-template-rows: repeat(auto-fit, 2, 1fr);
+    grid-template-columns: repeat(auto-fit, 1, 1fr);
+    gap: 10px;
+  }
+  .map-placeholder {
+    margin-right: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .text-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+  }
 }

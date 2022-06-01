@@ -25,7 +25,15 @@
           <div class="map-placeholder">Map Goes Here</div>
           <div class="text-wrapper">
             <p class="is-size-5">Description</p>
-            <p>{{bookmark.description}}</p>
+            <!-- <p>{{bookmark.description}}</p> -->
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
+              a officia amet qui, similique dicta dolorem harum recusandae,
+              voluptatum excepturi autem porro. Laboriosam numquam provident aut
+              ipsum laborum dolorum voluptates dignissimos, veritatis cupiditate
+              placeat ea consectetur, omnis quo sit quibusdam iusto voluptate
+              tempora non cumque. Est provident maxime consequuntur ad.
+            </p>
             <p class="is-size-5">Hint</p>
             <p>{{bookmark.hint}}</p>
           </div>
@@ -37,7 +45,7 @@
           <div class="box-wrapper">
             <i
               v-for="box_idx in max_boxes"
-              class="fa fa-square m-1 my-box"
+              class="fa fa-square my-box"
               :class="{'filled': box_idx <= bookmark.difficulty}"
             >
             </i>
@@ -48,7 +56,7 @@
           <div class="box-wrapper">
             <i
               v-for="box_idx in max_boxes"
-              class="fa fa-square m-1 my-box"
+              class="fa fa-square my-box"
               :class="{'filled': box_idx <= bookmark.terrain}"
             >
             </i>
@@ -59,7 +67,7 @@
           <div class="box-wrapper">
             <i
               v-for="box_idx in max_boxes"
-              class="fa fa-square m-1 my-box"
+              class="fa fa-square my-box"
               :class="{'filled': box_idx <= bookmark.size}"
             >
             </i>
