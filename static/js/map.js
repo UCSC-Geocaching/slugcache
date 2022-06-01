@@ -287,7 +287,7 @@ function setupMap(center) {
                                         //  after being reset
         }
     });
-
+ 
     var elapsed = false; 
     var loaded = false;
     setTimeout(() => { //Ensures loading screen is displayed for a minimum time

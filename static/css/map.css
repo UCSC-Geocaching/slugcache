@@ -170,7 +170,7 @@ body {
 #loader {
   position: absolute;
   top: calc(50% - 20px);
-  left: calc(50% - 45px);
+  left: calc(50% - 40px);
 }
 @keyframes loader {
   0% {

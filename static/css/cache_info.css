@@ -16,6 +16,7 @@
   height: clamp(200px, 30vw, 300px);
   width: 100%;
   overflow: hidden;
+  background-color: red;
 }
 
 .bannerWrapper > img {
@@ -34,12 +35,8 @@
   align-items: center;
 }
 
-/* .nameWrapper {
-
-} */
-
 .cacheName {
-  margin: 30px 0;
+  margin-bottom: 10px;
   font-size: xx-large;
   font-weight: bold;
 }
@@ -130,4 +127,19 @@
 }
 .green {
   color: green;
+}
+
+/*Map*/
+
+#mapWrapper{
+  top:10px;
+}
+
+#map {
+  height: 30vh;
+  width: 80vw;
+}
+
+.box{
+  border-radius: 0 !important;
 }

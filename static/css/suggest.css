@@ -1,0 +1,36 @@
+#vue-target {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    /* Hides scrollbar for:*/
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  #vue-target::-webkit-scrollbar {
+    display: none;
+  }
+
+  #suggestWrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    z-index: -1;
+  
+    overflow: hidden;
+  }
+
+  #suggestHeader{
+      background-color: red;
+      height: 10%;
+  }
+
+  #suggestForm{
+      background-color: blue;
+      height: 90%;
+  }

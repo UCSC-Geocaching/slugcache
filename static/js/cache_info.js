@@ -1,3 +1,7 @@
+mapboxgl.accessToken =
+  'pk.eyJ1IjoiY3N0ZXJ6YSIsImEiOiJjbDF0dDRleG0yMWpkM2Ztb3B0YWZoaTR6In0.09vTcRrP3ty1lWFuouDsiw'; //store in environ var.
+// ##################################
+
 // This will be the object that will contain the Vue attributes
 // and be used to initialize it.
 let app = {};
@@ -54,11 +58,27 @@ let init = (app) => {
     });
   };
 
+  app.loadMap = function () {
+    const map = new mapboxgl.Map({
+      container   : 'map',
+      style       : 'mapbox://styles/mapbox/outdoors-v11',
+      center      : [app.vue.cache_long, app.vue.cache_lat],
+      zoom        : 16,
+      dragPan     : false,
+      scrollZoom  : false,
+      maxBounds   : [
+                    [-122.08012683329952, 36.9750849217556], // SW coords
+                    [-122.0349268336223, 37.00766046433793], // NW coords
+                    ],
+      });
+  }
+
   // This contains all the methods.
   app.methods = {
     processCache: app.processCache,
-    getUser: app.getUser,
+    getUser: app.getUser, 
     bookmark: app.bookmark,
+    loadMap: app.loadMap,
   };
 
   // This creates the Vue instance.
@@ -75,6 +95,11 @@ let init = (app) => {
     axios.get(getCacheURL).then(function (r) {
       app.processCache(r.data.cache);
     });
+
+    setTimeout(() => {
+      app.loadMap();
+    }, "200")
+    
   };
 
   // Call to the initializer.

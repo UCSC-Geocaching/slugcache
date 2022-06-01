@@ -93,6 +93,7 @@ def getCaches():
     return dict(caches=rows)
 
 
+
 @action("search")
 @action.uses()
 def search():
@@ -203,7 +204,7 @@ def getBookmarked(cache_id=None):
 @action("suggest")
 @action.uses("suggest.html", db, auth.user)
 def suggest():
-    return ()
+    return dict()
 
 
 # Miscellaneous Controllers------------------------------------------
