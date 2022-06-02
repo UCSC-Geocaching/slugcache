@@ -76,10 +76,7 @@ let init = (app) => {
 
   app.logCache = function () {
     axios.put(logCacheURL).then(function (r) {
-      // Add log reverse chronologically
-      app.vue.cache_logs.splice(0, 0, r.data.log);
-      // Show only up to 5 logs
-      app.vue.cache_logs.length = Math.min(app.vue.cache_logs.length, 5);
+      app.getLogs();
     });
   };
 
@@ -87,6 +84,13 @@ let init = (app) => {
     axios.get(getLogsURL).then(function (r) {
       // Reverse chronological order
       tmpLogs = r.data.logs.reverse();
+      // Format the dates
+      tmpLogs.forEach((log) => {
+        tmp_date = new Date(log.discover_date.replace(' ', 'T'));
+        log.discover_month = tmp_date.getMonth() + 1;
+        log.discover_day = tmp_date.getDate();
+        log.discover_year = tmp_date.getFullYear();
+      });
       // Get only up to 5 logs
       tmpLogs.length = Math.min(tmpLogs.length, 5);
       app.vue.cache_logs = tmpLogs;

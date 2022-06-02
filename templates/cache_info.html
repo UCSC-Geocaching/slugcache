@@ -98,10 +98,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-content log-list">
-                  <div v-for="log in cache_logs" class="media">{{log.logger}} discovered this cache on {{log.discover_date}}</div>
-                  <!-- <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
-                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
-                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div> -->
+                  <div v-for="log in cache_logs" class="media">{{log.first_name}} {{log.last_name}} discovered this cache on {{log.discover_month}}/{{log.discover_day}}/{{log.discover_year}}</div>
                 </div>
               </div>
             </div>

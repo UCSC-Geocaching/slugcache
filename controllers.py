@@ -25,6 +25,7 @@ session, db, T, auth, and tempates are examples of Fixtures.
 Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app will result in undefined behavior
 """
 
+from webbrowser import get
 from requests import delete
 from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
@@ -208,10 +209,10 @@ def getBookmarked(cache_id=None):
 @action.uses(db, auth.user, url_signer.verify())
 def logCache(cache_id=None):
     # First user is from auth_user table
-    user = auth.get_user()
-    assert user is not None
+    auth_user_data = auth.get_user()
+    assert auth_user_data is not None
     # This user is from Users table
-    user = db(db.users.user_id == user["id"]).select().first()
+    user = db(db.users.user_id == auth_user_data["id"]).select().first()
     discover_date = datetime.now()
     assert user is not None
     assert cache_id is not None
@@ -219,7 +220,8 @@ def logCache(cache_id=None):
     
     log_id = db.logs.insert(logger=user["id"], cache=cache_id, discover_date=discover_date)
     log = db.logs[log_id]
-    print(log)
+    log["first_name"] = auth_user_data["first_name"]
+    log["last_name"] = auth_user_data["last_name"]
     return dict(log=log)
 
 
@@ -227,6 +229,12 @@ def logCache(cache_id=None):
 @action.uses(db, auth.user)
 def getLogs(cache_id=None):
     logs = db(db.logs.cache==cache_id).select().as_list()
+    # Add name attributes to logs
+    for log in logs:
+        user = db(db.users.id == log["logger"]).select().first()
+        auth_user_data = db(db.auth_user.id == user["user_id"]).select().first()
+        log["first_name"] = auth_user_data["first_name"]
+        log["last_name"] = auth_user_data["last_name"]
     # Figure out how to query only last 10 logs.
     # logs = db(db.executesql('SELECT * FROM logs order by id desc limit 10;'))
     return dict(logs=logs)
