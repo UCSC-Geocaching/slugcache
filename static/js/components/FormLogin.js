@@ -1,8 +1,12 @@
+import InputPassword from "./InputPassword.js";
 import { buildPath } from "../utils.js";
 
 export default {
     name: "FormLogin",
     inject: ["baseURL"],
+    components: {
+        InputPassword
+    },
     data() {
         return {
             email: "",
@@ -27,18 +31,7 @@ export default {
         </div>
       </div>
       <div class="field">
-        <div class="control has-icons-left">
-          <input 
-            class="input"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-            required
-            v-model="password" :class="{ 'is-danger': !isValidCredentials }">
-          <span class="icon is-small is-left">
-            <i class="fa fa-fw fa-lock"></i>
-          </span>
-        </div>
+        <input-password :is-danger="!isValidCredentials" v-model="password" />
         <p v-if="!isValidCredentials" class="help is-danger">Incorrect email or password. Please try again.</p>
         <button class="button is-ghost" type="button" @click="openForgotPwModal" style="padding-left: 0rem;">Forgot Password?</button>
       </div>

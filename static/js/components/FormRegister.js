@@ -1,8 +1,12 @@
+import InputPassword from "./InputPassword.js";
 import { buildPath } from '../utils.js';
 
 export default {
   name: 'FormRegister',
   inject: ['baseURL', 'addUserURL'],
+  components: {
+      InputPassword
+  },
   data() {
     // using snake_case to make constructing POST request easier
     return {
@@ -41,37 +45,15 @@ export default {
       </div>
       <!-- password -->
       <div class="field">
-        <div class="control has-icons-left">
-          <input
-            class="input"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-            required
-            v-model="password"
-            :class="{ 'is-danger': errors.password !== '' }"
-          />
-          <span class="icon is-small is-left">
-            <i class="fa fa-fw fa-lock"></i>
-          </span>
-        </div>
+        <input-password :is-danger="errors.password !== ''" v-model="password" />
       </div>
       <!-- password (again) -->
       <div class="field">
-        <div class="control has-icons-left">
-          <input
-            class="input"
-            type="password"
-            placeholder="Password (again)"
-            autocomplete="current-password"
-            required
-            v-model="password_again"
-            :class="{ 'is-danger': errors.password !== '' }"
-          />
-          <span class="icon is-small is-left">
-            <i class="fa fa-fw fa-lock"></i>
-          </span>
-        </div>
+        <input-password
+          placeholder="Password (again)"
+          :is-danger="errors.password !== ''"
+          v-model="password_again"
+        />
         <p v-if="errors.password !== ''" class="help is-danger">
           {{errors.password}}
         </p>

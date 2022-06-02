@@ -39,26 +39,29 @@ export default {
               <h1 class="modal-req-reset-pw-title title has-text-left">Need help with your password?</h1>
               <p class="subtitle has-text-left">Tell us some information about your account.</p>
             </div>
-            <form @submit.prevent="requestResetPassword" novalidate v-cloak>
-              <div class="field">
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    type="email"
-                    placeholder="Email Address"
-                    autocomplete="email"
-                    required v-model="email"
-                    :class="{ 'is-danger': !isValidEmail }"
-                  >
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-fw fa-envelope-o"></i>
-                  </span>
+            <div class="block">
+              <form @submit.prevent="requestResetPassword" novalidate v-cloak>
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="email"
+                      placeholder="Email Address"
+                      autocomplete="email"
+                      required v-model="email"
+                      :class="{ 'is-danger': !isValidEmail }"
+                    >
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-fw fa-envelope-o"></i>
+                    </span>
+                  </div>
+                  <p v-if="!isValidEmail" class="help is-danger">Invalid email. Please try again.</p>
+                  <p v-if="canShowSuccess" class="help is-success">Success! Visit the link sent to your email.</p>
                 </div>
-                <p v-if="!isValidEmail" class="help is-danger">Invalid email. Please try again.</p>
-                <p v-if="canShowSuccess" class="help is-success">Success! Visit the link sent to your email.</p>
-              </div>
-              <button class="button is-fullwidth is-warning" type="submit">Continue</button>
-            </form>
+                <button class="button is-fullwidth is-warning" type="submit">Continue</button>
+              </form>
+            </div>
+            <div class="block"></div>
           </div>
         </div>
       </div>
