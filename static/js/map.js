@@ -294,7 +294,7 @@ function setupMap(center) {
         elapsed = true; //If elapsed time has been reached and map is loaded: display
         if (loaded){
             app.vue.loadMode = false;
-            document.getElementById("map").style.zIndex="0";
+            document.getElementById("map").style.zIndex="0"; //clean up
         }
     }, "1500")
 

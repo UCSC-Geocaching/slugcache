@@ -3,26 +3,73 @@
 <style>
   [v-cloak] {
     display: none;
-  }
+  } 
 </style>
 
 <link rel="stylesheet" href="css/suggest.css" />
 
 <div class="suggestWrapper" id="vue-target">
 
-  <div id="suggestHeader">
-    <div class="columns is-mobile is-centered m-0">
-      <div class="column is-half">
-        <h6 class="title is-6">Suggest a Cache</h6>
-      </div>
-    </div>
-  </div>
+  <div class="container">
 
-  <div id="suggestForm"></div>
+    
+      <div class="columns is-mobile is-centered m-0 mt-3">
+        <div class="column is-narrow">
+          <p class="bd-notification">
+            <h6 class="title is-6">Suggest a Cache</h6>
+          </p>
+        </div>
+      </div>
+   
+
+    <div class="box ml-5 mr-5 mt-2">
+      <div id="map"></div> <!--Map-->
+    </div>
+    
+    <div class="container" id="suggestForm">
+
+      <div class="field">
+        <div class="control">
+          <input class="input" type="text" v-model="newName" placeholder="Cache Name (ex: Porter Stage)">
+        </div>
+      </div>
+      
+      <div class="field">
+        <div class="control">
+          <input class="input" type="text" v-model="newHint" placeholder="Hint">
+        </div>
+      </div>
+      
+      <div class="field">
+        <div class="control">
+          <textarea class="textarea has-fixed-size" v-model="newDesc" placeholder="Description"></textarea>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <a class="button" id="submitButton" href="[[=URL('map')]]" @click="addCache">
+            Submit
+          </a>
+        </div>
+        <div class="control">
+          <a class="button" id="cancelButton" href="[[=URL('map')]]">
+            Cancel
+          </a>
+        </div>
+      </div>
+
+
+    </div>
+
+</div>
  
 </div>
 
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
+<script>
+  let addCacheURL = '[[=XML(addCacheURL)]]';
+</script>
 <script src="js/suggest.js"></script>
 [[end]]

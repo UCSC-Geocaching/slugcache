@@ -2,6 +2,7 @@
   --primary-color: #003c6c;
   --primary-color-highlighted: #002e54;
   --accent-color: #fdc700;
+  --accent-color: #fdc700;
   /* filter generated with https://codepen.io/sosuke/pen/Pjoqqp */
   --selected-filter: brightness(0) saturate(100%) invert(77%) sepia(65%)
     saturate(2400%) hue-rotate(2deg) brightness(104%) contrast(106%);

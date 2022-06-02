@@ -7,13 +7,13 @@
     /* Hides scrollbar for:*/
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-  }
+}
   /* Hide scrollbar for Chrome, Safari and Opera */
-  #vue-target::-webkit-scrollbar {
+#vue-target::-webkit-scrollbar {
     display: none;
-  }
+}
 
-  #suggestWrapper{
+#suggestWrapper{
     position: absolute;
     top: 0;
     left: 0;
@@ -21,16 +21,51 @@
     width: 100%;
     background-color: rgb(255, 255, 255);
     z-index: -1;
-  
+   
     overflow: hidden;
-  }
+}
 
-  #suggestHeader{
-      background-color: red;
-      height: 10%;
-  }
+#suggestForm{
+    height: 90%;
+    width: 90%;
+}
 
-  #suggestForm{
-      background-color: blue;
-      height: 90%;
-  }
+/*Map*/
+#mapWrapper{
+  top:10px;
+}
+
+#map {
+  height: 30vh;
+  width: 100%;
+}
+
+/*
+.box{
+  border-radius: 0 !important;
+  box-shadow: none;
+}
+*/
+
+.marker {
+  background-image: url('../icons/cache-icon.png');
+  background-size: cover; 
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/*Form*/
+#submitButton{
+  background-color: #fdc700;
+  border-style: none;
+}
+
+.columns{
+  height: 30px;
+}
+
+/*
+Add an add mode, hides suggest a cache part and displays confirmation page!
+*/

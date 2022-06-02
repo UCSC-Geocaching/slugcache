@@ -12,9 +12,21 @@
   <div v-if="loadMode" id="loadingScreen">
     <div id="loader">
       <div id="shadow"></div>
-      <div id="box"></div>
+      <div id="box"></div> 
       <h4>Loading Caches</h4>
     </div>
+  </div>
+
+  <div v-if="!loadMode && !searchMode" class="suggestButtonWrapper mt-2 mr-2">
+
+    <!--<a class="button" id="suggestButton" href="[[=URL('suggest')]]">Suggest a Cache</a> -->
+    <a href="[[=URL('suggest')]]">
+      <i class="fa fa-plus-circle is-size-1" id="suggestButton" aria-hidden="true"></i>
+    </a>
+    
+      
+    </i>
+    
   </div>
 
   <div v-if="!loadMode && !searchMode" class="searchButton" @click="setSearchMode(true)">
@@ -29,7 +41,7 @@
       <span class="icon is-small is-left">
         <i class="fas fa-search"></i>
     </div>
-</div>
+  </div>
 
 
   <transition name="slide-fade" mode="out-in">

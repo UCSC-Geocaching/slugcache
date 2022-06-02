@@ -204,9 +204,25 @@ def getBookmarked(cache_id=None):
 
 # Suggest Page Controllers-------------------------------------------
 @action("suggest")
-@action.uses("suggest.html", db, auth.user)
+@action.uses("suggest.html", db, auth.user, url_signer)
 def suggest():
-    return dict()
+    return dict(
+        addCacheURL=URL("addCache", signer=url_signer)
+        )
+    
+    
+@action("addCache", method="POST")
+@action.uses(db, auth, url_signer.verify())
+def addCache():
+    db.caches.insert(
+        cache_name=request.json.get('cache_name'),
+        hint=request.json.get('hint'),
+        description=request.json.get('description'),
+        lat=request.json.get('lat'),
+        long=request.json.get('long'),
+        author=db(db.users.user_email == get_user_email).select().first().id,
+    )
+    redirect(URL("map"))
 
 
 # Miscellaneous Controllers------------------------------------------
