@@ -120,6 +120,10 @@
   margin: 1em;
 }
 
+.log-button-and-text {
+  display: flex;
+  flex-direction: column;
+}
 /*Map*/
 
 #mapWrapper {

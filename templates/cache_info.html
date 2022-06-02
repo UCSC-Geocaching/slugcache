@@ -103,9 +103,10 @@
               </div>
             </div>
             <div class="card-footer">
-              <div class="card-footer-item">
-                <div class="button" @click="logCache">Log Cache</div>
-                <div class="button" @click="getLogs">Load Caches</div>
+              <div class="card-footer-item log-button-and-text">
+                <div class="button" :disabled="button_disabled" @click="logCache">Log Cache
+                </div>
+                <p v-if="button_disabled" class="has-text-danger">Next log available at {{refresh_time}}</p>
               </div>
             </div>
           </div>
@@ -124,6 +125,7 @@
   let getBookmarkedURL = '[[=XML(getBookmarkedURL)]]';
   let logCacheURL = '[[=XML(logCacheURL)]]';
   let getLogsURL = '[[=XML(getLogsURL)]]';
+  let checkTimerURL = '[[=XML(checkTimerURL)]]';
 </script>
 <script src="js/cache_info.js"></script>
 <script

@@ -43,7 +43,7 @@ from .common import (
 from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 
 url_signer = URLSigner(session)
@@ -149,6 +149,7 @@ def cache_info(cache_id=None):
         getBookmarkedURL=URL("getBookmarked", cache_id, signer=url_signer),
         logCacheURL=URL("logCache", cache_id, signer=url_signer),
         getLogsURL=URL("getLogs", cache_id),
+        checkTimerURL=URL("checkTimer", cache_id, signer=url_signer),
     )
 
 
@@ -238,6 +239,31 @@ def getLogs(cache_id=None):
     # Figure out how to query only last 10 logs.
     # logs = db(db.executesql('SELECT * FROM logs order by id desc limit 10;'))
     return dict(logs=logs)
+
+
+@action("checkTimer/<cache_id:int>", method="GET")
+@action.uses(db, auth.user, url_signer.verify())
+def checkTimer(cache_id=None):
+    # First user is from auth_user table
+    auth_user_data = auth.get_user()
+    assert auth_user_data is not None
+    # This user is from Users table
+    user = db(db.users.user_id == auth_user_data["id"]).select().first()
+    assert user is not None
+    newest_log = db((db.logs.cache == cache_id) & (db.logs.logger == user["id"])).select().last()
+    # No log at this cache for this user
+    if newest_log is None:
+        return dict(disabled=False)
+    # Check if the most recent log is old enough
+    log_time = newest_log["discover_date"]
+    refresh_time = log_time + timedelta(minutes=15)
+    time_now = datetime.now()
+    # Now is past the refresh time limit
+    if (time_now > refresh_time):
+        return dict(disabled=False, refresh_time=refresh_time)
+    # Is hasn't been enough time yet
+    else:
+        return dict(disabled=True, refresh_time=refresh_time)
 
 # Suggest Page Controllers-------------------------------------------
 @action("suggest")

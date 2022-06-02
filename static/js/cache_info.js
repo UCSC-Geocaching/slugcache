@@ -26,6 +26,8 @@ let init = (app) => {
     cache_max_boxes: 5,
     bookmarked: false,
     cache_logs: [],
+    button_disabled: false,
+    refresh_time: '',
   };
 
   app.processCache = function (a) {
@@ -95,6 +97,15 @@ let init = (app) => {
       tmpLogs.length = Math.min(tmpLogs.length, 5);
       app.vue.cache_logs = tmpLogs;
     });
+    // Check if the log button should be disabled.
+    app.checkTimer();
+  };
+
+  app.checkTimer = function () {
+    axios.get(checkTimerURL).then(function (r) {
+      app.vue.button_disabled = r.data.disabled;
+      app.vue.refresh_time = r.data.refresh_time;
+    });
   };
 
   // This contains all the methods.
@@ -105,6 +116,7 @@ let init = (app) => {
     loadMap: app.loadMap,
     logCache: app.logCache,
     getLogs: app.getLogs,
+    checkTimer: app.checkTimer,
   };
 
   // This creates the Vue instance.
