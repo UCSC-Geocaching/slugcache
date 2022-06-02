@@ -56,6 +56,12 @@ export default {
         <div class="modal-content">
           <div class="box">
             <h1 class="modal-auth-title title has-text-centered">
+              <img
+                width="32"
+                height="32"
+                src="../static/icons/slug_gold.svg"
+                alt="Slug Cache Logo"
+              />
               {{ isLoginRoute ? 'Login to Slug Cache' : 'Join Slug Cache Today' }}
             </h1>
             <button class="delete" @click="close"></button>
