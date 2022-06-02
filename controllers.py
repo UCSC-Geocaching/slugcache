@@ -42,7 +42,8 @@ from .common import (
 from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
 
-from datetime import datetime
+from datetime import date, datetime
+
 
 url_signer = URLSigner(session)
 
@@ -145,6 +146,8 @@ def cache_info(cache_id=None):
         getUserURL=URL("getUser", signer=url_signer),
         setBookmarkedURL=URL("setBookmarked", cache_id, signer=url_signer),
         getBookmarkedURL=URL("getBookmarked", cache_id, signer=url_signer),
+        logCacheURL=URL("logCache", cache_id, signer=url_signer),
+        getLogsURL=URL("getLogs", cache_id),
     )
 
 
@@ -201,6 +204,32 @@ def getBookmarked(cache_id=None):
         bookmarked = True
     return dict(bookmarked=bookmarked)
 
+@action("logCache/<cache_id:int>", method="PUT")
+@action.uses(db, auth.user, url_signer.verify())
+def logCache(cache_id=None):
+    # First user is from auth_user table
+    user = auth.get_user()
+    assert user is not None
+    # This user is from Users table
+    user = db(db.users.user_id == user["id"]).select().first()
+    discover_date = datetime.now()
+    assert user is not None
+    assert cache_id is not None
+    assert discover_date is not None
+    
+    log_id = db.logs.insert(logger=user["id"], cache=cache_id, discover_date=discover_date)
+    log = db.logs[log_id]
+    print(log)
+    return dict(log=log)
+
+
+@action("getLogs/<cache_id:int>", method="GET")
+@action.uses(db, auth.user)
+def getLogs(cache_id=None):
+    logs = db(db.logs.cache==cache_id).select().as_list()
+    # Figure out how to query only last 10 logs.
+    # logs = db(db.executesql('SELECT * FROM logs order by id desc limit 10;'))
+    return dict(logs=logs)
 
 # Suggest Page Controllers-------------------------------------------
 @action("suggest")

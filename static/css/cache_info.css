@@ -116,6 +116,10 @@
   color: var(--accent-color);
 }
 
+.card {
+  margin: 1em;
+}
+
 /*Map*/
 
 #mapWrapper {

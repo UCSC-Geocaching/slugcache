@@ -97,22 +97,25 @@
               </div>
             <div class="card-content">
               <div class="media">
-                <div class="media-content">
+                <div class="media-content log-list">
+                  <div v-for="log in cache_logs" class="media">{{log.logger}} discovered this cache on {{log.discover_date}}</div>
+                  <!-- <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
                   <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
-                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
-                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
+                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div> -->
                 </div>
               </div>
             </div>
             <div class="card-footer">
               <div class="card-footer-item">
-                <div class="button">Log Cache</div>
+                <div class="button" @click="logCache">Log Cache</div>
+                <div class="button" @click="getLogs">Load Caches</div>
               </div>
             </div>
           </div>
         </div>
       </section>
     </div>
+    <div class="spacer"></div>
   </body>
 </section>
 
@@ -122,6 +125,8 @@
   let getUserURL = '[[=XML(getUserURL)]]';
   let setBookmarkedURL = '[[=XML(setBookmarkedURL)]]';
   let getBookmarkedURL = '[[=XML(getBookmarkedURL)]]';
+  let logCacheURL = '[[=XML(logCacheURL)]]';
+  let getLogsURL = '[[=XML(getLogsURL)]]';
 </script>
 <script src="js/cache_info.js"></script>
 <script
