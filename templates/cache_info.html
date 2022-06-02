@@ -33,7 +33,6 @@
           </div>
         </div>
       </div>
-      <!-- <hr class="line" /> -->
       <div class="card mt-5 mb-5">
         <div class="card-footer">
           <div class="card-footer-item statCard">
@@ -71,23 +70,45 @@
           </div>
         </div>
       </div>
-      <!-- <div class="statsWrapper">
-      </div> -->
-      <!-- <hr class="line" /> -->
+
       <section class="cacheContent">
-        <div class="contentWrapper">
-          <div class="contentHeader">Description:</div>
-          <div class="descriptionContent">{{cache_desc}}</div>
+        <div class="cacheContentColumn">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-title">Cache Info</div>
+            </div>
+            <div class="card-content">
+              <div class="infoHeader">Description:</div>
+              <div class="infoContent">{{cache_desc}}</div>
+              <div class="infoHeader">Hint:</div>
+              <div class="infoContent">{{cache_hint}}</div>
+              <div class="infoHeader">Additional Information:</div>
+              <div class="infoContent">
+                <div>Located at {{cache_lat}}, {{cache_long}}</div>
+                <div>Created on {{cache_create_date}} by {{cache_author}}</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="contentWrapper">
-          <div class="contentHeader">Hint:</div>
-          <div class="descriptionContent">{{cache_hint}}</div>
-        </div>
-        <div class="contentWrapper">
-          <div class="contentHeader">Additional Information:</div>
-          <div class="descriptionContent">
-            <div>Located at {{cache_lat}}, {{cache_long}}</div>
-            <div>Created on {{cache_create_date}} by {{cache_author}}</div>
+        <div class="cacheContentColumn">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-title">Log Feed</div>
+              </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
+                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
+                  <div class="media">Chris Sterza discovered this cache on 6/1/2022</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-footer-item">
+                <div class="button">Log Cache</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
