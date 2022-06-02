@@ -1,11 +1,11 @@
-import InputPassword from "./InputPassword.js";
+import InputPassword from './InputPassword.js';
 import { buildPath } from '../utils.js';
 
 export default {
   name: 'FormRegister',
   inject: ['baseURL', 'addUserURL'],
   components: {
-      InputPassword
+    InputPassword,
   },
   data() {
     // using snake_case to make constructing POST request easier
@@ -98,7 +98,7 @@ export default {
           {{errors.last_name}}
         </p>
       </div>
-      <button class="button is-fullwidth is-warning" type="submit">Sign Up</button>
+      <button class="button is-fullwidth gold-button" type="submit">Sign Up</button>
     </form>
     `,
   methods: {
@@ -110,41 +110,38 @@ export default {
 
       try {
         // Register with auth
-        await axios
-          .post(buildPath(this.baseURL, 'auth/api/register'), {
-            email: this.email,
-            password: this.password,
-            first_name: this.first_name,
-            last_name: this.last_name,
-          });
+        await axios.post(buildPath(this.baseURL, 'auth/api/register'), {
+          email: this.email,
+          password: this.password,
+          first_name: this.first_name,
+          last_name: this.last_name,
+        });
 
         try {
           // Auto login on successful registration
-          await axios
-            .post(buildPath(this.baseURL, 'auth/api/login'), {
-              email: this.email,
-              password: this.password,
-            });
+          await axios.post(buildPath(this.baseURL, 'auth/api/login'), {
+            email: this.email,
+            password: this.password,
+          });
           // Adding to "users" database
           // Must do this after login so we can get auth_user reference from session
-          await axios
-            .post(this.addUserURL, {
-              first_name: this.first_name,
-              last_name: this.last_name,
-              email: this.email,
-            });
+          await axios.post(this.addUserURL, {
+            first_name: this.first_name,
+            last_name: this.last_name,
+            email: this.email,
+          });
         } catch (err) {
           this.setAllErrors('Internal Server Error');
           return;
         }
-        
+
         const next =
           new URLSearchParams(location.search).get('next') ||
           buildPath(this.baseURL, 'map');
         window.location.replace(next);
 
         this.setAllErrors('');
-      } catch(err) {
+      } catch (err) {
         const errors = err.response.data.errors || '';
         Object.keys(this.errors).forEach(
           (key) => (this.errors[key] = errors[key] || '')
