@@ -1,0 +1,30 @@
+* {
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--primary-color);
+}
+
+#welcome-pg {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-wrapper {
+  max-width: 500px;
+  width: 30vw;
+  /* padding: 0 10%; */
+}
+
+.login-wrapper > button {
+  margin: 1em 0;
+}
+
+.logo {
+  margin-bottom: 1em;
+}

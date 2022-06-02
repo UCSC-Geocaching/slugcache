@@ -1,19 +1,19 @@
-import FormLogin from "./FormLogin.js";
-import FormRegister from "./FormRegister.js";
+import FormLogin from './FormLogin.js';
+import FormRegister from './FormRegister.js';
 
 export default {
-    name: "ModalAuth",
-    components: {
-        FormLogin,
-        FormRegister
+  name: 'ModalAuth',
+  components: {
+    FormLogin,
+    FormRegister,
+  },
+  props: {
+    route: {
+      type: String,
+      required: true,
     },
-    props: {
-        route: {
-            type: String,
-            required: true
-        }
-    },
-    template: /*html*/ `
+  },
+  template: /*html*/ `
     <div>
       <component :is="'style'" type="text/css">
         .modal h1.title {
@@ -56,7 +56,7 @@ export default {
         <div class="modal-content">
           <div class="box">
             <h1 class="title has-text-centered">
-              {{ isLoginRoute ? 'Login to Geocache' : 'Join Geocache Today' }}
+              {{ isLoginRoute ? 'Login to Slug Cache' : 'Join Slug Cache Today' }}
             </h1>
             <button class="delete" @click="close"></button>
             <div class="block">
@@ -89,23 +89,23 @@ export default {
       </div>
     </div>
     `,
-    methods: {
-        login() {
-            const baseURL = this.route.slice(0, this.route.lastIndexOf("/"));
-            this.$emit("update:route", `${baseURL}/login`);
-        },
-        register() {
-            const baseURL = this.route.slice(0, this.route.lastIndexOf("/"));
-            this.$emit("update:route", `${baseURL}/register`);
-        },
-        close() {
-            this.$emit("close");
-        }
+  methods: {
+    login() {
+      const baseURL = this.route.slice(0, this.route.lastIndexOf('/'));
+      this.$emit('update:route', `${baseURL}/login`);
     },
-    computed: {
-        isLoginRoute() {
-            const routes = this.route.split("/");
-            return routes[routes.length - 1] === "login";
-        }
-    }
+    register() {
+      const baseURL = this.route.slice(0, this.route.lastIndexOf('/'));
+      this.$emit('update:route', `${baseURL}/register`);
+    },
+    close() {
+      this.$emit('close');
+    },
+  },
+  computed: {
+    isLoginRoute() {
+      const routes = this.route.split('/');
+      return routes[routes.length - 1] === 'login';
+    },
+  },
 };
