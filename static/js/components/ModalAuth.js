@@ -16,8 +16,8 @@ export default {
   template: /*html*/ `
     <div>
       <component :is="'style'" type="text/css">
-        .modal h1.title {
-          margin: 0rem;
+        .modal-auth-title {
+          margin: 0rem !important;
           line-height: initial;
         }
         .delete {
@@ -55,7 +55,7 @@ export default {
         <div class="modal-background" @click="close"></div>
         <div class="modal-content">
           <div class="box">
-            <h1 class="title has-text-centered">
+            <h1 class="modal-auth-title title has-text-centered">
               {{ isLoginRoute ? 'Login to Slug Cache' : 'Join Slug Cache Today' }}
             </h1>
             <button class="delete" @click="close"></button>

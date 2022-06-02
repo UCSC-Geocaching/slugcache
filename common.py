@@ -101,6 +101,7 @@ class CustomAuthEnforcer(AuthEnforcer):
                 use_appname=self.auth.param.use_appname_in_redirects,
             )
         )
+
 class CustomAuth(Auth):
     @property
     def user(self):

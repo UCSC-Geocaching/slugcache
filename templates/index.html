@@ -27,28 +27,38 @@
   </div>
 
   <modal-auth
-    v-show="isModalVisible"
+    v-show="isModalAuthVisible"
     :route="currentRoute"
     @update:route="updateRoute"
     @close="closeModal"
   >
   </modal-auth>
+  <modal-forgot-pw
+    v-show="isModalForgotPwVisible"
+    :route="currentRoute"
+    @update:route="updateRoute"
+    @close="closeModal"
+  >
+  </modal-forgot-pw>
 </div>
 
 [[block page_scripts]]
 <script type="module">
   import ModalAuth from './js/components/ModalAuth.js';
+  import ModalForgotPw from './js/components/ModalForgotPw.js';
   import { buildPath } from './js/utils.js';
   import { listen, push } from './js/history.js';
 
   const baseURL = '[[=XML(base_url)]]';
   const loginURL = buildPath(baseURL, 'login');
   const registerURL = buildPath(baseURL, 'register');
+  const forgotPwURL = buildPath(baseURL, 'request_reset_password');
 
   new Vue({
     el: '#welcome-pg',
     components: {
       ModalAuth,
+      ModalForgotPw
     },
     provide: {
       baseURL,
@@ -74,13 +84,19 @@
       openRegisterModal() {
         this.updateRoute(registerURL);
       },
+      openForgotPwModal() {
+        this.updateRoute(forgotPwURL);
+      },
       closeModal() {
         this.updateRoute(baseURL);
       },
     },
     computed: {
-      isModalVisible() {
+      isModalAuthVisible() {
         return [loginURL, registerURL].includes(this.currentRoute);
+      },
+      isModalForgotPwVisible() {
+        return forgotPwURL === this.currentRoute;
       },
     },
   });

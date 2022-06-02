@@ -49,10 +49,12 @@ url_signer = URLSigner(session)
 # Login Controllers--------------------------------------------------
 @action("login")
 @action("register")
+@action("request_reset_password")
 @action("index")
 @action.uses("index.html", auth, url_signer)
 def index():
-    if request.fullpath in (URL("login"), URL("register")) and auth.is_logged_in:
+    logged_out_endpoints = (URL(endpoint) for endpoint in ("login", "register", "request_reset_password"))
+    if request.fullpath in logged_out_endpoints and auth.is_logged_in:
         redirect(URL("map"))
     return {
         "base_url": URL(),

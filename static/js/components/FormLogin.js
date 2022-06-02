@@ -40,6 +40,7 @@ export default {
           </span>
         </div>
         <p v-if="!isValidCredentials" class="help is-danger">Incorrect email or password. Please try again.</p>
+        <button class="button is-ghost" type="button" @click="openForgotPwModal" style="padding-left: 0rem;">Forgot Password?</button>
       </div>
       <button class="button is-fullwidth is-warning" type="submit">Login</button>
     </form>
@@ -57,6 +58,9 @@ export default {
                     window.location.replace(next);
                 })
                 .catch((err) => (this.isValidCredentials = false));
+        },
+        openForgotPwModal() {
+            this.$parent.$parent.openForgotPwModal();
         }
     },
     mounted() {
