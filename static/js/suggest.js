@@ -17,6 +17,7 @@ let init = (app) => {
     newLat: 0,
     newLong: 0,
     center: 0,
+    formMode: true,
   };
  
   app.enumerate = (a) => {
@@ -27,6 +28,13 @@ let init = (app) => {
     });
     return a;
   };
+
+  app.toggleForm = function (mode){
+    app.vue.formMode = mode;
+    app.map.dragPan.disable();
+    app.map.scrollZoom.disable();
+    app.map.doubleClickZoom.disable();
+  }
 
   app.addCache = function () {
     axios.post(addCacheURL,
@@ -46,6 +54,7 @@ let init = (app) => {
       style       : 'mapbox://styles/mapbox/outdoors-v11',
       center      : center, 
       zoom        : 15,
+      dragPan     : true,
       scrollZoom  : true,
       maxBounds   : [
                     [-122.08012683329952, 36.9750849217556], // SW coords
@@ -69,6 +78,7 @@ let init = (app) => {
       marker.setLngLat(app.vue.center);
     });
 
+    app.map = map;
     
   } 
 
@@ -76,6 +86,7 @@ let init = (app) => {
   app.methods = {
     loadMap: app.loadMap,
     addCache: app.addCache,
+    toggleForm: app.toggleForm,
   };
 
   // This creates the Vue instance.

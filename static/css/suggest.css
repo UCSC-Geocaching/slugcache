@@ -25,7 +25,7 @@
     overflow: hidden;
 }
 
-#suggestForm{
+#suggestForm{ 
     height: 90%;
     width: 90%;
 }
@@ -40,12 +40,6 @@
   width: 100%;
 }
 
-/*
-.box{
-  border-radius: 0 !important;
-  box-shadow: none;
-}
-*/
 
 .marker {
   background-image: url('../icons/cache-icon.png');
@@ -62,10 +56,19 @@
   border-style: none;
 }
 
-.columns{
+#titleCache{
   height: 30px;
 }
 
-/*
-Add an add mode, hides suggest a cache part and displays confirmation page!
-*/
+#confirmWrapper{
+  width: 70%;;
+}
+
+#confirmSubtitle{
+  word-wrap: break-word;
+  width: 230px; 
+}
+
+#checkIcon{
+ margin-left:80px; 
+}

@@ -170,12 +170,10 @@
   width: 100%;
 }
 
-/*
-#logWrapper{
-  overflow-y:auto;
-  max-height: 230px;
+#ratingsWrapper{
+box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0px 0 1px rgb(10 10 10 / 2%);
 }
-*/
+
 #infoWrapper {
   height: 230px;
   overflow: scroll;
@@ -185,10 +183,3 @@
   height: 165px;
   overflow: scroll;
 }
-
-/*
-Trying to create a div inside card content that is the size of its left card
-From here it stays that height
-Can scroll inside
-
-*/

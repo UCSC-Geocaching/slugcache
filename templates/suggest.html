@@ -12,58 +12,70 @@
 
   <div class="container">
 
-
-      <div class="columns is-mobile is-centered m-0 mt-3">
+      <div class="box m-0 p-0">
+        <div id="map"></div> <!--Map-->
+      </div>
+    
+      <div class="columns is-mobile is-centered m-0 mt-3" id="titleCache">
         <div class="column is-narrow">
           <p class="bd-notification">
             <h6 class="title is-6 is-bold">Suggest a Cache</h6>
           </p>
         </div>
       </div>
-   
 
-    <div class="box ml-5 mr-5 mt-2">
-      <div id="map"></div> <!--Map-->
-    </div>
-    
-    <div class="container" id="suggestForm">
+      <div v-if="formMode" class="container mt-4" id="suggestForm">
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" v-model="newName" placeholder="Cache Name (ex: Porter Stage)">
+          </div>
+        </div>
+        
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" v-model="newHint" placeholder="Hint">
+          </div>
+        </div>
+        
+        <div class="field">
+          <div class="control">
+            <textarea class="textarea has-fixed-size" v-model="newDesc" placeholder="Description"></textarea>
+          </div>
+        </div>
 
-      <div class="field">
-        <div class="control">
-          <input class="input" type="text" v-model="newName" placeholder="Cache Name (ex: Porter Stage)">
-        </div>
-      </div>
-      
-      <div class="field">
-        <div class="control">
-          <input class="input" type="text" v-model="newHint" placeholder="Hint">
-        </div>
-      </div>
-      
-      <div class="field">
-        <div class="control">
-          <textarea class="textarea has-fixed-size" v-model="newDesc" placeholder="Description"></textarea>
-        </div>
-      </div>
-
-      <div class="field is-grouped">
-        <div class="control">
-          <a class="button" id="submitButton" href="[[=URL('map')]]" @click="addCache">
-            Submit
-          </a>
-        </div>
-        <div class="control">
-          <a class="button" id="cancelButton" href="[[=URL('map')]]">
-            Cancel
-          </a>
+        <div class="field is-grouped">
+          <div class="control">
+            <a class="button" id="submitButton" @click="addCache(); toggleForm(false)">
+              Submit
+            </a>
+          </div>
+          <div class="control">
+            <a class="button" id="cancelButton" href="[[=URL('map')]]">
+              Cancel
+            </a>
+          </div>
         </div>
       </div>
 
+      <div v-if="!formMode" class="container" id="confirmWrapper">
+        <div class="columns is-mobile is-centered m-0 mt-3">
+          <div class="column is-narrow">
+            <div class="box">
+              <h6 class="title is-6 mb-0">Cache Successfully Submitted</h6>
+              <i class="fa fa-check fa-4x" aria-hidden="true" id="checkIcon"></i>
+              <h6 class="subtitle is-6 ml-2 pr-3" id="confirmSubtitle">
+                Your cache is pending review. If approved, the cache 
+                will be added to the map.
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    </div>
 
-</div>
- 
+
+
+  </div>
 </div>
 
 [[block page_scripts]]
