@@ -21,14 +21,7 @@ body {
 
 .login-wrapper {
   max-width: 500px;
-  width: 30vw;
-  /* padding: 0 10%; */
-}
-
-@media only screen and (max-width: 480px) {
-  .login-wrapper {
-    width: 80vw;
-  }
+  width: 70vw;
 }
 
 .login-wrapper > button {

@@ -1,11 +1,16 @@
-
-
 #vue-target {
   height: 100%;
   width: 100%;
   overflow: scroll;
+  /* Hides scrollbar for:*/
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
- 
+/* Hide scrollbar for Chrome, Safari and Opera */
+#vue-target::-webkit-scrollbar {
+  display: none;
+}
+
 .bannerWrapper {
   height: clamp(200px, 30vw, 300px);
   width: 100%;
@@ -113,6 +118,18 @@
 .card {
   margin: 1em;
 }
+.card,
+.card > * {
+  overflow: scroll;
+  /* Hides scrollbar for:*/
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.card::-webkit-scrollbar,
+.card > *::-webkit-scrollbar {
+  display: none;
+}
 
 .log-button-and-text {
   display: flex;
@@ -133,15 +150,14 @@
   border-radius: 0 !important;
 }
 
-
 /**/
 
-#detailsWrapper{
+#detailsWrapper {
   height: 100%;
   width: 100%;
 }
 
-#pageTitle{
+#pageTitle {
   height: 30px;
 }
 
@@ -156,16 +172,15 @@
   max-height: 230px;
 }
 */
-#infoWrapper{
+#infoWrapper {
   height: 230px;
   overflow: scroll;
 }
 
-#logWrapper{
+#logWrapper {
   height: 165px;
   overflow: scroll;
 }
-
 
 /*
 Trying to create a div inside card content that is the size of its left card
