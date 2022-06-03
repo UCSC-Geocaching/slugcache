@@ -1,17 +1,11 @@
-* {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
+
 
 #vue-target {
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-y: visible;
+  overflow: scroll;
 }
-
+ 
 .bannerWrapper {
   height: clamp(200px, 30vw, 300px);
   width: 100%;
@@ -138,3 +132,44 @@
 .box {
   border-radius: 0 !important;
 }
+
+
+/**/
+
+#detailsWrapper{
+  height: 100%;
+  width: 100%;
+}
+
+#pageTitle{
+  height: 30px;
+}
+
+#map {
+  height: 30vh;
+  width: 100%;
+}
+
+/*
+#logWrapper{
+  overflow-y:auto;
+  max-height: 230px;
+}
+*/
+#infoWrapper{
+  height: 230px;
+  overflow: scroll;
+}
+
+#logWrapper{
+  height: 165px;
+  overflow: scroll;
+}
+
+
+/*
+Trying to create a div inside card content that is the size of its left card
+From here it stays that height
+Can scroll inside
+
+*/

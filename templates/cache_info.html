@@ -2,120 +2,111 @@
 <link rel="stylesheet" href="css/cache_info.css" />
 [[end]]
 
-<section id="vue-target">
-  <header>
-    <section class="hero is-fullwidth is-small mt-3" id="mapWrapper">
-      <div class="container is-max-desktop">
-        <div class="box">
-            <div id="map"></div> <!--Map-->
-        </div>
-      </div>
-    </section>
-  </header> 
+<div id="vue-target">
+  <div class="container" id="detailsWrapper">
+  
+    <div class="box m-0 p-0">
+      <div id="map"></div>
+    </div>
 
-  <body>
-    <div class="container">
-      <div class="header">
-        <div class="alignWrapper">
-          <div class="nameWrapper">
-            <div class="cacheName">{{cache_name}}</div>
-          </div>
-          <div class="bookmarkWrapper">
-            <button class="button" @click="bookmark">
-              <span v-show="bookmarked">
-                <i class="fas fa-heart"/></i>
-              </span>
-              <span v-show="!bookmarked">
-                <i class="far fa-heart"/></i>
-              </span>
-              <p class="m-2">Bookmark</p>
-            </button>
-          </div>
-        </div>
+    <div class="columns is-mobile is-centered m-0">
+      <div class="column is-narrow pb-0">
+        <h4 class="title is-4">{{cache_name}}</h6>
       </div>
-      <div class="card mt-5 mb-5">
-        <div class="card-footer">
-          <div class="card-footer-item statCard">
-            <div class="boxWrapper">
-              <i
-                v-for="box_idx in cache_max_boxes"
-                class="fas fa-square myBox"
-                :class="{'filled': box_idx <= cache_diff}"
-              >
-              </i>
-            </div>
-            <div class="statName">Difficulty</div>
-          </div>
-          <div class="card-footer-item statCard">
-            <div class="boxWrapper">
-              <i
-                v-for="box_idx in cache_max_boxes"
-                class="fas fa-square myBox"
-                :class="{'filled': box_idx <= cache_terrain}"
-              >
-              </i>
-            </div>
-            <div class="statName">Terrain</div>
-          </div>
-          <div class="card-footer-item statCard">
-            <div class="boxWrapper">
-              <i
-                v-for="box_idx in cache_max_boxes"
-                class="fas fa-square myBox"
-                :class="{'filled': box_idx <= cache_size}"
-              >
-              </i>
-            </div>
-            <div class="statName">Size</div>
-          </div>
-        </div>
-      </div>
+    </div>
 
-      <section class="cacheContent">
-        <div class="cacheContentColumn">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-title">Cache Info</div>
-            </div>
-            <div class="card-content">
-              <div class="infoHeader">Description:</div>
-              <div class="infoContent">{{cache_desc}}</div>
-              <div class="infoHeader">Hint:</div>
-              <div class="infoContent">{{cache_hint}}</div>
-              <div class="infoHeader">Additional Information:</div>
-              <div class="infoContent">
-                <div>Located at {{cache_lat}}, {{cache_long}}</div>
-                <div>Created on {{cache_create_date}} by {{cache_author}}</div>
-              </div>
-            </div>
+    <div class="columns is-mobile is-centered m-0">
+      <div class="column is-narrow">
+        <button class="button" @click="bookmark">
+          <span v-show="bookmarked">
+            <i class="fas fa-heart"/></i>
+          </span>
+          <span v-show="!bookmarked">
+            <i class="far fa-heart"/></i>
+          </span>
+          <p class="m-2">Bookmark</p>
+      </button>
+      </div>
+    </div>
+
+    <div class="columns is-mobile is-centered m-0">
+      <div class="column is-narrow">
+        <i
+        v-for="box_idx in cache_max_boxes"
+        class="fas fa-square myBox"
+        :class="{'filled': box_idx <= cache_diff}"
+      >
+      </i>
+      <h6 class="title is-6 ml-4">Difficulty</h6>
+      </div>
+      <div class="column is-narrow">
+        <i
+          v-for="box_idx in cache_max_boxes"
+          class="fas fa-square myBox"
+          :class="{'filled': box_idx <= cache_terrain}"
+          >
+        </i>
+        <h6 class="title is-6 ml-5">Terrain</h6>
+      </div>
+      <div class="column is-narrow">
+        <i
+        v-for="box_idx in cache_max_boxes"
+        class="fas fa-square myBox"
+        :class="{'filled': box_idx <= cache_size}"
+        >
+        </i>
+        <h6 class="title is-6 ml-5 pl-3" >Size</h6>
+      </div>
+    </div>
+
+    <div class="columns is-centered m-0">
+      <div class="column pt-0">
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">Cache Info</div>
+          </div>
+          <div class="card-content pl-4 pr-4" id="infoWrapper">
+            <h6 class="title is-6" >Description</h6>
+            <h6 class="subtitle is-6">{{cache_desc}}</h6>
+            <h6 class="title is-6" >Hint</h6>
+            <h6 class="subtitle is-6">{{cache_hint}}</h6>
+            <h6 class="title is-6" >Coordinates</h6>
+            <h6 class="subtitle is-6">{{cache_long}}, {{cache_lat}}</h6>
+            <h6 class="title is-6" >Created By</h6>
+            <h6 class="subtitle is-6">{{cache_author}} on {{cache_create_date}}</h6>
           </div>
         </div>
-        <div class="cacheContentColumn">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-header-title">Log Feed</div>
-              </div>
-            <div class="card-content">
+
+
+      </div>
+      <div class="column pt-0" >
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">Log Feed</div>
+          </div>
+            <div class="card-content pr-0"  id="logWrapper">
               <div class="media">
                 <div class="media-content log-list">
                   <div v-for="log in cache_logs" class="media">{{log.first_name}} {{log.last_name}} discovered this cache on {{log.discover_month}}/{{log.discover_day}}/{{log.discover_year}}</div>
                 </div>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="card-footer-item log-button-and-text">
-                <div class="button" :disabled="button_disabled" @click="logCache">Log Cache
-                </div>
-                <p v-if="button_disabled" class="has-text-danger">Next log available {{refresh_time.month}}/{{refresh_time.date}}/{{refresh_time.year}} at {{refresh_time.time}}</p>
-              </div>
+          <div class="card-footer">
+            <div class="card-footer-item log-button-and-text"><!--new-->
+              <div class="button" :disabled="button_disabled" @click="logCache">Log Cache</div>
+              <p v-if="button_disabled" class="has-text-danger">Next log available {{refresh_time.month}}/{{refresh_time.date}}/{{refresh_time.year}} at {{refresh_time.time}}</p>
             </div>
           </div>
         </div>
-      </section>
+
+      </div>
     </div>
-    <div class="spacer"></div>
-  </body>
-</section>
+
+    
+  </div>
+</div>
 
 [[block page_scripts]]
 <script>
@@ -135,3 +126,4 @@
 <!--Change-->
 <!-- Loads the index-specific js for Vue -->
 [[end]]
+

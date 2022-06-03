@@ -13,6 +13,10 @@
   margin-top: 50px;
 }
 
+#vue-target {
+  height: 100%;
+}
+
 body {
   margin: 0;
 }
@@ -113,9 +117,7 @@ body {
   touch-action: auto;
 }
 
-#vue-target {
-  height: 100%;
-}
+
 
 #map {
   padding: 0px;
