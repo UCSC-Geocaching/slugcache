@@ -95,7 +95,7 @@
             </div>
           <div class="card-footer">
             <div class="card-footer-item log-button-and-text"><!--new-->
-              <div class="button" :disabled="button_disabled" @click="logCache">Log Cache</div>
+              <button class="button" :disabled="button_disabled" @click="logCache">Log Cache</button>
               <p v-if="button_disabled" class="has-text-danger">Next log available {{refresh_time.month}}/{{refresh_time.date}}/{{refresh_time.year}} at {{refresh_time.time}}</p>
             </div>
           </div>
