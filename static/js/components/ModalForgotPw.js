@@ -58,7 +58,7 @@ export default {
                   <p v-if="!isValidEmail" class="help is-danger">Invalid email. Please try again.</p>
                   <p v-if="canShowSuccess" class="help is-success">Success! Visit the link sent to your email.</p>
                 </div>
-                <button class="button is-fullwidth is-warning" type="submit">Continue</button>
+                <button class="button is-fullwidth gold-button" type="submit">Continue</button>
               </form>
             </div>
             <div class="block"></div>
