@@ -145,6 +145,10 @@
   height: 30vh;
   width: 80vw;
 }
+/* Map isn't interactable on cache_info page */
+.mapboxgl-canvas {
+  pointer-events: none;
+}
 
 .box {
   border-radius: 0 !important;
