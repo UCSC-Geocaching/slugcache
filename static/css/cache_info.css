@@ -115,6 +115,10 @@
   color: var(--accent-color);
 }
 
+.stats {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
 .card {
   margin: 1em;
 }
@@ -170,8 +174,9 @@
   width: 100%;
 }
 
-#ratingsWrapper{
-box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0px 0 1px rgb(10 10 10 / 2%);
+#ratingsWrapper {
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%),
+    0 0px 0 1px rgb(10 10 10 / 2%);
 }
 
 #infoWrapper {

@@ -5,10 +5,12 @@
 <div id="vue-target">
   <div class="container" id="detailsWrapper">
   
+    <!-- Map -->
     <div class="box m-0 p-0">
       <div id="map"></div>
     </div>
 
+    <!-- Cache name and bookmark button -->
     <div class="columns is-mobile is-centered m-0">
       <div class="column is-narrow pb-0">
         <h4 class="title is-4">{{cache_name}}</h6>
@@ -29,39 +31,48 @@
       </div>
     </div>
 
-    <div class="columns is-mobile is-centered m-0" id="ratingsWrapper">
-      <div class="column is-narrow">
-        <i
-        v-for="box_idx in cache_max_boxes"
-        class="fas fa-square myBox"
-        :class="{'filled': box_idx <= cache_diff}"
-      >
-      </i>
-      <h6 class="title is-6 ml-4">Difficulty</h6>
-      </div>
-      <div class="column is-narrow">
-        <i
-          v-for="box_idx in cache_max_boxes"
-          class="fas fa-square myBox"
-          :class="{'filled': box_idx <= cache_terrain}"
-          >
-        </i>
-        <h6 class="title is-6 ml-5">Terrain</h6>
-      </div>
-      <div class="column is-narrow">
-        <i
-        v-for="box_idx in cache_max_boxes"
-        class="fas fa-square myBox"
-        :class="{'filled': box_idx <= cache_size}"
-        >
-        </i>
-        <h6 class="title is-6 ml-5 pl-3" >Size</h6>
+    <!-- Cache stats -->
+    <div class="card mt-5 mb-5 stats">
+      <div class="card-footer">
+        <div class="card-footer-item statCard">
+          <div class="boxWrapper">
+            <i
+              v-for="box_idx in cache_max_boxes"
+              class="fas fa-square myBox"
+              :class="{'filled': box_idx <= cache_diff}"
+            >
+            </i>
+          </div>
+          <div class="statName">Difficulty</div>
+        </div>
+        <div class="card-footer-item statCard">
+          <div class="boxWrapper">
+            <i
+              v-for="box_idx in cache_max_boxes"
+              class="fas fa-square myBox"
+              :class="{'filled': box_idx <= cache_terrain}"
+            >
+            </i>
+          </div>
+          <div class="statName">Terrain</div>
+        </div>
+        <div class="card-footer-item statCard">
+          <div class="boxWrapper">
+            <i
+              v-for="box_idx in cache_max_boxes"
+              class="fas fa-square myBox"
+              :class="{'filled': box_idx <= cache_size}"
+            >
+            </i>
+          </div>
+          <div class="statName">Size</div>
+        </div>
       </div>
     </div>
 
+    <!-- Cache information -->
     <div class="columns is-centered m-0">
       <div class="column pt-0">
-
         <div class="card">
           <div class="card-header">
             <div class="card-header-title">Cache Info</div>
@@ -77,11 +88,10 @@
             <h6 class="subtitle is-6">{{cache_author}} on {{cache_create_date}}</h6>
           </div>
         </div>
-
-
       </div>
-      <div class="column pt-0" >
 
+      <!-- Log feed -->
+      <div class="column pt-0" >
         <div class="card">
           <div class="card-header">
             <div class="card-header-title">Log Feed</div>
@@ -100,10 +110,9 @@
             </div>
           </div>
         </div>
-
       </div>
-    </div>
 
+    </div>
   </div>
 </div>
 
