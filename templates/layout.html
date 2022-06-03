@@ -28,10 +28,30 @@
         <img class="logo" width="75" src="../static/icons/slug-cache-logo.svg">
       </a>
 
+      <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          const btn = document.querySelector('.navbar-burger.burger');
+          const email = document.getElementById('navbar-email');
+          const options = {
+            root: document.documentElement,
+          };
+          const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.intersectionRatio > 0)
+                // is visible
+                email.style.display = 'none';
+              else
+                email.style.display = 'block';
+            });
+          }, options);
 
+          observer.observe(btn);
+        });
+      </script>
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
         data-target="the-navbar-menu"
-        onclick="this.classList.toggle('is-active');document.getElementById(this.dataset.target).classList.toggle('is-active');">
+        onclick="this.classList.toggle('is-active');
+                 document.getElementById(this.dataset.target).classList.toggle('is-active');">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -44,7 +64,6 @@
         <!-- individual pages can add menu items here -->[[end]]
       </div>
 
-      <!-- TODO: FIX NAV BAR MOBILE VIEW -->
       <div class="navbar-end">
         <div class="navbar-item custom">
           <div class="buttons">
@@ -55,7 +74,7 @@
                 <a class="navbar-item" href="[[=URL('profile')]]">Profile</a>
                 <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
               </div>
-              <a class="navbar-link custom is-primary">
+              <a id="navbar-email" class="navbar-link custom is-primary">
                 [[=globals().get('user').get('email')]]
               </a>
             </div>
