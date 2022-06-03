@@ -25,6 +25,12 @@ body {
   /* padding: 0 10%; */
 }
 
+@media only screen and (max-width: 480px) {
+  .login-wrapper {
+    width: 80vw;
+  }
+}
+
 .login-wrapper > button {
   margin: 1em 0;
 }
