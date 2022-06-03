@@ -71,7 +71,8 @@ export default {
         requestResetPassword() {
             axios
                 .post(buildPath(this.baseURL, "auth/api/request_reset_password"), {
-                    "email": this.email
+                    "email": this.email,
+                    "route": "custom_auth"
                 })
                 .then(resp => {
                     this.isValidEmail = true;

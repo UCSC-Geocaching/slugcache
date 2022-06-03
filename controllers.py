@@ -63,6 +63,11 @@ def index():
         "add_user_url": URL("add_user", signer=url_signer),
     }
 
+@action("custom_auth/reset_password")
+@action.uses("reset_pw.html", auth)
+def resetpw():
+    return { "base_url": URL() }
+
 
 # Profile Page Controllers-------------------------------------------
 @action("profile")

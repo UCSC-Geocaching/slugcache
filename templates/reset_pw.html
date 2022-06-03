@@ -1,0 +1,51 @@
+[[extend 'layout.html']]
+
+<style>
+  .container {
+    padding: 5rem 2rem;
+    min-width: 30vw;
+  }
+  
+  @media only screen and (max-width: 1216px) {
+    .container {
+      min-width: 60vw;
+    }
+  }
+  
+  .gold-button {
+    background-color: var(--accent-color);
+  }
+</style>
+
+<section id="reset-pw" class="container">
+  <h1 class="title has-text-centered">New credentials</h1>
+  <p class="subtitle has-text-centered">Set your new password.</p>
+  <form @submit.prevent="resetPw" novalidate v-cloak>
+    <div class="field">
+      <label class="label">New Password</label>
+      <input-password
+        placeholder=""
+        v-model="password"
+        :is-danger="hasError"
+      />
+    </div>
+    <div class="field">
+      <label class="label">Confirm Password</label>
+      <input-password
+        placeholder=""
+        v-model="password2"
+        :is-danger="hasError"
+      ></input-password>
+      <p v-if="hasError" class="help is-danger">{{ error }}</p>
+      <p v-if="isReset" class="help is-success">Success! Your password has been reset.</p>
+    </div>
+    <button class="button is-fullwidth gold-button" type="submit">Update</button>
+  </form>
+</section>
+
+[[block page_scripts]]
+<script>
+  const baseURL = '[[=XML(base_url)]]';
+</script>
+<script src="js/reset_pw.js" type="module"></script>
+[[pass]]
