@@ -27,7 +27,7 @@ let init = (app) => {
     bookmarked: false,
     cache_logs: [],
     button_disabled: false,
-    refresh_time: '',
+    refresh_time: {},
   };
 
   app.processCache = function (a) {
@@ -104,7 +104,11 @@ let init = (app) => {
   app.checkTimer = function () {
     axios.get(checkTimerURL).then(function (r) {
       app.vue.button_disabled = r.data.disabled;
-      app.vue.refresh_time = r.data.refresh_time;
+      raw_datetime = new Date(r.data.refresh_time.replace(' ', 'T'));
+      app.vue.refresh_time.month = raw_datetime.getMonth() + 1;
+      app.vue.refresh_time.date = raw_datetime.getDate();
+      app.vue.refresh_time.year = raw_datetime.getFullYear();
+      app.vue.refresh_time.time = r.data.refresh_time.split(' ')[1];
     });
   };
 
