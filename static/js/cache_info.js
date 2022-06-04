@@ -78,7 +78,10 @@ let init = (app) => {
 
   app.logCache = function () {
     axios.put(logCacheURL).then(function (r) {
-      app.getLogs();
+      if (r.data.log != null) {
+        app.getLogs();
+      }
+      app.checkTimer();
     });
   };
 
@@ -97,8 +100,6 @@ let init = (app) => {
       tmpLogs.length = Math.min(tmpLogs.length, 5);
       app.vue.cache_logs = tmpLogs;
     });
-    // Check if the log button should be disabled.
-    app.checkTimer();
   };
 
   app.checkTimer = function () {
@@ -137,6 +138,7 @@ let init = (app) => {
     axios.get(getCacheURL).then(function (r) {
       app.processCache(r.data.cache);
       app.getLogs();
+      app.checkTimer();
     });
 
     setTimeout(() => {

@@ -25,6 +25,7 @@ session, db, T, auth, and tempates are examples of Fixtures.
 Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app will result in undefined behavior
 """
 
+from unittest import result
 from webbrowser import get
 from requests import delete
 from py4web import action, request, abort, redirect, URL
@@ -227,6 +228,15 @@ def logCache(cache_id=None):
     assert cache_id is not None
     assert discover_date is not None
 
+    # Check the timer before logging
+    newest_log = (
+        db((db.logs.cache == cache_id) & (db.logs.logger == user["id"])).select().last()
+    )
+    result = checkLogTimer(newest_log)
+    if result["disabled"]:
+        return dict(log=None)
+
+    # Add the log
     log_id = db.logs.insert(logger=user.id, cache=cache_id, discover_date=discover_date)
     log = db.logs[log_id]
     log["first_name"] = auth_user_data["first_name"]
@@ -234,6 +244,7 @@ def logCache(cache_id=None):
 
     # Update caches loged counter
     db(db.users.id == user.id).update(caches_logged=user.caches_logged + 1)
+
     return dict(log=log)
 
 
@@ -264,19 +275,11 @@ def checkTimer(cache_id=None):
     newest_log = (
         db((db.logs.cache == cache_id) & (db.logs.logger == user["id"])).select().last()
     )
-    # No log at this cache for this user
-    if newest_log is None:
-        return dict(disabled=False)
-    # Check if the most recent log is old enough
-    log_time = newest_log["discover_date"]
-    refresh_time = log_time + timedelta(minutes=15)
-    time_now = datetime.now()
-    # Now is past the refresh time limit
-    if time_now > refresh_time:
-        return dict(disabled=False, refresh_time=refresh_time)
-    # Is hasn't been enough time yet
-    else:
-        return dict(disabled=True, refresh_time=refresh_time)
+    result = checkLogTimer(newest_log)
+    return dict(
+        disabled=result["disabled"],
+        refresh_time=result["refresh_time"],
+    )
 
 
 # Suggest Page Controllers-------------------------------------------
@@ -418,3 +421,20 @@ def clear_db():
     db.users.truncate()
     db.caches.truncate()
     redirect(URL("index"))
+
+
+# Helper Functions---------------------------------------------------
+def checkLogTimer(newest_log=None):
+    # No log at this cache for this user
+    if newest_log is None:
+        return dict(disabled=False)
+    # Check if the most recent log is old enough
+    log_time = newest_log["discover_date"]
+    refresh_time = log_time + timedelta(minutes=15)
+    time_now = datetime.now()
+    # Now is past the refresh time limit
+    if time_now > refresh_time:
+        return dict(disabled=False, refresh_time=refresh_time)
+    # Is hasn't been enough time yet
+    else:
+        return dict(disabled=True, refresh_time=refresh_time)
