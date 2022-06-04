@@ -73,6 +73,10 @@ def index():
 def resetpw():
     return {"base_url": URL()}
 
+@action("change_password", method=["GET","PUT"])
+@action.uses("change_password.html", db, auth.user, url_signer.verify())
+def change_password():
+    return dict()
 
 # Profile Page Controllers-------------------------------------------
 @action("profile")
