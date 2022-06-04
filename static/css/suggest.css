@@ -1,38 +1,38 @@
 #vue-target {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-y: scroll;
-    /* Hides scrollbar for:*/
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  /* Hides scrollbar for:*/
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-  /* Hide scrollbar for Chrome, Safari and Opera */
+/* Hide scrollbar for Chrome, Safari and Opera */
 #vue-target::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
-#suggestWrapper{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgb(255, 255, 255);
-    z-index: -1;
-   
-    overflow: hidden;
+#suggestWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  z-index: -1;
+
+  overflow: hidden;
 }
 
-#suggestForm{ 
-    height: 90%;
-    width: 90%;
+#suggestForm {
+  height: 90%;
+  width: 90%;
 }
 
 /*Map*/
-#mapWrapper{
-  top:10px;
+#mapWrapper {
+  top: 10px;
 }
 
 #map {
@@ -40,10 +40,9 @@
   width: 100%;
 }
 
-
 .marker {
   background-image: url('../icons/cache-icon.png');
-  background-size: cover; 
+  background-size: cover;
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -51,24 +50,35 @@
 }
 
 /*Form*/
-#submitButton{
-  background-color: #fdc700;
+.gold-button {
+  background-color: var(--accent-color);
   border-style: none;
 }
 
-#titleCache{
+#titleCache {
   height: 30px;
 }
 
-#confirmWrapper{
-  width: 70%;;
+#confirmWrapper {
+  margin-top: 3em;
+  width: 70%;
 }
 
-#confirmSubtitle{
+#confirmSubtitle {
   word-wrap: break-word;
-  width: 230px; 
+  width: 230px;
 }
 
-#checkIcon{
- margin-left:80px; 
+.box.centered-contents {
+  align-items: center;
+}
+
+.card {
+  margin: 2em 1em;
+}
+.card-header {
+  background-color: var(--primary-color);
+}
+.card-header-title {
+  color: white;
 }
