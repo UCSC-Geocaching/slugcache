@@ -55,7 +55,9 @@ url_signer = URLSigner(session)
 @action("index")
 @action.uses("index.html", auth, url_signer)
 def index():
-    logged_out_endpoints = (URL(endpoint) for endpoint in ("login", "register", "request_reset_password"))
+    logged_out_endpoints = (
+        URL(endpoint) for endpoint in ("login", "register", "request_reset_password")
+    )
     if request.fullpath in logged_out_endpoints and auth.is_logged_in:
         redirect(URL("map"))
     return {
@@ -63,10 +65,11 @@ def index():
         "add_user_url": URL("add_user", signer=url_signer),
     }
 
+
 @action("custom_auth/reset_password")
 @action.uses("reset_pw.html", auth)
 def resetpw():
-    return { "base_url": URL() }
+    return {"base_url": URL()}
 
 
 # Profile Page Controllers-------------------------------------------
@@ -100,7 +103,6 @@ def map():
 def getCaches():
     rows = db(db.caches).select().as_list()
     return dict(caches=rows)
-
 
 
 @action("search")
@@ -211,6 +213,7 @@ def getBookmarked(cache_id=None):
         bookmarked = True
     return dict(bookmarked=bookmarked)
 
+
 @action("logCache/<cache_id:int>", method="PUT")
 @action.uses(db, auth.user, url_signer.verify())
 def logCache(cache_id=None):
@@ -223,18 +226,21 @@ def logCache(cache_id=None):
     assert user is not None
     assert cache_id is not None
     assert discover_date is not None
-    
-    log_id = db.logs.insert(logger=user["id"], cache=cache_id, discover_date=discover_date)
+
+    log_id = db.logs.insert(logger=user.id, cache=cache_id, discover_date=discover_date)
     log = db.logs[log_id]
     log["first_name"] = auth_user_data["first_name"]
     log["last_name"] = auth_user_data["last_name"]
+
+    # Update caches loged counter
+    db(db.users.id == user.id).update(caches_logged=user.caches_logged + 1)
     return dict(log=log)
 
 
 @action("getLogs/<cache_id:int>", method="GET")
 @action.uses(db, auth.user)
 def getLogs(cache_id=None):
-    logs = db(db.logs.cache==cache_id).select().as_list()
+    logs = db(db.logs.cache == cache_id).select().as_list()
     # Add name attributes to logs
     for log in logs:
         user = db(db.users.id == log["logger"]).select().first()
@@ -255,7 +261,9 @@ def checkTimer(cache_id=None):
     # This user is from Users table
     user = db(db.users.user_id == auth_user_data["id"]).select().first()
     assert user is not None
-    newest_log = db((db.logs.cache == cache_id) & (db.logs.logger == user["id"])).select().last()
+    newest_log = (
+        db((db.logs.cache == cache_id) & (db.logs.logger == user["id"])).select().last()
+    )
     # No log at this cache for this user
     if newest_log is None:
         return dict(disabled=False)
@@ -264,30 +272,29 @@ def checkTimer(cache_id=None):
     refresh_time = log_time + timedelta(minutes=15)
     time_now = datetime.now()
     # Now is past the refresh time limit
-    if (time_now > refresh_time):
+    if time_now > refresh_time:
         return dict(disabled=False, refresh_time=refresh_time)
     # Is hasn't been enough time yet
     else:
         return dict(disabled=True, refresh_time=refresh_time)
 
+
 # Suggest Page Controllers-------------------------------------------
 @action("suggest")
 @action.uses("suggest.html", db, auth.user, url_signer)
 def suggest():
-    return dict(
-        addCacheURL=URL("addCache", signer=url_signer)
-        )
-    
-    
+    return dict(addCacheURL=URL("addCache", signer=url_signer))
+
+
 @action("addCache", method="POST")
 @action.uses(db, auth, url_signer.verify())
 def addCache():
     db.caches.insert(
-        cache_name=request.json.get('cache_name'),
-        hint=request.json.get('hint'),
-        description=request.json.get('description'),
-        lat=request.json.get('lat'),
-        long=request.json.get('long'),
+        cache_name=request.json.get("cache_name"),
+        hint=request.json.get("hint"),
+        description=request.json.get("description"),
+        lat=request.json.get("lat"),
+        long=request.json.get("long"),
         author=db(db.users.user_email == get_user_email).select().first().id,
     )
     redirect(URL("map"))
