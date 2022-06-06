@@ -13,7 +13,8 @@
     <div id="loader">
       <div id="shadow"></div>
       <div id="box"></div> 
-      <h4>Loading Caches</h4>
+      <h6 class="title">Loading Caches</h6>
+      
     </div>
   </div>
 
@@ -44,7 +45,7 @@
 
   <transition name="slide-fade" mode="out-in">
   <div v-if="popupMode && !loadMode" class="section box mb-0" @click="redirectCacheInfo"> <!--Popups-->
-    <div class="popupColumn">
+    <div  class="popupColumn">
       <div id="popColOne">
         <p class="title is-5">
           {{cacheTitle}}

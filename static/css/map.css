@@ -187,7 +187,7 @@ body {
   height: 100%;
   width: 100%;
   background-color: rgb(255, 255, 255);
-  z-index: -1;
+  z-index: 2;
 
   overflow: hidden;
 }
@@ -256,15 +256,12 @@ body {
   }
 }
 
-h4 {
+h6 {
   position: absolute;
   width: 150px;
-  bottom: -100px;
+  bottom: -150px;
   right: -120px;
   margin: 0;
-  opacity: 0.7;
-  font-weight: 500;
-  font-family: sans-serif;
   color: #003c6c;
   z-index: -1;
 }

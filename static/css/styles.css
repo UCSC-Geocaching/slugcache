@@ -41,6 +41,7 @@ body > footer {
 }
 
 .footer {
+  z-index: 100;
   background-color: var(--primary-color);
 }
 
