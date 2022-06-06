@@ -116,6 +116,8 @@ let init = (app) => {
     app.loadLocations = function (map) {
 
         for (let cache of app.vue.caches) {
+            if(cache.valid == 0) {continue;} //Skip invalid caches
+
             const el = document.createElement('div');  // create DOM element for the marker
             el.className = 'marker';
             el.id = "marker-" + cache.id;
@@ -237,7 +239,6 @@ let init = (app) => {
         app.addNav(map) //nav controls
         app.addGeoTracking(map)
         app.loadLocations(map) //needs to be passed the db
-
     };
 
     /**

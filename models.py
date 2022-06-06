@@ -76,6 +76,7 @@ db.define_table(
     Field("difficulty", "integer"),
     Field("terrain", "integer"),
     Field("size", "integer"),
+    Field("valid", "integer"),
 )
 
 # Cache Table Field Requirements
@@ -98,6 +99,7 @@ db.caches.creation_date.default = get_time
 db.caches.difficulty.default = 1
 db.caches.terrain.default = 1
 db.caches.size.default = 1
+db.caches.valid.default = 0
 
 # Cache Table Field labels
 db.caches.cache_name.label = "Name"
@@ -109,6 +111,7 @@ db.caches.creation_date.label = "Creation Date"
 db.caches.difficulty.label = "Difficulty"
 db.caches.terrain.label = "Terrain"
 db.caches.size.label = "Size"
+db.caches.valid.label = "Valid"
 
 # Cache Table Fields Readable/Writeable edits
 db.caches.author.readable = db.caches.author.writable = False

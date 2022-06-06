@@ -11,13 +11,18 @@ let app = {};
 let init = (app) => {
   // This is the Vue data.
   app.data = {
+    caches: [],
+    currCache: null,
     newName: "",
     newHint: "",
     newDesc: "",
     newLat: 0,
     newLong: 0,
+    newAuth: "",
+    newDate: "",
     center: 0,
     formMode: true,
+    infoMode: false,
   };
  
   app.enumerate = (a) => {
@@ -29,12 +34,63 @@ let init = (app) => {
     return a;
   };
 
+  app.setInfoMode = function(mode, cache){
+
+    //console.log(cache)
+    app.vue.infoMode = mode;
+    if(cache != null){
+      console.log(cache)
+      app.vue.currCache = cache;
+      app.vue.newName =  cache.cache_name;
+      app.vue.newDesc =  cache.description;
+      app.vue.newHint =  cache.hint;
+      app.vue.newLat  =  cache.lat;
+      app.vue.newLong =  cache.long;
+      app.vue.newAuth =  cache.author;
+      app.vue.newDate =  cache.creation_date;
+    }
+  }
+
   app.toggleForm = function (mode){
     app.vue.formMode = mode;
     app.map.dragPan.disable();
     app.map.scrollZoom.disable();
     app.map.doubleClickZoom.disable();
   }
+
+  app.disableInteraction = function (){
+    app.map.dragPan.disable();
+    app.map.scrollZoom.disable();
+    app.map.doubleClickZoom.disable();
+  }
+
+  app.approveCache = function (cache){
+    app.updateCaches();
+    axios.post(approveCacheURL, {id: (app.vue.currCache).id})
+  }
+
+  app.denyCache = function (){
+    app.updateCaches();
+    //app.vue.caches = (app.vue.caches).filter(cache => cache != app.vue.currCache); //Update array
+    axios.post(deleteCacheURL, {id: (app.vue.currCache).id}) //Delete
+  }
+
+  app.updateCaches = function (){
+    app.vue.caches = (app.vue.caches).filter(cache => cache != app.vue.currCache); //Update array
+  }
+
+  app.setCenter = function (cache) {
+    app.map.flyTo({ //Fly To animation details
+      center: [cache.long,cache.lat],
+      zoom: 17,
+      speed: 1,
+      curve: 1,
+      easing(t) {
+          return t;
+          }
+      });
+  }
+
 
   app.addCache = function () {
     axios.post(addCacheURL,
@@ -44,6 +100,7 @@ let init = (app) => {
             description : app.vue.newDesc,
             lat      : app.vue.center.lat,
             long     : app.vue.center.lng,
+            valid    : 0,
         })
   };
 
@@ -87,6 +144,12 @@ let init = (app) => {
     loadMap: app.loadMap,
     addCache: app.addCache,
     toggleForm: app.toggleForm,
+    setCenter: app.setCenter,
+    disableInteraction: app.disableInteraction,
+    setInfoMode: app.setInfoMode,
+    approveCache: app.approveCache,
+    denyCache: app.denyCache,
+    updateCaches: app.updateCaches,
   };
 
   // This creates the Vue instance.
@@ -99,6 +162,10 @@ let init = (app) => {
 
   // And this initializes it.
   app.init = () => {
+    axios.get(loadGeoCachesURL).then(function (r) {
+      app.vue.caches = (r.data.caches).filter(cache => cache.valid == 0);
+      app.vue.caches = app.enumerate(app.vue.caches);
+    })
     app.loadMap();
 
   };
