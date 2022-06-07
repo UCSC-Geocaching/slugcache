@@ -18,6 +18,7 @@ let init = (app) => {
     newDesc: "",
     newLat: 0,
     newLong: 0,
+    newAuthID: "",
     newAuth: "",
     newDate: "",
     center: 0,
@@ -39,17 +40,24 @@ let init = (app) => {
     //console.log(cache)
     app.vue.infoMode = mode;
     if(cache != null){
-      console.log(cache)
       app.vue.currCache = cache;
       app.vue.newName =  cache.cache_name;
       app.vue.newDesc =  cache.description;
       app.vue.newHint =  cache.hint;
       app.vue.newLat  =  cache.lat;
       app.vue.newLong =  cache.long;
-      app.vue.newAuth =  cache.author;
+      app.vue.newAuthID =  cache.author;
+      app.vue.newAuth = app.getUser();
       app.vue.newDate =  cache.creation_date;
     }
   }
+
+  app.getUser = function () {
+    axios.post(getUserURL, { id: app.vue.newAuthID }).then(function (r) {
+      app.vue.newAuth =
+        r.data['user']['first_name'] + ' ' + r.data['user']['last_name'];
+    });
+  };
 
   app.toggleForm = function (mode){
     app.vue.formMode = mode;
@@ -71,7 +79,6 @@ let init = (app) => {
 
   app.denyCache = function (){
     app.updateCaches();
-    //app.vue.caches = (app.vue.caches).filter(cache => cache != app.vue.currCache); //Update array
     axios.post(deleteCacheURL, {id: (app.vue.currCache).id}) //Delete
   }
 
@@ -136,6 +143,7 @@ let init = (app) => {
     });
 
     app.map = map;
+    app.map.setZoom(app.map.getZoom());
     
   } 
 
@@ -150,6 +158,7 @@ let init = (app) => {
     approveCache: app.approveCache,
     denyCache: app.denyCache,
     updateCaches: app.updateCaches,
+    getUser: app.getUser, 
   };
 
   // This creates the Vue instance.

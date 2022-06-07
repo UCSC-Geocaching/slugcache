@@ -318,6 +318,7 @@ def pending():
         loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
         deleteCacheURL = URL('deleteCache', signer=url_signer),
         approveCacheURL = URL('approveCache', signer=url_signer),
+        getUserURL=URL("getUser", signer=url_signer),
         )
 
 @action('deleteCache', method="POST")
