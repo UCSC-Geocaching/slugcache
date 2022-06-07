@@ -23,29 +23,83 @@
     </div>
   </div>
 
-  <div class="infoContainer">
+  <div class="container">
     <div class="nameAndDate">
-      <p class="accountName">{{user_email}}</p>
+      <p class="accountName">{{first_name}} {{last_name}}</p>
       <p></p>
       <div class="accountDate">
         <p>Member since:</p>
         <p class="dateJoined">{{creation_date}}</p>
       </div>
     </div>
-    <div class="accountCacheInfo">
-      <div class="profileCard">
-        <div class="iconAndCount">
-          <img src="../static/icons/notebook.svg" alt="Notebook Icon" />
-          <p>{{logs}}</p>
+
+    <div class="columns is-centered">
+      <!-- Left column -->
+      <div class="column">
+        <!-- Account stats -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">Account Statistics</div>
+          </div>
+          <div class="card-content horizontal-content">
+            <div class="statCard">
+              <div class="iconAndCount">
+                <img src="../static/icons/notebook.svg" alt="Notebook Icon" />
+                <p>{{logs}}</p>
+              </div>
+              <p>Caches logged</p>
+            </div>
+            <div class="statCard">
+              <div class="iconAndCount">
+                <img
+                  src="../static/icons/treasure_chest.svg"
+                  alt="Treasure Icon"
+                />
+                <p>{{hides}}</p>
+              </div>
+              <p>Caches hidden</p>
+            </div>
+          </div>
         </div>
-        <p>Caches logged</p>
+        <!-- Hidden caches card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">Caches Hidden</div>
+          </div>
+          <div class="card-content">
+            <div v-if="hidden_caches.length <= 0">
+              <p>{{first_name}} {{last_name}} has not hidden any caches</p>
+            </div>
+            <div v-else v-for="cache in hidden_caches">
+              <a :href="cache.href" class="cache-link">{{cache.cache_name}}</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="profileCard">
-        <div class="iconAndCount">
-          <img src="../static/icons/treasure_chest.svg" alt="Treasure Icon" />
-          <p>{{hides}}</p>
+
+      <!-- Right column -->
+      <div class="column">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">Account Activity</div>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <div v-for="activity in activities" class="media">
+                  <p>
+                    {{first_name}} {{last_name}} discovered
+                    <a :href="activity.href" class="cache-link">
+                      {{activity.cache_name}}
+                    </a>
+                    on
+                    {{activity.discover_month}}/{{activity.discover_day}}/{{activity.discover_year}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p>Caches hidden</p>
       </div>
     </div>
   </div>
@@ -55,6 +109,8 @@
 <!-- Loads the index-specific js for Vue -->
 <script>
   let load_profile_url = '[[=XML(load_profile_url)]]';
+  let load_activity_url = '[[=XML(load_activity_url)]]';
+  let load_hidden_caches_url = '[[=XML(load_hidden_caches_url)]]';
 </script>
 <script src="js/profile.js"></script>
 [[end]]

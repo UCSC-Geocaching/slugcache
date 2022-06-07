@@ -45,9 +45,9 @@
   object-fit: contain;
 }
 
-.infoContainer {
+/* .infoContainer {
   padding: 0 5%;
-}
+} */
 .nameAndDate {
   display: flex;
   flex-direction: column;
@@ -70,15 +70,15 @@
   flex-direction: row;
   justify-content: space-around;
 }
-.profileCard {
+.statCard {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.profileCard p {
+.statCard p {
   font-weight: bold;
 }
-.profileCard > * {
+.statCard > * {
   padding: 0.5em;
 }
 .iconAndCount {
@@ -91,4 +91,42 @@
 }
 .iconAndCount p {
   font-weight: bold;
+}
+
+.card {
+  margin: 1em;
+}
+.card-header-title {
+  background-color: var(--primary-color);
+  color: white;
+}
+.horizontal-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.cache-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+.cache-link::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.cache-link:hover {
+  color: var(--primary-color);
+}
+.cache-link:hover::before {
+  transform: scaleX(1);
 }

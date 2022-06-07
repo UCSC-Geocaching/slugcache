@@ -72,18 +72,60 @@ def resetpw():
 
 
 # Profile Page Controllers-------------------------------------------
-@action("profile")
+@action("profile", method="GET")
 @action.uses("profile.html", db, auth.user)
 def profile():
-    return dict(load_profile_url=URL("load_profile_details"))
+    return dict(
+        load_profile_url=URL("load_profile_details"),
+        load_activity_url=URL("load_activity"),
+        load_hidden_caches_url=URL("load_hidden_caches"),
+    )
 
 
-@action("load_profile_details")
+@action("load_profile_details", method="GET")
 @action.uses(db, auth.user)
 def load_profile_details():
     user = auth.get_user()
     profile = db(db.users.user_id == user["id"]).select().first()
     return dict(profile=profile)
+
+
+@action("load_activity", method="GET")
+@action.uses(db, auth.user)
+def load_activity():
+    activities = []
+    # First user is from auth_user table
+    user = auth.get_user()
+    assert user is not None
+    # This user is from Users table
+    user = db(db.users.user_id == user["id"]).select().first()
+    assert user is not None
+
+    activities = db(db.logs.logger == user["id"]).select().as_list()
+    # Attach the cache names and hrefs
+    for activity in activities:
+        cache = db.caches[activity["cache"]]
+        activity["cache_name"] = cache.cache_name
+        activity["href"] = URL("cache_info", cache["id"])
+    return dict(activities=activities)
+
+
+@action("load_hidden_caches", method="GET")
+@action.uses(db, auth.user)
+def load_hidden_caches():
+    caches = []
+    # First user is from auth_user table
+    user = auth.get_user()
+    assert user is not None
+    # This user is from Users table
+    user = db(db.users.user_id == user["id"]).select().first()
+    assert user is not None
+
+    caches = db(db.caches.author == user["id"]).select().as_list()
+    # Attach hrefs to caches
+    for cache in caches:
+        cache["href"] = URL("cache_info", cache["id"])
+    return dict(caches=caches)
 
 
 # Map Page Controllers-----------------------------------------------
@@ -287,7 +329,7 @@ def suggest():
     return dict(
         addCacheURL=URL("addCache", signer=url_signer),
         loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
-        )
+    )
 
 
 @action("addCache", method="POST")
@@ -300,21 +342,23 @@ def addCache():
         lat=request.json.get("lat"),
         long=request.json.get("long"),
         author=db(db.users.user_email == get_user_email).select().first().id,
-        valid = 0,
+        valid=0,
     )
     redirect(URL("map"))
+
 
 @action("pending", method="GET")
 @action.uses("pending.html", db, auth.user, url_signer)
 def pending():
     return dict(
         loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
-        deleteCacheURL = URL('deleteCache', signer=url_signer),
-        approveCacheURL = URL('approveCache', signer=url_signer),
+        deleteCacheURL=URL("deleteCache", signer=url_signer),
+        approveCacheURL=URL("approveCache", signer=url_signer),
         getUserURL=URL("getUser", signer=url_signer),
-        )
+    )
 
-@action('deleteCache', method="POST")
+
+@action("deleteCache", method="POST")
 @action.uses(db, auth.user, url_signer.verify())
 def deleteCache():
     id = request.json.get("id")
@@ -322,14 +366,16 @@ def deleteCache():
     db(db.caches.id == id).delete()
     return dict()
 
-@action('approveCache', method="POST")
+
+@action("approveCache", method="POST")
 @action.uses(db, auth.user, url_signer.verify())
 def approveCache():
     id = request.json.get("id")
     assert id is not None
-    #print(db(db.caches.id == id).select().first())
+    # print(db(db.caches.id == id).select().first())
     db(db.caches.id == id).update(valid=1)
     return dict()
+
 
 # Miscellaneous Controllers------------------------------------------
 @action("add_user", method="POST")
@@ -376,7 +422,7 @@ def setup():
         hint="Test hint",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid =1,
+        valid=1,
     )
     creation_date = datetime.now()
     db.users.insert(
@@ -398,7 +444,7 @@ def setup():
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid =1,
+        valid=1,
     )
     db.caches.insert(
         cache_name="Jack Baskin",
@@ -409,7 +455,7 @@ def setup():
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid =1,
+        valid=1,
     )
     db.caches.insert(
         cache_name="Porter",
