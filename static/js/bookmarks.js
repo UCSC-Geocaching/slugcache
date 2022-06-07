@@ -26,7 +26,11 @@ let init = (page) => {
     // Complete as you see fit.
     get_bookmarks: function () {
       axios.get(get_bookmarks_url).then(function (res) {
-        page.data.bookmarks = res.data.bookmarks;
+        tmp_bookmarks = res.data.bookmarks;
+        tmp_bookmarks.forEach((bookmark) => {
+          bookmark.map_src = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/${bookmark.long},${bookmark.lat},17/300x250?access_token=pk.eyJ1IjoiY3N0ZXJ6YSIsImEiOiJjbDF0dDRleG0yMWpkM2Ztb3B0YWZoaTR6In0.09vTcRrP3ty1lWFuouDsiw`;
+        });
+        page.data.bookmarks = tmp_bookmarks;
       });
     },
   };

@@ -45,17 +45,24 @@
   gap: 10px;
 }
 
-.map-placeholder {
+.map-wrapper {
   margin-right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   align-self: center;
   justify-self: center;
-  aspect-ratio: 1/1;
-  width: 200px;
-  background-color: red;
+  height: 250px;
+  width: 300px;
   grid-column: 1;
+}
+
+.marker {
+  position: absolute;
+  background-image: url('../icons/straight_map_marker_o.svg');
+  background-size: cover;
+  width: 28px;
+  height: 40px;
 }
 
 .text-wrapper {

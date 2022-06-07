@@ -27,7 +27,10 @@
       </div>
       <div class="card-content">
         <div class="content content-wrapper">
-          <div class="map-placeholder">Map Goes Here</div>
+          <div class="map-wrapper">
+            <img :src="bookmark.map_src" alt="Map of the cache location" />
+            <div class="marker"></div>
+          </div>
           <div class="text-wrapper">
             <p class="is-size-5">Description</p>
             <p>{{bookmark.description}}</p>
