@@ -130,3 +130,7 @@
 .cache-link:hover::before {
   transform: scaleX(1);
 }
+
+.no-content {
+  font-weight: bold;
+}

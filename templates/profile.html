@@ -67,9 +67,9 @@
             <div class="card-header-title">Caches Hidden</div>
           </div>
           <div class="card-content">
-            <div v-if="hidden_caches.length <= 0">
-              <p>{{first_name}} {{last_name}} has not hidden any caches</p>
-            </div>
+            <p v-if="hidden_caches.length <= 0" class="no-content">
+              {{first_name}} {{last_name}} has not hidden any caches
+            </p>
             <div v-else v-for="cache in hidden_caches">
               <a :href="cache.href" class="cache-link">{{cache.cache_name}}</a>
             </div>
@@ -84,7 +84,10 @@
             <div class="card-header-title">Account Activity</div>
           </div>
           <div class="card-content">
-            <div class="media">
+            <p v-if="activities.length <= 0" class="no-content">
+              {{first_name}} {{last_name}} has not discovered any caches
+            </p>
+            <div v-else class="media">
               <div class="media-content">
                 <div v-for="activity in activities" class="media">
                   <p>
