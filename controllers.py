@@ -497,7 +497,7 @@ def clear_db():
 def checkLogTimer(newest_log=None):
     # No log at this cache for this user
     if newest_log is None:
-        return dict(disabled=False)
+        return dict(disabled=False, refresh_time=datetime.now())
     # Check if the most recent log is old enough
     log_time = newest_log["discover_date"]
     refresh_time = log_time + timedelta(minutes=15)
