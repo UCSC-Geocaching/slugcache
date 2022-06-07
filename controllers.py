@@ -130,7 +130,7 @@ def load_hidden_caches():
 
 # Map Page Controllers-----------------------------------------------
 @action("map")
-@action.uses("map.html", db, auth, url_signer)
+@action.uses("map.html", db, auth, auth.user, url_signer)
 def map():
     return dict(
         loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
@@ -347,14 +347,14 @@ def addCache():
 @action("pending", method="GET")
 @action.uses("pending.html", db, auth.user, url_signer)
 def pending():
-    user=auth.get_user()
-    #print(user)
+    user = auth.get_user()
+    # print(user)
     check = db.admins[user["id"]]
-    #print(check)
-    
-    #admins = ["oliver@admin.com"]
-    #userEmail = db(db.users.user_email == get_user_email).select().first().user_email
-    #if (userEmail in admins) == False: #if user is not an admin
+    # print(check)
+
+    # admins = ["oliver@admin.com"]
+    # userEmail = db(db.users.user_email == get_user_email).select().first().user_email
+    # if (userEmail in admins) == False: #if user is not an admin
     #    redirect(URL("map"))
     return dict(
         loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
@@ -378,8 +378,8 @@ def deleteCache():
 def approveCache():
     id = request.json.get("id")
     assert id is not None
-    #print(db(db.caches.id == id).select().first())
-    db(db.caches.id == id).update(valid=1) #update cache submitted
+    # print(db(db.caches.id == id).select().first())
+    db(db.caches.id == id).update(valid=1)  # update cache submitted
     return dict()
 
 
@@ -491,6 +491,7 @@ def setup():
         valid=0,
     )
     redirect(URL("index"))
+
 
 # TODO: MAKE SURE TO REMOVE FOR PRODUCTION
 @action("clear_db")
