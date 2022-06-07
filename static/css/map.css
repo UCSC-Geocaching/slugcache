@@ -50,16 +50,16 @@ body {
   color: #003c6c;
   /*margin-top: 15px;
   margin-right: 15px;*/
-  right:10px;
-  bottom:120px;
+  right: 10px;
+  bottom: 120px;
   position: absolute;
   z-index: 1;
   touch-action: auto;
   cursor: pointer;
 }
 
-#suggestButton{
-  color:#003c6c;
+#suggestButton {
+  color: #003c6c;
   background-color: #fdc700;
   border-radius: 50%;
 }
@@ -117,8 +117,6 @@ body {
   touch-action: auto;
 }
 
-
-
 #map {
   padding: 0px;
   margin: 0px;
@@ -128,11 +126,10 @@ body {
 
 .marker {
   /*Background image just a placeholder, to be replaced with relative path's to uploaded(?) photos*/
-  background-image: url('../icons/cache-icon.png');
+  background-image: url('../icons/straight_map_marker_o.svg');
   background-size: cover;
   width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  height: 40px;
   cursor: pointer;
 }
 
@@ -154,8 +151,8 @@ body {
 }
 
 .mapboxgl-marker:hover {
-  width: 35px !important;
-  height: 35px !important;
+  width: 31px !important;
+  height: 44px !important;
 }
 
 /*

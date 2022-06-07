@@ -41,11 +41,10 @@
 }
 
 .marker {
-  background-image: url('../icons/cache-icon.png');
+  background-image: url('../icons/straight_map_marker_o.svg');
   background-size: cover;
   width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  height: 40px;
   cursor: pointer;
 }
 
@@ -96,14 +95,13 @@
   display: none;
 }
 
-
 /*Pending stuff*/
 #infoWrapper {
   height: 250px;
   overflow: scroll;
 }
 
-#cacheWrapper{
+#cacheWrapper {
   overflow-y: scroll;
 }
 
@@ -111,6 +109,6 @@
   border-right: 1px solid #ededed;
 }
 
-#footerWrapper{
+#footerWrapper {
   overflow-x: hidden;
 }
