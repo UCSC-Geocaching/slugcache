@@ -296,7 +296,7 @@ function setupMap(center) {
       app.vue.loadMode = false;
       document.getElementById('map').style.zIndex = '0'; //clean up
     }
-  }, '1500');
+  }, '200');
 
   map.on('load', function () {
     //If map has loaded, activate loaded boolean to true

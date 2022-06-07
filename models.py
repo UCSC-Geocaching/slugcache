@@ -153,6 +153,21 @@ db.bookmarks.cache.label = "Cache"
 # Log Table Fields Readable/Writeable edits
 # ----------------------------------------------------
 
+# ----------------------------------------------------
+# Admins Table
+db.define_table(
+    "admins",
+    Field("user", "reference users"),
+    Field("user_email", "string"),
+)
+# Admins Table Field Requirements
+db.admins.user_email.requires = IS_NOT_EMPTY()
+
+# Admin Table Defaults
+
+# Admin Table Field Labels
+db.admins.user_email.label = "Email"
+
 ### Define your table below
 #
 # db.define_table('thing', Field('name'))
