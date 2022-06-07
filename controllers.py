@@ -282,9 +282,6 @@ def logCache(cache_id=None):
     log["first_name"] = auth_user_data["first_name"]
     log["last_name"] = auth_user_data["last_name"]
 
-    # Update caches loged counter
-    db(db.users.id == user.id).update(caches_logged=user.caches_logged + 1)
-
     return dict(log=log)
 
 
@@ -410,8 +407,6 @@ def setup():
         creation_date=creation_date,
         banner_path="",
         photo_profile_path="",
-        caches_logged=5,
-        caches_hidden=3,
     )
     db.caches.insert(
         cache_name="Arboretum",
@@ -432,8 +427,6 @@ def setup():
         creation_date=creation_date,
         banner_path="",
         photo_profile_path="",
-        caches_logged=2,
-        caches_hidden=1,
     )
     db.caches.insert(
         cache_name="Quarry Amphitheater",
@@ -476,8 +469,6 @@ def setup():
         creation_date=creation_date,
         banner_path="",
         photo_profile_path="",
-        caches_logged=7,
-        caches_hidden=7,
     )
     db.caches.insert(
         cache_name="East Remote",

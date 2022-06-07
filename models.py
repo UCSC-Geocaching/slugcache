@@ -27,8 +27,6 @@ db.define_table(
     Field("creation_date", "datetime"),
     Field("banner_path", "string"),
     Field("profile_photo_path", "string"),
-    Field("caches_logged", "integer"),
-    Field("caches_hidden", "integer"),
 )
 
 # User Table Field Requirements
@@ -38,24 +36,18 @@ db.users.user_email.requires = IS_EMAIL(error_message="Enter a valid email.")
 db.users.creation_date.requires = IS_DATETIME(error_message="Enter a valid date.")
 db.users.banner_path.requires = IS_NOT_EMPTY()
 db.users.profile_photo_path.requires = IS_NOT_EMPTY()
-db.users.caches_logged.requires = IS_INT_IN_RANGE(0, None)
-db.users.caches_hidden.requires = IS_INT_IN_RANGE(0, None)
 
 # User Table Defaults
 db.users.user_email.default = get_user_email
 db.users.creation_date.default = get_time
 db.users.banner_path.default = URL("static", "images", "default_banner.jpg")
 db.users.profile_photo_path.default = URL("static", "images", "default_profile_pic.jpg")
-db.users.caches_logged.default = 0
-db.users.caches_hidden.default = 0
 
 # User Table Field Labels
 db.users.first_name.label = "First Name"
 db.users.last_name.label = "Last Name"
 db.users.user_email.label = "Email"
 db.users.creation_date.label = "Creation Date"
-db.users.caches_logged.label = "Caches Logged"
-db.users.caches_hidden.label = "Caches Hidden"
 
 # User Table Fields Readable/Writeable edits
 db.users.user_email.readable = db.users.user_email.writeable = False

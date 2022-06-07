@@ -44,8 +44,6 @@ let init = (page) => {
         page.vue.creation_date = `${
           date.getMonth() + 1
         }/${date.getDate()}/${date.getFullYear()}`;
-        page.vue.logs = profile.caches_logged;
-        page.vue.hides = profile.caches_hidden;
         page.vue.banner_URL = '..' + profile.banner_path; // Should change this
         page.vue.profile_pic_URL = '..' + profile.profile_photo_path; // Should change this
       });
@@ -54,6 +52,8 @@ let init = (page) => {
     // load_activity: Loads the activity feed with the most recent activity
     load_activity: function () {
       axios.get(load_activity_url).then(function (r) {
+        // Update the logs statistic
+        page.vue.logs = r.data.activities.length;
         // Reverse chronological order
         tmp_activities = r.data.activities.reverse();
         // Format the dates
@@ -72,6 +72,8 @@ let init = (page) => {
     // load_hidden_caches: Loads and displays caches hidden by the user
     load_hidden_caches: function () {
       axios.get(load_hidden_caches_url).then(function (r) {
+        // Update the hides statistic
+        page.vue.hides = r.data.caches.length;
         page.vue.hidden_caches = r.data.caches;
       });
     },
