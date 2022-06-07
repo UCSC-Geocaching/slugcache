@@ -6,8 +6,9 @@
   <div class="container" id="detailsWrapper">
   
     <!-- Map -->
-    <div class="box m-0 p-0">
-      <div id="map"></div>
+    <div id="map-container" class="box m-0 p-0">
+      <img id="map-image" :src="map_src" alt="Map of cache location">
+      <div class="marker"></div>
     </div>
 
     <!-- Cache name and bookmark button -->

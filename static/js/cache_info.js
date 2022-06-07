@@ -28,6 +28,7 @@ let init = (app) => {
     cache_logs: [],
     button_disabled: false,
     refresh_time: {},
+    map_src: '',
   };
 
   app.processCache = function (a) {
@@ -62,18 +63,7 @@ let init = (app) => {
   };
 
   app.loadMap = function () {
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/outdoors-v11',
-      center: [app.vue.cache_long, app.vue.cache_lat],
-      zoom: 16,
-      dragPan: false,
-      scrollZoom: false,
-      maxBounds: [
-        [-122.08012683329952, 36.9750849217556], // SW coords
-        [-122.0349268336223, 37.00766046433793], // NW coords
-      ],
-    });
+    app.vue.map_src = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/${app.vue.cache_long},${app.vue.cache_lat},17/1280x1280?access_token=pk.eyJ1IjoiY3N0ZXJ6YSIsImEiOiJjbDF0dDRleG0yMWpkM2Ztb3B0YWZoaTR6In0.09vTcRrP3ty1lWFuouDsiw`;
   };
 
   app.logCache = function () {
