@@ -57,10 +57,7 @@ url_signer = URLSigner(session)
 @action("index")
 @action.uses("index.html", auth, url_signer)
 def index():
-    logged_out_endpoints = (
-        URL(endpoint) for endpoint in ("login", "register", "request_reset_password")
-    )
-    if request.fullpath in logged_out_endpoints and auth.is_logged_in:
+    if auth.is_logged_in:
         redirect(URL("map"))
     return {
         "base_url": URL(),
@@ -73,10 +70,6 @@ def index():
 def resetpw():
     return {"base_url": URL()}
 
-@action("change_password", method=["GET","PUT"])
-@action.uses("change_password.html", db, auth.user, url_signer.verify())
-def change_password():
-    return dict()
 
 # Profile Page Controllers-------------------------------------------
 @action("profile")

@@ -1,6 +1,4 @@
-[[extend 'layout.html']] [[if globals().get('user'):]]
-<script src="js/map.js"></script>
-[[else:]]
+[[extend 'layout.html']]
 <link rel="stylesheet" href="../static/css/login.css" />
 <div id="welcome-pg" v-cloak>
   <div class="login-wrapper">
@@ -101,4 +99,4 @@
     },
   });
 </script>
-[[end]] [[pass]]
+[[pass]]
