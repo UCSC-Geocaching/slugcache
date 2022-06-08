@@ -12,17 +12,6 @@ let init = (app) => {
   // This is the Vue data.
   app.data = {
     cache: {},
-    // cache_name: '',
-    // cache_lat: 0.0,
-    // cache_long: 0.0,
-    // cache_desc: '',
-    // cache_hint: '',
-    // cache_author_id: null,
-    // cache_author: '',
-    // cache_create_date: '',
-    // cache_diff: 1,
-    // cache_terrain: 1,
-    // cache_size: 1,
     cache_max_boxes: 5,
     bookmarked: false,
     cache_logs: [],
@@ -38,14 +27,10 @@ let init = (app) => {
       app.checkTimer();
       app.loadMap();
     });
+    axios.get(getBookmarkedURL).then(function (r) {
+      app.vue.bookmarked = r.data.bookmarked;
+    });
   };
-
-  // app.getUser = function () {
-  //   axios.post(getUserURL, { id: app.vue.cache_author_id }).then(function (r) {
-  //     app.vue.cache_author =
-  //       r.data['user']['first_name'] + ' ' + r.data['user']['last_name'];
-  //   });
-  // };
 
   app.bookmark = function () {
     axios.put(setBookmarkedURL).then(function (r) {
