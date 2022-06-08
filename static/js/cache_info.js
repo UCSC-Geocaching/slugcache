@@ -129,11 +129,8 @@ let init = (app) => {
       app.processCache(r.data.cache);
       app.getLogs();
       app.checkTimer();
-    });
-
-    setTimeout(() => {
       app.loadMap();
-    }, '200');
+    });
   };
 
   // Call to the initializer.
