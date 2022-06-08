@@ -34,7 +34,9 @@
     </div>
 
     <div v-if="admin" class="button-wrapper mb-4">
-      <button class="button admin-button">Review Pending Caches</div>
+      <a class="button admin-button" href="[[=XML(go_to_pending_url)]]">
+        Review Pending Caches
+      </a>
     </div>
 
     <div class="columns is-centered">

@@ -79,6 +79,7 @@ def profile():
         load_profile_url=URL("load_profile_details"),
         load_activity_url=URL("load_activity"),
         load_hidden_caches_url=URL("load_hidden_caches"),
+        go_to_pending_url=URL("pending", signer=url_signer),
     )
 
 
@@ -378,7 +379,7 @@ def pending():
     user = db(db.users.user_id == auth_user_data["id"]).select().first()
     assert user is not None
 
-    check = db(db.admins.user == user["id"])
+    check = db(db.admins.user == user["id"]).select().first()
 
     if check is None:  # if user is not an admin
         redirect(URL("map"))
