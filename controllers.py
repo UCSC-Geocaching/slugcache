@@ -130,7 +130,11 @@ def load_hidden_caches():
     assert user is not None
 
     # Get caches that are by the user and valid
-    caches = db((db.caches.author == user["id"]) & (db.caches.valid == True)).select().as_list()
+    caches = (
+        db((db.caches.author == user["id"]) & (db.caches.valid == True))
+        .select()
+        .as_list()
+    )
     # Attach hrefs to caches
     for cache in caches:
         cache["href"] = URL("cache_info", cache["id"])
@@ -447,7 +451,7 @@ def setup():
         cache_name="Arboretum",
         lat=36.98267070650899,
         long=-122.05985900885949,
-        description="The UCSC Arboretum is a beautiful part of campus full of various trees and wildlife.",
+        description="The UCSC Arboretum is a beautiful part of campus full of various trees and wildlife. Even if you can't find the cache, come for the smells alone.",
         hint="Check under this tree from down under!",
         author=user["id"],
         creation_date=datetime.now(),
