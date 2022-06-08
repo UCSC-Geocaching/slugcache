@@ -12,7 +12,6 @@ let init = (app) => {
   // This is the Vue data.
   app.data = {
     cache_name: '',
-    cache_photo_path: '',
     cache_lat: 0.0,
     cache_long: 0.0,
     cache_desc: '',
@@ -33,7 +32,6 @@ let init = (app) => {
 
   app.processCache = function (a) {
     (app.vue.cache_name = a.cache_name),
-      (app.vue.cache_photo_path = a.photo_path),
       (app.vue.cache_lat = a.lat),
       (app.vue.cache_long = a.long),
       (app.vue.cache_desc = a.description),

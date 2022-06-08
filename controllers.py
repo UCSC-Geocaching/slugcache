@@ -332,30 +332,43 @@ def suggest():
 @action("addCache", method="POST")
 @action.uses(db, auth, url_signer.verify())
 def addCache():
+    # First user is from auth_user table
+    auth_user_data = auth.get_user()
+    assert auth_user_data is not None
+    # This user is from Users table
+    user = db(db.users.user_id == auth_user_data["id"]).select().first()
+    assert user is not None
+
     db.caches.insert(
         cache_name=request.json.get("cache_name"),
-        hint=request.json.get("hint"),
-        description=request.json.get("description"),
         lat=request.json.get("lat"),
         long=request.json.get("long"),
-        author=db(db.users.user_email == get_user_email).select().first().id,
+        description=request.json.get("description"),
+        hint=request.json.get("hint"),
+        author=user["id"],
+        creation_date=datetime.now(),
+        difficulty=request.json.get("difficulty"),
+        terrain=request.json.get("terrain"),
+        size=request.json.get("size"),
         valid=0,
     )
-    redirect(URL("map"))
+    return "OK"
 
 
 @action("pending", method="GET")
 @action.uses("pending.html", db, auth.user, url_signer)
 def pending():
-    user = auth.get_user()
-    # print(user)
-    check = db.admins[user["id"]]
-    # print(check)
+    # First user is from auth_user table
+    auth_user_data = auth.get_user()
+    assert auth_user_data is not None
+    # This user is from Users table
+    user = db(db.users.user_id == auth_user_data["id"]).select().first()
+    assert user is not None
 
-    # admins = ["oliver@admin.com"]
-    # userEmail = db(db.users.user_email == get_user_email).select().first().user_email
-    # if (userEmail in admins) == False: #if user is not an admin
-    #    redirect(URL("map"))
+    check = db(db.admins.user == user["id"])
+
+    if check is None:  # if user is not an admin
+        redirect(URL("map"))
     return dict(
         loadGeoCachesURL=URL("loadGeoCaches", signer=url_signer),
         deleteCacheURL=URL("deleteCache", signer=url_signer),
@@ -378,7 +391,6 @@ def deleteCache():
 def approveCache():
     id = request.json.get("id")
     assert id is not None
-    # print(db(db.caches.id == id).select().first())
     db(db.caches.id == id).update(valid=1)  # update cache submitted
     return dict()
 
@@ -419,7 +431,6 @@ def setup():
     )
     db.caches.insert(
         cache_name="Arboretum",
-        photo_path="",
         lat=36.98267070650899,
         long=-122.05985900885949,
         description="This Arboretum cache is...",
@@ -439,7 +450,6 @@ def setup():
     )
     db.caches.insert(
         cache_name="Quarry Amphitheater",
-        photo_path="",
         lat=36.9986320770141,
         long=-122.05648938884585,
         description="This Quarry cache is...",
@@ -450,7 +460,6 @@ def setup():
     )
     db.caches.insert(
         cache_name="Jack Baskin",
-        photo_path="",
         lat=37.0005353033127,
         long=-122.06380507461215,
         description="This Jack Baskin cache is...",
@@ -461,7 +470,6 @@ def setup():
     )
     db.caches.insert(
         cache_name="Porter",
-        photo_path="",
         lat=36.99473025211556,
         long=-122.06554686691216,
         description="This Porter cache is...",
@@ -481,7 +489,6 @@ def setup():
     )
     db.caches.insert(
         cache_name="East Remote",
-        photo_path="",
         lat=36.9911648945102,
         long=-122.0534244573749,
         description="This East Remote cache is...",

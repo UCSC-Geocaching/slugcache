@@ -58,7 +58,6 @@ db.users.creation_date.readable = db.users.creation_date.writeable = False
 db.define_table(
     "caches",
     Field("cache_name", "string"),
-    Field("photo_path", "string"),
     Field("lat", "float"),
     Field("long", "float"),
     Field("description", "string"),
@@ -158,15 +157,12 @@ db.bookmarks.cache.label = "Cache"
 db.define_table(
     "admins",
     Field("user", "reference users"),
-    Field("user_email", "string"),
 )
 # Admins Table Field Requirements
-db.admins.user_email.requires = IS_NOT_EMPTY()
 
 # Admin Table Defaults
 
 # Admin Table Field Labels
-db.admins.user_email.label = "Email"
 
 ### Define your table below
 #
