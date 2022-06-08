@@ -28,6 +28,7 @@ let init = (app) => {
     formMode: true,
     infoMode: false,
     options: [1, 2, 3, 4, 5],
+    max_boxes: 5,
     errName: false,
     errDesc: false,
     errHint: false,

@@ -129,7 +129,8 @@ def load_hidden_caches():
     user = db(db.users.user_id == user["id"]).select().first()
     assert user is not None
 
-    caches = db(db.caches.author == user["id"]).select().as_list()
+    # Get caches that are by the user and valid
+    caches = db((db.caches.author == user["id"]) & (db.caches.valid == True)).select().as_list()
     # Attach hrefs to caches
     for cache in caches:
         cache["href"] = URL("cache_info", cache["id"])
@@ -198,6 +199,11 @@ def get_bookmarks():
 @action("cache_info/<cache_id:int>")
 @action.uses("cache_info.html", db, auth.user, url_signer)
 def cache_info(cache_id=None):
+    # Don't show invalid caches
+    valid = db.caches[cache_id].valid
+    if not valid:
+        redirect(URL("map"))
+
     return dict(
         getCacheURL=URL("getCache", cache_id, signer=url_signer),
         getUserURL=URL("getUser", signer=url_signer),
