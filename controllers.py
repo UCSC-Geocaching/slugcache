@@ -343,14 +343,11 @@ def addCache():
         cache_name=request.json.get("cache_name"),
         lat=request.json.get("lat"),
         long=request.json.get("long"),
-        description=request.json.get("description"),
-        hint=request.json.get("hint"),
-        author=user["id"],
-        creation_date=datetime.now(),
         difficulty=request.json.get("difficulty"),
         terrain=request.json.get("terrain"),
         size=request.json.get("size"),
-        valid=0,
+        author=db(db.users.user_email == get_user_email).select().first().id,
+        valid=False,
     )
     return "OK"
 
@@ -391,7 +388,8 @@ def deleteCache():
 def approveCache():
     id = request.json.get("id")
     assert id is not None
-    db(db.caches.id == id).update(valid=1)  # update cache submitted
+    # print(db(db.caches.id == id).select().first())
+    db(db.caches.id == id).update(valid=True)  # update cache submitted
     return dict()
 
 
@@ -437,7 +435,7 @@ def setup():
         hint="Test hint",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid=1,
+        valid=True,
     )
     creation_date = datetime.now()
     db.users.insert(
@@ -456,7 +454,7 @@ def setup():
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid=1,
+        valid=True,
     )
     db.caches.insert(
         cache_name="Jack Baskin",
@@ -466,7 +464,7 @@ def setup():
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid=1,
+        valid=True,
     )
     db.caches.insert(
         cache_name="Porter",
@@ -476,7 +474,7 @@ def setup():
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid=0,
+        valid=False,
     )
     creation_date = datetime.now()
     db.users.insert(
@@ -495,7 +493,7 @@ def setup():
         hint="u eat dis",
         author=db(db.users.creation_date == creation_date).select().first().id,
         creation_date=datetime.now(),
-        valid=0,
+        valid=False,
     )
     redirect(URL("index"))
 

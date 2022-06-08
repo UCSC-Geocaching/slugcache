@@ -18,12 +18,16 @@ let init = (app) => {
     newDesc: '',
     newLat: 0,
     newLong: 0,
-    newAuthID: '',
-    newAuth: '',
-    newDate: '',
+    newAuthID: "",
+    newAuth: "",
+    newDate: "",
+    newSize: 0,
+    newTerr: 0,
+    newDiff: 0,
     center: 0,
     formMode: true,
     infoMode: false,
+    max_boxes: 5,
   };
 
   app.enumerate = (a) => {
@@ -47,7 +51,10 @@ let init = (app) => {
       app.vue.newLong = cache.long;
       app.vue.newAuthID = cache.author;
       app.vue.newAuth = app.getUser();
-      app.vue.newDate = cache.creation_date;
+      app.vue.newDate =  cache.creation_date;
+      app.vue.newSize =  cache.size;
+      app.vue.newTerr = cache.terrain;
+      app.vue.newDiff = cache.difficulty;
     }
   };
 
@@ -101,17 +108,19 @@ let init = (app) => {
   };
 
   app.addCache = function () {
-    axios.post(addCacheURL, {
-      cache_name: app.vue.newName,
-      hint: app.vue.newHint,
-      description: app.vue.newDesc,
-      lat: app.vue.center.lat,
-      long: app.vue.center.lng,
-      difficulty: 1,
-      terrain: 1,
-      size: 1,
-      valid: 0,
-    });
+    axios.post(addCacheURL,
+        {
+            cache_name  : app.vue.newName,
+            hint        : app.vue.newHint,
+            description : app.vue.newDesc,
+            lat         : app.vue.center.lat,
+            long        : app.vue.center.lng,
+            valid       : 0,
+            difficulty  : app.vue.newDiff,
+            terrain     : app.vue.newTerr,
+            size        : app.vue.newSize,
+        })
+      
   };
 
   app.loadMap = function () {

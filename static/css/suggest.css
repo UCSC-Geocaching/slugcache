@@ -54,6 +54,12 @@
   border-style: none;
 }
 
+#submit{
+  background-color: var(--accent-color);
+  border-style: none;
+}
+
+
 #titleCache {
   height: 30px;
 }
@@ -111,4 +117,32 @@
 
 #footerWrapper {
   overflow-x: hidden;
+}
+
+/*Ratings Card*/
+.statCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.boxWrapper { 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#ratings{
+  width: 95px;
+}
+
+.stats{
+  box-shadow: none;
+}
+.myBox {
+  margin: 0 3px;
+  color: var(--primary-color);
+}
+.myBox.filled {
+  color: var(--accent-color);
 }

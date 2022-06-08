@@ -117,7 +117,7 @@ let init = (app) => {
    */
   app.loadLocations = function (map) {
     for (let cache of app.vue.caches) {
-      if (cache.valid == 0) {
+      if (!cache.valid) {
         continue;
       } //Skip invalid caches
 

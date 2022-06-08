@@ -15,7 +15,7 @@
       <!--Map-->
     </div>
 
-    <div v-if="formMode" class="card">
+    <div v-if="formMode" class="card mt-3">
       <header class="card-header">
         <p class="card-header-title">Suggest a Cache</p>
       </header>
@@ -50,10 +50,23 @@
               ></textarea>
             </div>
           </div>
+
+          <div class="field is-grouped is-grouped-multilined">
+            <div class="control" id="ratings">
+              <input class="input" type="text" v-model="newDiff" placeholder="Difficulty">
+            </div>
+            <div class="control" id="ratings">
+              <input class="input" type="text" v-model="newTerr" placeholder="Terrain">
+            </div>
+            <div class="control" id="ratings">
+              <input class="input" type="text" v-model="newSize" placeholder="Size">
+            </div>
+          </div>
+
           <div class="field is-grouped">
             <div class="control">
               <a
-                class="button gold-button"
+                class="button" id="submit"
                 @click="addCache(); toggleForm(false)"
               >
                 Submit
@@ -96,4 +109,5 @@
   let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
 </script>
 <script src="js/suggest.js"></script>
+
 [[end]]
