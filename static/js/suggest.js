@@ -18,16 +18,19 @@ let init = (app) => {
     newDesc: '',
     newLat: 0,
     newLong: 0,
-    newAuthID: "",
-    newAuth: "",
-    newDate: "",
-    newSize: 0,
-    newTerr: 0,
-    newDiff: 0,
+    newAuthID: '',
+    newAuth: '',
+    newDate: '',
+    newSize: 1,
+    newTerr: 1,
+    newDiff: 1,
     center: 0,
     formMode: true,
     infoMode: false,
-    max_boxes: 5,
+    options: [1, 2, 3, 4, 5],
+    errName: false,
+    errDesc: false,
+    errHint: false,
   };
 
   app.enumerate = (a) => {
@@ -51,8 +54,8 @@ let init = (app) => {
       app.vue.newLong = cache.long;
       app.vue.newAuthID = cache.author;
       app.vue.newAuth = app.getUser();
-      app.vue.newDate =  cache.creation_date;
-      app.vue.newSize =  cache.size;
+      app.vue.newDate = cache.creation_date;
+      app.vue.newSize = cache.size;
       app.vue.newTerr = cache.terrain;
       app.vue.newDiff = cache.difficulty;
     }
@@ -108,19 +111,34 @@ let init = (app) => {
   };
 
   app.addCache = function () {
-    axios.post(addCacheURL,
-        {
-            cache_name  : app.vue.newName,
-            hint        : app.vue.newHint,
-            description : app.vue.newDesc,
-            lat         : app.vue.center.lat,
-            long        : app.vue.center.lng,
-            valid       : 0,
-            difficulty  : app.vue.newDiff,
-            terrain     : app.vue.newTerr,
-            size        : app.vue.newSize,
-        })
-      
+    // Check for empty inputs
+    app.vue.errName = app.vue.errDesc = app.vue.errHint = false;
+    if (app.vue.newName == '') {
+      app.vue.errName = true;
+    }
+    if (app.vue.newDesc == '') {
+      app.vue.errDesc = true;
+    }
+    if (app.vue.newHint == '') {
+      app.vue.errHint = true;
+    }
+    if (app.vue.errName || app.vue.errDesc || app.vue.errHint) {
+      return;
+    }
+    axios
+      .post(addCacheURL, {
+        cache_name: app.vue.newName,
+        hint: app.vue.newHint,
+        description: app.vue.newDesc,
+        lat: app.vue.center.lat,
+        long: app.vue.center.lng,
+        difficulty: app.vue.newDiff,
+        terrain: app.vue.newTerr,
+        size: app.vue.newSize,
+      })
+      .then(function (r) {
+        app.toggleForm(false);
+      });
   };
 
   app.loadMap = function () {
@@ -182,7 +200,7 @@ let init = (app) => {
   // And this initializes it.
   app.init = () => {
     axios.get(loadGeoCachesURL).then(function (r) {
-      app.vue.caches = r.data.caches.filter((cache) => cache.valid == 0);
+      app.vue.caches = r.data.caches.filter((cache) => cache.valid == false);
       app.vue.caches = app.enumerate(app.vue.caches);
     });
     app.loadMap();

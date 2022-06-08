@@ -343,10 +343,13 @@ def addCache():
         cache_name=request.json.get("cache_name"),
         lat=request.json.get("lat"),
         long=request.json.get("long"),
+        description=request.json.get("description"),
+        hint=request.json.get("hint"),
+        author=user["id"],
+        creation_date=datetime.now(),
         difficulty=request.json.get("difficulty"),
         terrain=request.json.get("terrain"),
         size=request.json.get("size"),
-        author=db(db.users.user_email == get_user_email).select().first().id,
         valid=False,
     )
     return "OK"

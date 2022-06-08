@@ -21,6 +21,9 @@
       </header>
       <div class="card-content">
         <div class="content">
+          <div v-if="errName" class="error-message has-text-danger">
+            Please enter a name
+          </div>
           <div class="field">
             <div class="control">
               <input
@@ -30,6 +33,9 @@
                 placeholder="Cache Name (ex: Porter Stage)"
               />
             </div>
+          </div>
+          <div v-if="errHint" class="error-message has-text-danger">
+            Please enter a hint
           </div>
           <div class="field">
             <div class="control">
@@ -41,6 +47,9 @@
               />
             </div>
           </div>
+          <div v-if="errDesc" class="error-message has-text-danger">
+            Please enter a description
+          </div>
           <div class="field">
             <div class="control">
               <textarea
@@ -51,26 +60,42 @@
             </div>
           </div>
 
-          <div class="field is-grouped is-grouped-multilined">
-            <div class="control" id="ratings">
-              <input class="input" type="text" v-model="newDiff" placeholder="Difficulty">
+          <div class="field centered-content">
+            <div class="stat-card">
+              <p>Difficulty</p>
+              <div class="select is-link">
+                <select v-model="newDiff" id="selDiff">
+                  <option v-for="opt in options" v-bind:value="opt">
+                    {{opt}}
+                  </option>
+                </select>
+              </div>
             </div>
-            <div class="control" id="ratings">
-              <input class="input" type="text" v-model="newTerr" placeholder="Terrain">
+            <div class="stat-card">
+              <p>Terrain</p>
+              <div class="select is-link">
+                <select v-model="newTerr" id="selTerr">
+                  <option v-for="opt in options" v-bind:value="opt">
+                    {{opt}}
+                  </option>
+                </select>
+              </div>
             </div>
-            <div class="control" id="ratings">
-              <input class="input" type="text" v-model="newSize" placeholder="Size">
+            <div class="stat-card">
+              <p>Size</p>
+              <div class="select is-link">
+                <select v-model="newSize" id="selSize">
+                  <option v-for="opt in options" v-bind:value="opt">
+                    {{opt}}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
 
-          <div class="field is-grouped">
+          <div class="field is-grouped mt-6">
             <div class="control">
-              <a
-                class="button" id="submit"
-                @click="addCache(); toggleForm(false)"
-              >
-                Submit
-              </a>
+              <a class="button" id="submit" @click="addCache()"> Submit </a>
             </div>
             <div class="control">
               <a class="button" id="cancelButton" href="[[=URL('map')]]">
@@ -106,7 +131,7 @@
 <!-- Loads the index-specific js for Vue -->
 <script>
   let addCacheURL = '[[=XML(addCacheURL)]]';
-  let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
+  let loadGeoCachesURL = '[[=XML(loadGeoCachesURL)]]';
 </script>
 <script src="js/suggest.js"></script>
 

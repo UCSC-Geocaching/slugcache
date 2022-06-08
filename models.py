@@ -87,9 +87,9 @@ db.caches.size.requires = [IS_IN_SET([1, 2, 3, 4, 5]), IS_NOT_EMPTY()]
 # Cache Table Field defaults
 db.caches.author.default = get_user_email
 db.caches.creation_date.default = get_time
-#db.caches.difficulty.default = 1
-#db.caches.terrain.default = 1
-#db.caches.size.default = 1
+# db.caches.difficulty.default = 1
+# db.caches.terrain.default = 1
+# db.caches.size.default = 1
 db.caches.valid.default = False
 
 # Cache Table Field labels

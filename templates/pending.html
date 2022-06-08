@@ -3,16 +3,16 @@
 <style>
   [v-cloak] {
     display: none;
-  } 
+  }
 </style>
 
 <link rel="stylesheet" href="css/suggest.css" />
 
 <div class="suggestWrapper" id="vue-target">
   <div class="container">
- 
     <div class="box m-0 p-0">
-        <div id="map"></div> <!--Map-->
+      <div id="map"></div>
+      <!--Map-->
     </div>
 
     <div class="card">
@@ -20,62 +20,65 @@
         <p class="card-header-title">Pending Caches</p>
       </header>
       <div class="card-content pr-0 pb-0" id="infoWrapper">
-
         <div v-if="caches.length == 0">
           <div class="media-content log-list">
-            <h6 class="title is-6" >No caches pending.</h6>
+            <h6 class="title is-6">No caches pending.</h6>
           </div>
         </div>
 
         <div v-if="!infoMode" class="media">
           <div class="media-content log-list">
-            <div v-for="cache in caches" class="media" @click="setCenter(cache); setInfoMode(true, cache)">
-              <h6 class="title is-6" >{{cache.cache_name}}</h6>
+            <div
+              v-for="cache in caches"
+              class="media"
+              @click="setCenter(cache); setInfoMode(true, cache)"
+            >
+              <h6 class="title is-6 cache-link">{{cache.cache_name}}</h6>
             </div>
           </div>
-        </div>  
+        </div>
 
         <div v-if="infoMode" class="card-content p-0 pr-4" id="descWrapper">
-          <h6 class="title is-6" >Description</h6>
+          <h6 class="title is-6">Description</h6>
           <h6 class="subtitle is-6">{{newDesc}}</h6>
-          <h6 class="title is-6" >Hint</h6>
+          <h6 class="title is-6">Hint</h6>
           <h6 class="subtitle is-6">{{newHint}}</h6>
-          <h6 class="title is-6" >Coordinates</h6>
+          <h6 class="title is-6">Coordinates</h6>
           <h6 class="subtitle is-6">{{newLong}}, {{newLat}}</h6>
-          <h6 class="title is-6" >Submitted By</h6>
+          <h6 class="title is-6">Submitted By</h6>
           <h6 class="subtitle is-6">{{newAuth}} on {{newDate}}</h6>
         </div>
       </div>
 
       <div v-if="infoMode" class="card ml-0 mr-0 mt-0 mb-2 stats">
-        <div class="card-footer">
-          <div class="card-footer-item statCard pt-2 pl-0 pr-0 pb-0">
+        <div class="stats-wrapper">
+          <div class="stat-card">
             <div class="boxWrapper">
               <i
                 v-for="box_idx in max_boxes"
-                class="fas fa-square myBox"
+                class="fas fa-square my-box"
                 :class="{'filled': box_idx <= newDiff}"
               >
               </i>
             </div>
             <div class="statName">Difficulty</div>
           </div>
-          <div class="card-footer-item statCard pt-2 pl-0 pr-0 pb-0">
+          <div class="stat-card">
             <div class="boxWrapper">
               <i
                 v-for="box_idx in max_boxes"
-                class="fas fa-square myBox"
+                class="fas fa-square my-box"
                 :class="{'filled': box_idx <= newTerr}"
               >
               </i>
             </div>
             <div class="statName">Terrain</div>
           </div>
-          <div class="card-footer-item statCard pt-2 pl-0 pr-0 pb-0">
+          <div class="stat-card">
             <div class="boxWrapper">
               <i
                 v-for="box_idx in max_boxes"
-                class="fas fa-square myBox"
+                class="fas fa-square my-box"
                 :class="{'filled': box_idx <= newSize}"
               >
               </i>
@@ -86,32 +89,41 @@
       </div>
 
       <div class="card-footer" id="footerWrapper">
-        <div v-if="infoMode" class="card-footer-item log-button-and-text"><!--new-->
-          <button class="button"  @click="setInfoMode(false, null)">Back</button>
+        <div v-if="infoMode" class="card-footer-item log-button-and-text">
+          <!--new-->
+          <button class="button" @click="setInfoMode(false, null)">Back</button>
         </div>
         <div v-if="!infoMode" class="card-footer-item log-button-and-text">
           <a href="[[=URL('map')]]" class="button gold-button">Back to Map</a>
         </div>
-        <div v-if="infoMode" class="card-footer-item log-button-and-text"><!--new-->
-          <a class="button is-danger" @click="denyCache(); setInfoMode(false, null)">Deny</a>
+        <div v-if="infoMode" class="card-footer-item log-button-and-text">
+          <!--new-->
+          <a
+            class="button is-danger"
+            @click="denyCache(); setInfoMode(false, null)"
+            >Deny</a
+          >
         </div>
-        <div v-if="infoMode" class="card-footer-item log-button-and-text"><!--new-->
-          <a class="button gold-button" @click="approveCache(); setInfoMode(false, null)">Approve</a>
+        <div v-if="infoMode" class="card-footer-item log-button-and-text">
+          <!--new-->
+          <a
+            class="button gold-button"
+            @click="approveCache(); setInfoMode(false, null)"
+            >Approve</a
+          >
         </div>
       </div>
-
     </div>
-
   </div>
 </div>
 
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
-    let loadGeoCachesURL = "[[=XML(loadGeoCachesURL)]]";
-    let deleteCacheURL = "[[=XML(deleteCacheURL)]]";
-    let approveCacheURL = "[[=XML(approveCacheURL)]]";
-    let getUserURL = '[[=XML(getUserURL)]]';
+  let loadGeoCachesURL = '[[=XML(loadGeoCachesURL)]]';
+  let deleteCacheURL = '[[=XML(deleteCacheURL)]]';
+  let approveCacheURL = '[[=XML(approveCacheURL)]]';
+  let getUserURL = '[[=XML(getUserURL)]]';
 </script>
 <script src="js/suggest.js"></script>
 <script
