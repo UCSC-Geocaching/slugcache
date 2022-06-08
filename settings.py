@@ -30,7 +30,7 @@ CLOUD_DB_URI = "google:MySQLdb://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_socket=
     DB_USER=DB_USER,
     DB_NAME=DB_NAME,
     DB_PASSWORD=DB_PASSWORD,
-    DB_CONNECTION=DB_CONNECTION
+    DB_CONNECTION=DB_CONNECTION,
 )
 CLOUD_DB_POOL_SIZE = 1
 CLOUD_DB_MIGRATE = False
@@ -65,7 +65,7 @@ SMTP_TLS = False
 
 # session settings
 SESSION_TYPE = "database"
-SESSION_SECRET_KEY = "<session-secret-key>" # replace this with a uuid
+SESSION_SECRET_KEY = "<session-secret-key>"  # replace this with a uuid
 MEMCACHE_CLIENTS = ["127.0.0.1:11211"]
 REDIS_SERVER = "localhost:6379"
 

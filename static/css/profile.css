@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5% 0;
+  padding: 3% 0;
 }
 .accountName {
   font-size: x-large;
@@ -133,4 +133,14 @@
 
 .no-content {
   font-weight: bold;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.admin-button {
+  background-color: var(--accent-color);
 }

@@ -8,6 +8,7 @@ let init = (page) => {
   // This is the Vue data.
   page.data = {
     // Complete as you see fit.
+    admin: false,
     user_email: '',
     first_name: '',
     last_name: '',
@@ -37,6 +38,7 @@ let init = (page) => {
       axios.get(load_profile_url).then(function (r) {
         let profile = r.data.profile;
         let date_string = profile.creation_date.replace(' ', 'T');
+        page.vue.admin = profile.admin;
         page.vue.user_email = profile.user_email;
         page.vue.first_name = profile.first_name;
         page.vue.last_name = profile.last_name;

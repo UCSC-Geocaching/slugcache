@@ -87,6 +87,13 @@ def profile():
 def load_profile_details():
     user = auth.get_user()
     profile = db(db.users.user_id == user["id"]).select().first()
+    # Attach admin status
+    status = db(db.admins.user == profile["id"]).select().first()
+    if status == None:
+        status = False
+    else:
+        status = True
+    profile["admin"] = status
     return dict(profile=profile)
 
 
@@ -205,6 +212,12 @@ def cache_info(cache_id=None):
 @action.uses(db)
 def getCache(cache_id=None):
     cache = db(db.caches._id == cache_id).select().first()
+    assert cache is not None
+    user = db.users[cache["author"]]
+    assert user is not None
+    # Attach name to cache
+    cache["first_name"] = user["first_name"]
+    cache["last_name"] = user["last_name"]
     return dict(cache=cache)
 
 
@@ -419,84 +432,74 @@ def getUser():
 
 # TODO: MAKE SURE TO REMOVE FOR PRODUCTION
 @action("setup")
-@action.uses(db, auth)
+@action.uses(db, auth, auth.user)
 def setup():
-    creation_date = datetime.now()
-    db.users.insert(
-        first_name="Chris",
-        last_name="Sterza",
-        user_email="csterza@ucsc.edu",
-        creation_date=creation_date,
-        banner_path="",
-        photo_profile_path="",
-    )
+    auth_user = auth.get_user()
+    user = db(db.users.user_id == auth_user["id"]).select().first()
     db.caches.insert(
         cache_name="Arboretum",
         lat=36.98267070650899,
         long=-122.05985900885949,
-        description="This Arboretum cache is...",
-        hint="Test hint",
-        author=db(db.users.creation_date == creation_date).select().first().id,
+        description="The UCSC Arboretum is a beautiful part of campus full of various trees and wildlife.",
+        hint="Check under this tree from down under!",
+        author=user["id"],
         creation_date=datetime.now(),
+        difficulty=4,
+        terrain=3,
+        size=2,
         valid=True,
-    )
-    creation_date = datetime.now()
-    db.users.insert(
-        first_name="Hello",
-        last_name="World",
-        user_email="helloworld@ucsc.edu",
-        creation_date=creation_date,
-        banner_path="",
-        photo_profile_path="",
     )
     db.caches.insert(
         cache_name="Quarry Amphitheater",
         lat=36.9986320770141,
         long=-122.05648938884585,
-        description="This Quarry cache is...",
-        hint="u eat dis",
-        author=db(db.users.creation_date == creation_date).select().first().id,
+        description="The Quarry Ampitheater is a great place to watch some great concerts. Check the UCSC website to see what shows are coming up!",
+        hint="I guarantee you've never seen a show like this B4",
+        author=user["id"],
         creation_date=datetime.now(),
+        difficulty=2,
+        terrain=1,
+        size=1,
         valid=True,
     )
     db.caches.insert(
         cache_name="Jack Baskin",
         lat=37.0005353033127,
         long=-122.06380507461215,
-        description="This Jack Baskin cache is...",
-        hint="u eat dis",
-        author=db(db.users.creation_date == creation_date).select().first().id,
+        description="Jack Baskin is home to many of the engineering classes here at UCSC. The buildings are some of the most modern looking buildings on campus.",
+        hint="These buildings are the CORNERstone of the engineering classes.",
+        author=user["id"],
         creation_date=datetime.now(),
+        difficulty=3,
+        terrain=3,
+        size=2,
         valid=True,
     )
     db.caches.insert(
         cache_name="Porter",
         lat=36.99473025211556,
         long=-122.06554686691216,
-        description="This Porter cache is...",
-        hint="u eat dis",
-        author=db(db.users.creation_date == creation_date).select().first().id,
+        description="Porter Quad is often considered the noisest place on campus at 3am. With two tall towers full of party-loving students, how could it not be?",
+        hint="If you can't find it, break a leg and try again.",
+        author=user["id"],
         creation_date=datetime.now(),
-        valid=False,
-    )
-    creation_date = datetime.now()
-    db.users.insert(
-        first_name="first name",
-        last_name="last naem",
-        user_email="firstlast@ucsc.edu",
-        creation_date=creation_date,
-        banner_path="",
-        photo_profile_path="",
+        difficulty=2,
+        terrain=1,
+        size=5,
+        valid=True,
     )
     db.caches.insert(
         cache_name="East Remote",
-        lat=36.9911648945102,
-        long=-122.0534244573749,
-        description="This East Remote cache is...",
-        hint="u eat dis",
-        author=db(db.users.creation_date == creation_date).select().first().id,
+        lat=36.99056080000000,
+        long=-122.05252790000000,
+        description="If you're living off campus, this parking lot is your best friend. You can catch the bus here to the rest of your classes.",
+        hint="If you climb over me, you'll be partying with the cows!",
+        author=user["id"],
         creation_date=datetime.now(),
-        valid=False,
+        difficulty=5,
+        terrain=1,
+        size=3,
+        valid=True,
     )
     redirect(URL("index"))
 
@@ -505,8 +508,23 @@ def setup():
 @action("clear_db")
 @action.uses(db, auth)
 def clear_db():
+    db.auth_user.truncate()
     db.users.truncate()
     db.caches.truncate()
+    db.logs.truncate()
+    db.bookmarks.truncate()
+    redirect(URL("index"))
+
+
+# TODO: MAKE SURE TO REMOVE FOR PRODUCTION
+@action("make_admin")
+@action.uses(db, auth, auth.user)
+def make_admin():
+    auth_user = auth.get_user()
+    user = db(db.users.user_id == auth_user["id"]).select().first()
+    db.admins.insert(
+        user=user["id"],
+    )
     redirect(URL("index"))
 
 

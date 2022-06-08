@@ -11,17 +11,18 @@ let app = {};
 let init = (app) => {
   // This is the Vue data.
   app.data = {
-    cache_name: '',
-    cache_lat: 0.0,
-    cache_long: 0.0,
-    cache_desc: '',
-    cache_hint: '',
-    cache_author_id: null,
-    cache_author: '',
-    cache_create_date: '',
-    cache_diff: 1,
-    cache_terrain: 1,
-    cache_size: 1,
+    cache: {},
+    // cache_name: '',
+    // cache_lat: 0.0,
+    // cache_long: 0.0,
+    // cache_desc: '',
+    // cache_hint: '',
+    // cache_author_id: null,
+    // cache_author: '',
+    // cache_create_date: '',
+    // cache_diff: 1,
+    // cache_terrain: 1,
+    // cache_size: 1,
     cache_max_boxes: 5,
     bookmarked: false,
     cache_logs: [],
@@ -30,29 +31,21 @@ let init = (app) => {
     map_src: '',
   };
 
-  app.processCache = function (a) {
-    (app.vue.cache_name = a.cache_name),
-      (app.vue.cache_lat = a.lat),
-      (app.vue.cache_long = a.long),
-      (app.vue.cache_desc = a.description),
-      (app.vue.cache_hint = a.hint),
-      (app.vue.cache_author_id = a.author),
-      (app.vue.cache_author = app.getUser()),
-      (app.vue.cache_create_date = a.creation_date),
-      (app.vue.cache_diff = a.difficulty),
-      (app.vue.cache_terrain = a.terrain),
-      (app.vue.cache_size = a.size),
-      axios.get(getBookmarkedURL).then(function (r) {
-        app.vue.bookmarked = r.data.bookmarked;
-      });
-  };
-
-  app.getUser = function () {
-    axios.post(getUserURL, { id: app.vue.cache_author_id }).then(function (r) {
-      app.vue.cache_author =
-        r.data['user']['first_name'] + ' ' + r.data['user']['last_name'];
+  app.getCacheInfo = function () {
+    axios.get(getCacheURL).then(function (r) {
+      app.vue.cache = r.data.cache;
+      app.getLogs();
+      app.checkTimer();
+      app.loadMap();
     });
   };
+
+  // app.getUser = function () {
+  //   axios.post(getUserURL, { id: app.vue.cache_author_id }).then(function (r) {
+  //     app.vue.cache_author =
+  //       r.data['user']['first_name'] + ' ' + r.data['user']['last_name'];
+  //   });
+  // };
 
   app.bookmark = function () {
     axios.put(setBookmarkedURL).then(function (r) {
@@ -61,7 +54,7 @@ let init = (app) => {
   };
 
   app.loadMap = function () {
-    app.vue.map_src = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/${app.vue.cache_long},${app.vue.cache_lat},17/1280x1280?access_token=pk.eyJ1IjoiY3N0ZXJ6YSIsImEiOiJjbDF0dDRleG0yMWpkM2Ztb3B0YWZoaTR6In0.09vTcRrP3ty1lWFuouDsiw`;
+    app.vue.map_src = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/${app.vue.cache.long},${app.vue.cache.lat},17/1280x1280?access_token=pk.eyJ1IjoiY3N0ZXJ6YSIsImEiOiJjbDF0dDRleG0yMWpkM2Ztb3B0YWZoaTR6In0.09vTcRrP3ty1lWFuouDsiw`;
   };
 
   app.logCache = function () {
@@ -103,8 +96,8 @@ let init = (app) => {
 
   // This contains all the methods.
   app.methods = {
-    processCache: app.processCache,
-    getUser: app.getUser,
+    getCacheInfo: app.getCacheInfo,
+    // getUser: app.getUser,
     bookmark: app.bookmark,
     loadMap: app.loadMap,
     logCache: app.logCache,
@@ -123,12 +116,7 @@ let init = (app) => {
   app.init = () => {
     // Put here any initialization code.
     // Typically this is a server GET call to load the data.
-    axios.get(getCacheURL).then(function (r) {
-      app.processCache(r.data.cache);
-      app.getLogs();
-      app.checkTimer();
-      app.loadMap();
-    });
+    app.getCacheInfo();
   };
 
   // Call to the initializer.

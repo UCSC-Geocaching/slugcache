@@ -14,7 +14,7 @@
     <!-- Cache name and bookmark button -->
     <div class="columns is-mobile is-centered m-0">
       <div class="column is-narrow pb-0">
-        <h4 class="title is-4">{{cache_name}}</h6>
+        <h4 class="title is-4">{{cache.cache_name}}</h6>
       </div>
     </div>
 
@@ -40,7 +40,7 @@
             <i
               v-for="box_idx in cache_max_boxes"
               class="fas fa-square myBox"
-              :class="{'filled': box_idx <= cache_diff}"
+              :class="{'filled': box_idx <= cache.difficulty}"
             >
             </i>
           </div>
@@ -51,7 +51,7 @@
             <i
               v-for="box_idx in cache_max_boxes"
               class="fas fa-square myBox"
-              :class="{'filled': box_idx <= cache_terrain}"
+              :class="{'filled': box_idx <= cache.terrain}"
             >
             </i>
           </div>
@@ -62,7 +62,7 @@
             <i
               v-for="box_idx in cache_max_boxes"
               class="fas fa-square myBox"
-              :class="{'filled': box_idx <= cache_size}"
+              :class="{'filled': box_idx <= cache.size}"
             >
             </i>
           </div>
@@ -80,13 +80,14 @@
           </div>
           <div class="card-content pl-4 pr-4" id="infoWrapper">
             <h6 class="title is-6" >Description</h6>
-            <h6 class="subtitle is-6">{{cache_desc}}</h6>
+            <h6 class="subtitle is-6">{{cache.description}}</h6>
             <h6 class="title is-6" >Hint</h6>
-            <h6 class="subtitle is-6">{{cache_hint}}</h6>
-            <h6 class="title is-6" >Coordinates</h6>
-            <h6 class="subtitle is-6">{{cache_long}}, {{cache_lat}}</h6>
+            <h6 class="subtitle is-6">{{cache.hint}}</h6>
+            <!-- Shouldn't give coordinates to the user -->
+            <!-- <h6 class="title is-6" >Coordinates</h6>
+            <h6 class="subtitle is-6">{{cache.long}}, {{cache.lat}}</h6> -->
             <h6 class="title is-6" >Created By</h6>
-            <h6 class="subtitle is-6">{{cache_author}} on {{cache_create_date}}</h6>
+            <h6 class="subtitle is-6">{{cache.first_name}} {{cache.last_name}} on {{cache.creation_date}}</h6>
           </div>
         </div>
       </div>

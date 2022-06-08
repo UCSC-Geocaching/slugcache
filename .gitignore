@@ -3,4 +3,4 @@ __pycache__/*
 databases/*
 !databases/README.md
 .DS_Store
-private/secret_settings.py
+private/*
