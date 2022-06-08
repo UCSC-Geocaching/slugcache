@@ -6,10 +6,10 @@ We had a lot of fun creating this for CSE183, Spring 2022.
 
 ## Team Members
 
-  - Albert Yuan
-  - Brandon Wong
-  - Christopher Sterza
-  - Geo Ochoa
+  - [Albert Yuan](https://github.com/ayyce)
+  - [Brandon Wong](https://github.com/Brwonze)
+  - [Christopher Sterza](https://github.com/ChristopherSterza)
+  - [Geo Ochoa](https://github.com/gdochoa)
 
 ## How to Run
 We had a little trouble hosting the app online. We used Google App Engine and Cloud SQL to host it, and the link to the hosted product can be found here: **[Slug Cache](https://slug-cache-352705.wl.r.appspot.com/)**
