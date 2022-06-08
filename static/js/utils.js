@@ -1,15 +1,23 @@
 "user strict";
 
-// https://stackoverflow.com/a/46427607
-export const buildPath = (...args) => {
-    return args.map((part, i) => {
-        if (i === 0) {
-            return part.trim().replace(/[\/]*$/g, '')
-        } else {
-            return part.trim().replace(/(^[\/]*|[\/]*$)/g, '')
-        }
-    }).filter(x => x.length).join('/');
-};
+// https://stackoverflow.com/a/66100959
+export function buildPath(...args) {
+  const [first] = args;
+  const firstTrimmed = first.trim();
+  const result = args
+    .map((part) => part.trim())
+    .map((part, i) => {
+      if (i === 0) {
+        return part.replace(/[/]*$/g, '');
+      } else {
+        return part.replace(/(^[/]*|[/]*$)/g, '');
+      }
+    })
+    .filter((x) => x.length)
+    .join('/');
+
+  return firstTrimmed === '/' ? `/${result}` : result;
+}
 
 // Allows "bla {a} bla {b}".format({'a': 'hello', 'b': 'world'})
 if (!String.prototype.format) {
