@@ -12,7 +12,8 @@ from py4web.core import required_folder
 try:
     from .private.secret_settings import *
 except (ImportError, ModuleNotFoundError):
-    pass
+    # define these variables in private/secret_settings.py if you want to deploy app
+    DB_USER = DB_NAME = DB_PASSWORD = DB_CONNECTION = None
 
 # db settings
 APP_FOLDER = os.path.dirname(__file__)
