@@ -235,7 +235,6 @@ let init = (app) => {
 
     app.addNav(map); //nav controls
     app.addGeoTracking(map);
-    app.loadLocations(map); //needs to be passed the db
   };
 
   /**
@@ -305,6 +304,8 @@ function setupMap(center) {
       app.vue.loadMode = false;
       document.getElementById('map').style.zIndex = '0';
     }
+
+    app.loadLocations(map); //needs to be passed the db
   });
 
   map.resize();
