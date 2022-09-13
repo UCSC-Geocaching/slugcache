@@ -21,6 +21,4 @@ It is advised to remove these endpoints before deploying your app.
 
 ## Demo
 
-If we get around to it, we will record a demo of the app on youtube and post it here.
-
 Demo Link: https://www.youtube.com/watch?v=D930IxmufzM
