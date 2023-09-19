@@ -12,7 +12,7 @@ We had a lot of fun creating this for CSE183, Spring 2022.
   - [Geo Ochoa](https://github.com/geoochoa)
 
 ## How to Run
-We had a little trouble hosting the app online. We used Google App Engine and Cloud SQL to host it, and the link to the hosted product can be found here: **[Slug Cache](https://slug-cache-352705.wl.r.appspot.com/)**
+We had a little trouble hosting the app online. We used Google App Engine and Cloud SQL to host it, and the link to the hosted product can be found here: **[Slug Cache](https://slug-cache-personal.wl.r.appspot.com/)**
 
 If you wish to run your own copy locally, you must first install **[py4web](https://py4web.com/_documentation/static/en/chapter-03.html)**. Once installed, simply clone this repo into the **apps** folder and run **`./py4web.py run apps`**. Now that the server is running, the app can be accessed by pointing a browser to **`http://localhost:8000/{appname}`**.
 
